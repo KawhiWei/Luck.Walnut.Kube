@@ -1,6 +1,6 @@
-using Luck.KubeWalnut.Domain.AggregateRoots.Clusters;
+using Luck.Walnut.Kube.Domain.AggregateRoots.Clusters;
 
-namespace Luck.KubeWalnut.Persistence.Configurations;
+namespace Luck.Walnut.Kube.Persistence.Configurations;
 
 public class ClusterMapConfiguration: IEntityTypeConfiguration<Cluster>
 {

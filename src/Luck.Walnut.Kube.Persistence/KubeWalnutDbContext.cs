@@ -1,8 +1,8 @@
 using System.Reflection;
 using Luck.EntityFrameworkCore.DbContexts;
-using Luck.KubeWalnut.Domain.AggregateRoots.Clusters;
+using Luck.Walnut.Kube.Domain.AggregateRoots.Clusters;
 
-namespace Luck.KubeWalnut.Persistence;
+namespace Luck.Walnut.Kube.Persistence;
 
 public class KubeWalnutDbContext: LuckDbContextBase
 {

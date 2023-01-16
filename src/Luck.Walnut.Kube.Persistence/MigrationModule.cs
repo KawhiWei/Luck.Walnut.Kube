@@ -1,7 +1,7 @@
 using Luck.Framework.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Luck.KubeWalnut.Persistence;
+namespace Luck.Walnut.Kube.Persistence;
 
 public class MigrationModule: AppModule
 {

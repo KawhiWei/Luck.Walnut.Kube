@@ -2,7 +2,7 @@ using Luck.EntityFrameworkCore;
 using Luck.EntityFrameworkCore.DbContextDrivenProvides;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Luck.KubeWalnut.Persistence;
+namespace Luck.Walnut.Kube.Persistence;
 
 public class EntityFrameworkCoreModule: EntityFrameworkCoreBaseModule
 {

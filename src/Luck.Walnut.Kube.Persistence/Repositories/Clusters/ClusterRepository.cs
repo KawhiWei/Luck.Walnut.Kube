@@ -1,9 +1,8 @@
 using Luck.EntityFrameworkCore.DbContexts;
-using Luck.EntityFrameworkCore.Repositories;
-using Luck.KubeWalnut.Domain.AggregateRoots.Clusters;
-using Luck.KubeWalnut.Domain.Repositories.Clusters;
+using Luck.Walnut.Kube.Domain.AggregateRoots.Clusters;
+using Luck.Walnut.Kube.Domain.Repositories.Clusters;
 
-namespace Luck.KubeWalnut.Persistence.Repositories.Clusters;
+namespace Luck.Walnut.Kube.Persistence.Repositories.Clusters;
 
 
 public class ClusterRepository: EfCoreAggregateRootRepository<Cluster, string>,IClusterRepository
