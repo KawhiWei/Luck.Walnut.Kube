@@ -1,5 +1,5 @@
 ﻿using Luck.Framework.Infrastructure;
-using Luck.KubeWalnut.Api.AppModules;
+using Luck.Walnut.Kube.Api.AppModules;
 using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddApplication<AppWebModule>();
 builder.Services.AddMediatR(AssemblyHelper.AllAssemblies);
 var app = builder.Build();
-app.UsePathBase("/kubewalnut");
+app.UsePathBase("/kube");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

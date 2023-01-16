@@ -1,9 +1,9 @@
-using Luck.KubeWalnut.Application.Clusters;
-using Luck.KubeWalnut.Dto.Clusteries;
-using Luck.KubeWalnut.Dto.Kubernetes;
+using Luck.Walnut.Kube.Application.Clusters;
+using Luck.Walnut.Kube.Dto.Clusteries;
+using Luck.Walnut.Kube.Dto.Kubernetes;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Luck.KubeWalnut.Api.Controllers;
+namespace Luck.Walnut.Kube.Api.Controllers;
 
 /// <summary>
 /// 集群管理
@@ -26,7 +26,7 @@ public class ClusterController : BaseController
     [HttpGet("{id}")]
     public async Task<KubernetesClusterMonitoringPanelOutputDto> GetClusterInformationAsync(string id)
     {
-        return await _clusterApplication.GetClusterInformationAsync(id);
+        return await _clusterApplication.GetClusterDashboardAsync(id);
     }
 
     [HttpGet("clusterlist")]

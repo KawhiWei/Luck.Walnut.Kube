@@ -1,11 +1,11 @@
-namespace Luck.KubeWalnut.Domain.AggregateRoots.Kubernetes;
+namespace Luck.Walnut.Kube.Domain.AggregateRoots.Kubernetes;
 
 public class KubernetesManager
 {
     public KubernetesManager(List<KubernetesNode> kubernetesNodes, List<KubernetesDaemonSet> kubernetesNodeDaemonSets,
         List<KubernetesPod> kubernetesPods, List<KubernetesJob> kubernetesJobs,
         List<KubernetesNamespace> kubernetesNamespaces, List<KubernetesReplicaSet> kubernetesReplicaSets,
-        List<KubernetesStatefulSet> kubernetesStatefulSets)
+        List<KubernetesStatefulSet> kubernetesStatefulSets,List<KubernetesDeployment> kubernetesDeployments)
     {
         KubernetesNodes = kubernetesNodes;
         KubernetesNodeDaemonSets = kubernetesNodeDaemonSets;
@@ -14,6 +14,7 @@ public class KubernetesManager
         KubernetesNamespaces = kubernetesNamespaces;
         KubernetesReplicaSets = kubernetesReplicaSets;
         KubernetesStatefulSets = kubernetesStatefulSets;
+        KubernetesDeployments = kubernetesDeployments;
     }
 
     /// <summary>
@@ -41,6 +42,11 @@ public class KubernetesManager
 
 
     public List<KubernetesStatefulSet> KubernetesStatefulSets { get; private set; }
+    
+    public List<KubernetesDeployment> KubernetesDeployments { get; private set; }
+
+    
+    
 
     public double GetClusterTotalCpuCapacity()
     {

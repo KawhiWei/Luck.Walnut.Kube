@@ -1,4 +1,4 @@
-namespace Luck.KubeWalnut.Domain.AggregateRoots.Kubernetes;
+namespace Luck.Walnut.Kube.Domain.AggregateRoots.Kubernetes;
 
 public class KubernetesPod:KubernetesResourceBase
 {

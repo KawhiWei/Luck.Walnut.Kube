@@ -1,7 +1,7 @@
 using System.Text;
 using k8s;
 
-namespace Luck.KubeWalnut.Adapter.Factories;
+namespace Luck.Walnut.Kube.Adapter.Factories;
 
 public class KubernetesClientFactory:IKubernetesClientFactory
 {

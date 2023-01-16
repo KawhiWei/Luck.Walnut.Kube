@@ -1,20 +1,7 @@
-namespace Luck.KubeWalnut.Dto.Clusteries;
+namespace Luck.Walnut.Kube.Dto.Clusteries;
 
-public class ClusterOutputDto
+public class ClusterOutputDto:ClusterOutputBase
 {
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public string Id { get; set; } = default!;
-    
-    /// <summary>
-    /// 
-    /// </summary>
-    public string Name { get; set; } = default!;
-    
-    /// <summary>
-    /// 
-    /// </summary>
-    public string NickName { get; set; } = default!;
+
 }

@@ -1,4 +1,4 @@
-﻿namespace Luck.KubeWalnut.Dto.Kubernetes;
+﻿namespace Luck.Walnut.Kube.Dto.Kubernetes;
 
 public class KubernetesClusterMonitoringPanelOutputDto
 {
@@ -34,6 +34,9 @@ public class KubernetesClusterMonitoringPanelOutputDto
     public int ClusterTotalPodUsage { get; set; }
     
     public int DaemonSetTotal { get; set; } = default!;
+    public int DeploymentTotal { get; set; } = default!;
+
+    
     
     public int JobTotal { get; set; } = default!;
     

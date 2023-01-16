@@ -1,7 +1,7 @@
 using Luck.DDD.Domain.Repositories;
-using Luck.KubeWalnut.Domain.AggregateRoots.Clusters;
+using Luck.Walnut.Kube.Domain.AggregateRoots.Clusters;
 
-namespace Luck.KubeWalnut.Domain.Repositories.Clusters;
+namespace Luck.Walnut.Kube.Domain.Repositories.Clusters;
 
 public interface IClusterRepository: IAggregateRootRepository<Cluster,string>,IScopedDependency
 {

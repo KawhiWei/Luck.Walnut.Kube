@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Luck.Walnut.Kube.Applicatio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.", "4.", "{A88DFC4D-5FBC-4583-A3ED-5835B07F92A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Luck.Walnut.Kube.Persistence", "stc\Luck.Walnut.Kube.Persistence\Luck.Walnut.Kube.Persistence.csproj", "{83434A41-8A5C-4163-97E8-68D79EFA62A0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Luck.Walnut.Kube.Persistence", "src\Luck.Walnut.Kube.Persistence\Luck.Walnut.Kube.Persistence.csproj", "{83434A41-8A5C-4163-97E8-68D79EFA62A0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Luck.Walnut.Kube.Infrastructure", "src\Luck.Walnut.Kube.Infrastructure\Luck.Walnut.Kube.Infrastructure.csproj", "{47559658-EAA4-4059-B3A9-E9F910F63781}"
 EndProject

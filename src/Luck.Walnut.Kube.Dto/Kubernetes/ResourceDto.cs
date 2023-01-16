@@ -1,4 +1,4 @@
-namespace Luck.KubeWalnut.Dto.Kubernetes;
+namespace Luck.Walnut.Kube.Dto.Kubernetes;
 
 public class ResourceDto
 {

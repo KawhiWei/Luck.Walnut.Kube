@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\stc\Luck.Walnut.Kube.Persistence\Luck.Walnut.Kube.Persistence.csproj" />
+    <ProjectReference Include="..\Luck.Walnut.Kube.Persistence\Luck.Walnut.Kube.Persistence.csproj" />
     <ProjectReference Include="..\Luck.Walnut.Kube.Adapter\Luck.Walnut.Kube.Adapter.csproj" />
     <ProjectReference Include="..\Luck.Walnut.Kube.Domain\Luck.Walnut.Kube.Domain.csproj" />
     <ProjectReference Include="..\Luck.Walnut.Kube.Dto\Luck.Walnut.Kube.Dto.csproj" />

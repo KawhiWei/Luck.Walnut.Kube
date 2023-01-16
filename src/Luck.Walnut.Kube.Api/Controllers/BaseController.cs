@@ -2,7 +2,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace Luck.KubeWalnut.Api.Controllers;
+namespace Luck.Walnut.Kube.Api.Controllers;
 
 [ApiController]
 [ApiResultWrap]

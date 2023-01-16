@@ -1,14 +1,14 @@
 using Luck.Framework.Exceptions;
 using Luck.Framework.UnitOfWorks;
-using Luck.KubeWalnut.Adapter.KubernetesAdaper;
-using Luck.KubeWalnut.Domain.AggregateRoots.Clusters;
-using Luck.KubeWalnut.Domain.AggregateRoots.Kubernetes;
-using Luck.KubeWalnut.Domain.Repositories.Clusters;
-using Luck.KubeWalnut.Dto.Clusteries;
-using Luck.KubeWalnut.Dto.Kubernetes;
+using Luck.Walnut.Kube.Adapter.KubernetesAdapter;
+using Luck.Walnut.Kube.Domain.AggregateRoots.Clusters;
+using Luck.Walnut.Kube.Domain.AggregateRoots.Kubernetes;
+using Luck.Walnut.Kube.Domain.Repositories.Clusters;
+using Luck.Walnut.Kube.Dto.Clusteries;
+using Luck.Walnut.Kube.Dto.Kubernetes;
 
 
-namespace Luck.KubeWalnut.Application.Clusters;
+namespace Luck.Walnut.Kube.Application.Clusters;
 
 public class ClusterApplication : IClusterApplication
 {
@@ -26,17 +26,17 @@ public class ClusterApplication : IClusterApplication
 
     public Task CreateClusterAsync()
     {
-        _clusterRepository.Add(new Cluster("Luck生产集群", "esxik8s集群", @"", "v1.22.12-3+dba78d63ae38c7"));
+        _clusterRepository.Add(new Cluster("Luck生产集群", @"", "v1.22.12-3+dba78d63ae38c7"));
         return _unitOfWork.CommitAsync();
     }
 
 
-    public async Task<KubernetesClusterMonitoringPanelOutputDto> GetClusterInformationAsync(string id)
+    public async Task<KubernetesClusterMonitoringPanelOutputDto> GetClusterDashboardAsync(string id)
     {
-        var cluster = await _clusterRepository.FindAll().FirstOrDefaultAsync(x => x.Id ==id);
+        var cluster = await _clusterRepository.FindAll().FirstOrDefaultAsync(x => x.Id == id);
         if (cluster is null)
             throw new BusinessException("集群不存在");
-        var kubernetes = await _kubernetesResource.GetNodeListAsync(cluster.Config);
+        var kubernetes = await _kubernetesResource.GetDashboardAsync(cluster.Config);
         return GetKubernetesClusterOutputDto(kubernetes);
     }
 
@@ -47,7 +47,6 @@ public class ClusterApplication : IClusterApplication
         {
             Id = x.Id,
             Name = x.Name,
-            NickName = x.NickName
         }).ToListAsync();
     }
 
@@ -58,12 +57,12 @@ public class ClusterApplication : IClusterApplication
         {
             ClusterTotalCpuCapacity = kubernetesManager.GetClusterTotalCpuCapacity(),
             ClusterTotalCpuUsage = kubernetesManager.GetClusterTotalCpuUsage(),
-
             ClusterTotalMemoryCapacity = kubernetesManager.GetClusterTotalMemoryCapacity(),
             ClusterTotalMemoryUsage = kubernetesManager.GetClusterTotalMemoryUsage(),
             Nodes = GetKubernetesNodeOutputDtos(kubernetesManager.KubernetesNodes),
             ClusterTotalPodCapacity = kubernetesManager.GetClusterTotalPodCapacity(),
             DaemonSetTotal = kubernetesManager.KubernetesNodeDaemonSets.Count,
+            DeploymentTotal = kubernetesManager.KubernetesDeployments.Count,
             ClusterTotalPodUsage = kubernetesManager.KubernetesPods.Count,
             JobTotal = kubernetesManager.KubernetesJobs.Count,
             StatefulSetTotal = kubernetesManager.KubernetesStatefulSets.Count,

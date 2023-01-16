@@ -1,13 +1,10 @@
-using System.ComponentModel;
-
-namespace Luck.KubeWalnut.Domain.AggregateRoots.Clusters;
+namespace Luck.Walnut.Kube.Domain.AggregateRoots.Clusters;
 
 public class Cluster:FullAggregateRoot
 {
-    public Cluster(string name, string nickName, string config, string clusterVersion)
+    public Cluster(string name,string config, string clusterVersion)
     {
         Name = name;
-        NickName = nickName;
         Config = config;
         ClusterVersion = clusterVersion;
     }
@@ -16,11 +13,6 @@ public class Cluster:FullAggregateRoot
     /// 集群名称
     /// </summary>
     public string Name { get; private set; } 
-    
-    /// <summary>
-    /// 集群昵称
-    /// </summary>
-    public string NickName { get; private set; }
     
     /// <summary>
     /// 集群名称

@@ -1,15 +1,14 @@
+using Luck.Walnut.Kube.Dto.Clusteries;
+using Luck.Walnut.Kube.Dto.Kubernetes;
 
-using Luck.KubeWalnut.Dto.Clusteries;
-using Luck.KubeWalnut.Dto.Kubernetes;
-
-namespace Luck.KubeWalnut.Application.Clusters;
+namespace Luck.Walnut.Kube.Application.Clusters;
 
 public interface IClusterApplication:IScopedDependency
 {
     Task CreateClusterAsync();
 
 
-    Task<KubernetesClusterMonitoringPanelOutputDto> GetClusterInformationAsync(string id);
+    Task<KubernetesClusterMonitoringPanelOutputDto> GetClusterDashboardAsync(string id);
 
     Task<List<ClusterOutputDto>> GetClusterListAsync();
 }

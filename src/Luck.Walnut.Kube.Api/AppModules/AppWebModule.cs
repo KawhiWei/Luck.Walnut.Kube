@@ -1,7 +1,7 @@
 using Luck.Framework.Infrastructure;
-using Luck.KubeWalnut.Persistence;
+using Luck.Walnut.Kube.Persistence;
 
-namespace Luck.KubeWalnut.Api.AppModules;
+namespace Luck.Walnut.Kube.Api.AppModules;
 
 
 [DependsOn(
