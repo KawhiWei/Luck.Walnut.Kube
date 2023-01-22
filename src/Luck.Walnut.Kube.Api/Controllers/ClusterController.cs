@@ -23,13 +23,13 @@ public class ClusterController : BaseController
         await _clusterApplication.CreateClusterAsync();
     }
 
-    [HttpGet("{id}")]
-    public async Task<KubernetesClusterMonitoringPanelOutputDto> GetClusterInformationAsync(string id)
+    [HttpGet("{id}/cluster/dashboard")]
+    public async Task<KubernetesClusterMonitoringPanelOutputDto> ClusterDashboard(string id)
     {
         return await _clusterApplication.GetClusterDashboardAsync(id);
     }
 
-    [HttpGet("clusterlist")]
+    [HttpGet("list")]
     public Task<List<ClusterOutputDto>> GetClusterList()
     {
         return _clusterApplication.GetClusterListAsync();
