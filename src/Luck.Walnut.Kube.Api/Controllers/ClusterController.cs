@@ -24,7 +24,7 @@ public class ClusterController : BaseController
     }
 
     [HttpGet("{id}/cluster/dashboard")]
-    public async Task<KubernetesClusterMonitoringPanelOutputDto> ClusterDashboard(string id)
+    public async Task<KubernetesClusterDashboardOutputDto> ClusterDashboard(string id)
     {
         return await _clusterApplication.GetClusterDashboardAsync(id);
     }

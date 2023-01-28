@@ -1,6 +1,6 @@
 ﻿namespace Luck.Walnut.Kube.Dto.Kubernetes;
 
-public class KubernetesClusterMonitoringPanelOutputDto
+public class KubernetesClusterDashboardOutputDto
 {
     
     /// <summary>

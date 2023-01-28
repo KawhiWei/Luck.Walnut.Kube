@@ -31,7 +31,7 @@ public class ClusterApplication : IClusterApplication
     }
 
 
-    public async Task<KubernetesClusterMonitoringPanelOutputDto> GetClusterDashboardAsync(string id)
+    public async Task<KubernetesClusterDashboardOutputDto> GetClusterDashboardAsync(string id)
     {
         var cluster = await _clusterRepository.FindAll().FirstOrDefaultAsync(x => x.Id == id);
         if (cluster is null)
@@ -51,9 +51,9 @@ public class ClusterApplication : IClusterApplication
     }
 
 
-    private KubernetesClusterMonitoringPanelOutputDto GetKubernetesClusterOutputDto(KubernetesManager kubernetesManager)
+    private KubernetesClusterDashboardOutputDto GetKubernetesClusterOutputDto(KubernetesManager kubernetesManager)
     {
-        var kubernetesClusterOutputDto = new KubernetesClusterMonitoringPanelOutputDto()
+        var kubernetesClusterOutputDto = new KubernetesClusterDashboardOutputDto()
         {
             ClusterTotalCpuCapacity = kubernetesManager.GetClusterTotalCpuCapacity(),
             ClusterTotalCpuUsage = kubernetesManager.GetClusterTotalCpuUsage(),
