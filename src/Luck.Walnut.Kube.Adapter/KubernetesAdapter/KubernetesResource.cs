@@ -26,6 +26,13 @@ public class KubernetesResource : IKubernetesResource
         var v1Pod = await client.CoreV1.ListPodForAllNamespacesAsync();
         var nameSpace = await client.CoreV1.ListNamespaceAsync();
 
+        // client.AppsV1.CreateNamespacedDeployment()
+
+        // var test = new Dictionary<string, ResourceQuantity>();
+        // test.Add("cpu",new ResourceQuantity(""));
+
+        // v1DaemonSetList.Items.First().Spec.Template.Spec.Containers.FirstOrDefault().Ports
+
         var jobs = await client.BatchV1.ListJobForAllNamespacesAsync();
 
         var replicaSetList = await client.AppsV1.ListReplicaSetForAllNamespacesAsync();

@@ -3,7 +3,7 @@ using Luck.Framework.UnitOfWorks;
 using Luck.Walnut.Kube.Adapter.KubernetesAdapter;
 using Luck.Walnut.Kube.Domain.AggregateRoots.Clusters;
 using Luck.Walnut.Kube.Domain.AggregateRoots.Kubernetes;
-using Luck.Walnut.Kube.Domain.Repositories.Clusters;
+using Luck.Walnut.Kube.Domain.Repositories;
 using Luck.Walnut.Kube.Dto.Clusteries;
 using Luck.Walnut.Kube.Dto.Kubernetes;
 
