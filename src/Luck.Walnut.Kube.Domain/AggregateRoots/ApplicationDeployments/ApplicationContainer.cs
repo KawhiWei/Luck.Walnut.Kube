@@ -25,13 +25,13 @@ public class ApplicationContainer : FullEntity
     /// 重启策略
     /// </summary>
 
-    public string RestartPolicy { get; private set; }
+    public string RestartPolicy { get; private set; } = default!;
 
     /// <summary>
     /// 镜像拉取策略
     /// </summary>
 
-    public string ImagePullPolicy { get; private set; }
+    public string ImagePullPolicy { get; private set; } = default!;
 
     /// <summary>
     /// 准备完成探针配置
@@ -70,6 +70,6 @@ public class ApplicationContainer : FullEntity
     public ApplicationDeployment ApplicationDeployment { get; } = default!;
 
 
-    public string ApplicationDeploymentId { get; private set; }
-    
+    public string ApplicationDeploymentId { get; private set; } = default!;
+
 }
