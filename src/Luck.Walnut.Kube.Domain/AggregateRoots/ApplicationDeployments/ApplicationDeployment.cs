@@ -1,4 +1,5 @@
 using Luck.Walnut.Kube.Domain.Shared.Enums;
+using Luck.Walnut.Kube.Dto.ApplicationDeployments;
 
 namespace Luck.Walnut.Kube.Domain.AggregateRoots.ApplicationDeployments;
 
@@ -7,7 +8,8 @@ namespace Luck.Walnut.Kube.Domain.AggregateRoots.ApplicationDeployments;
 /// </summary>
 public class ApplicationDeployment : FullAggregateRoot
 {
-    public ApplicationDeployment(string environmentName, ApplicationRuntimeTypeEnum applicationRuntimeType, DeploymentTypeEnum deploymentType, string chineseName, string name, string appId, string kubernetesNameSpaceId, int replicas, int maxUnavailable, string imagePullSecrets)
+    public ApplicationDeployment(string environmentName, ApplicationRuntimeTypeEnum applicationRuntimeType, DeploymentTypeEnum deploymentType, string chineseName, string name, string appId,
+        string kubernetesNameSpaceId, int replicas, int maxUnavailable, string? imagePullSecretId)
     {
         EnvironmentName = environmentName;
         ApplicationRuntimeType = applicationRuntimeType;
@@ -18,14 +20,14 @@ public class ApplicationDeployment : FullAggregateRoot
         KubernetesNameSpaceId = kubernetesNameSpaceId;
         Replicas = replicas;
         MaxUnavailable = maxUnavailable;
-        ImagePullSecrets = imagePullSecrets;
+        ImagePullSecretId = imagePullSecretId;
     }
 
     /// <summary>
     /// 部署环境
     /// </summary>
     public string EnvironmentName { get; private set; }
-    
+
     /// <summary>
     /// 应用运行时类型
     /// </summary>
@@ -69,10 +71,30 @@ public class ApplicationDeployment : FullAggregateRoot
     /// <summary>
     /// 镜像拉取证书
     /// </summary>
-    public string ImagePullSecrets { get; private set; }
+    public string? ImagePullSecretId { get; private set; }
 
     /// <summary>
     /// 应用容器配置
     /// </summary>
     public ICollection<ApplicationContainer> ApplicationContainers { get; private set; } = new HashSet<ApplicationContainer>();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="input"></param>
+    /// <returns></returns>
+    public ApplicationDeployment SetApplicationDeployment(ApplicationDeploymentInputDto input)
+    {
+        EnvironmentName = input.EnvironmentName;
+        ApplicationRuntimeType = input.ApplicationRuntimeType;
+        DeploymentType = input.DeploymentType;
+        ChineseName = input.ChineseName;
+        Name = input.Name;
+        AppId = input.AppId;
+        KubernetesNameSpaceId = input.KubernetesNameSpaceId;
+        Replicas = input.Replicas;
+        MaxUnavailable = input.MaxUnavailable;
+        ImagePullSecretId = input.ImagePullSecretId;
+        return this;
+    }
 }

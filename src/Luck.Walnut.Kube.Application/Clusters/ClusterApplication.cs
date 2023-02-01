@@ -24,10 +24,18 @@ public class ClusterApplication : IClusterApplication
         _unitOfWork = unitOfWork;
     }
 
-    public Task CreateClusterAsync()
+    public async Task CreateClusterAsync(ClusterInputDto input)
     {
-        _clusterRepository.Add(new Cluster("Luck生产集群", @"", "v1.22.12-3+dba78d63ae38c7"));
-        return _unitOfWork.CommitAsync();
+        var cluster = new Cluster(input.Name, input.Config, "");
+        _clusterRepository.Add(cluster);
+        await _unitOfWork.CommitAsync();
+    }
+
+    public async Task UpdateClusterAsync(string id, ClusterInputDto input)
+    {
+        var cluster = await CheckClusterIsExistAsync(id);
+        cluster.SetName(input.Name).SetConfig(input.Config);
+        await _unitOfWork.CommitAsync();
     }
 
 
@@ -39,17 +47,6 @@ public class ClusterApplication : IClusterApplication
         var kubernetes = await _kubernetesResource.GetDashboardAsync(cluster.Config);
         return GetKubernetesClusterOutputDto(kubernetes);
     }
-
-
-    public Task<List<ClusterOutputDto>> GetClusterListAsync()
-    {
-        return _clusterRepository.FindAll().Select(x => new ClusterOutputDto()
-        {
-            Id = x.Id,
-            Name = x.Name,
-        }).ToListAsync();
-    }
-
 
     private KubernetesClusterDashboardOutputDto GetKubernetesClusterOutputDto(KubernetesManager kubernetesManager)
     {
@@ -102,5 +99,17 @@ public class ClusterApplication : IClusterApplication
             IpAddresses = x.IpAddresses.Select(a => new IpAddressesOutputDto() { Address = a.Address, Name = a.Name })
                 .ToList(),
         }).ToList();
+    }
+
+
+    private async Task<Cluster> CheckClusterIsExistAsync(string id)
+    {
+        var cluster = await _clusterRepository.GetClusterFindByIdAsync(id);
+        if (cluster is null)
+        {
+            throw new BusinessException("集群不存在，请刷新页面");
+        }
+
+        return cluster;
     }
 }

@@ -22,5 +22,18 @@ public class Cluster:FullAggregateRoot
     /// <summary>
     /// 集群版本
     /// </summary>
-    public string ClusterVersion { get; private set; } 
+    public string ClusterVersion { get; private set; }
+
+
+    public Cluster SetName(string name)
+    {
+        Name = name;
+        return this;
+    }
+    
+    public Cluster SetConfig(string config)
+    {
+        Config = config;
+        return this;
+    }
 }

@@ -18,6 +18,7 @@
 		<ProjectReference Include="..\Luck.Walnut.Kube.Application\Luck.Walnut.Kube.Application.csproj" />
 		<ProjectReference Include="..\Luck.Walnut.Kube.Dto\Luck.Walnut.Kube.Dto.csproj" />
 		<ProjectReference Include="..\Luck.Walnut.Kube.Infrastructure\Luck.Walnut.Kube.Infrastructure.csproj" />
+		<ProjectReference Include="..\Luck.Walnut.Kube.Query\Luck.Walnut.Kube.Query.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
