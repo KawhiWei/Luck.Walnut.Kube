@@ -1,6 +1,9 @@
+
 using System.Reflection;
 using Luck.EntityFrameworkCore.DbContexts;
+using Luck.Walnut.Kube.Domain.AggregateRoots.ApplicationDeployments;
 using Luck.Walnut.Kube.Domain.AggregateRoots.Clusters;
+using Luck.Walnut.Kube.Domain.AggregateRoots.NameSpaces;
 
 namespace Luck.Walnut.Kube.Persistence;
 
@@ -10,8 +13,16 @@ public class KubeWalnutDbContext: LuckDbContextBase
     {
     }
     
-    public DbSet<Cluster> AppConfigurations => Set<Cluster>();
-    
+    public DbSet<Cluster> Clusters => Set<Cluster>();
+
+    public DbSet<ApplicationContainer> ApplicationContainers => Set<ApplicationContainer>();
+
+    public DbSet<ApplicationDeployment> ApplicationDeployments => Set<ApplicationDeployment>();
+
+    public DbSet<NameSpace> NameSpaces => Set<NameSpace>();
+
+    public DbSet<NameSpace> NameSpacens => Set<NameSpace>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
