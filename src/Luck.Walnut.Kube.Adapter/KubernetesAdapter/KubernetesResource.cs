@@ -31,7 +31,7 @@ public class KubernetesResource : IKubernetesResource
         // var test = new Dictionary<string, ResourceQuantity>();
         // test.Add("cpu",new ResourceQuantity(""));
 
-        // v1DaemonSetList.Items.First().Spec.Template.Spec.Containers.FirstOrDefault().Ports
+        //v1DaemonSetList.Items.First().Spec.Template.Spec.InitContainers
 
         var jobs = await client.BatchV1.ListJobForAllNamespacesAsync();
 

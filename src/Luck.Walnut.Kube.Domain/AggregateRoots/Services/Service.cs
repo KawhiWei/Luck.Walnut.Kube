@@ -8,10 +8,10 @@ namespace Luck.Walnut.Kube.Domain.AggregateRoots.Services;
 /// </summary>
 public class Service : FullAggregateRoot
 {
-    public Service(string name, string deploymentConfigurationId)
+    public Service(string name, string applicationDeploymentId)
     {
         Name = name;
-        DeploymentConfigurationId = deploymentConfigurationId;
+        ApplicationDeploymentId = applicationDeploymentId;
     }
 
     /// <summary>
@@ -22,7 +22,7 @@ public class Service : FullAggregateRoot
     /// <summary>
     /// 部署配置Id
     /// </summary>
-    public string DeploymentConfigurationId { get; private set; }
+    public string ApplicationDeploymentId { get; private set; }
 
     /// <summary>
     /// 服务端口配置

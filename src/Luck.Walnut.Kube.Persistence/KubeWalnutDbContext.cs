@@ -16,7 +16,7 @@ public class KubeWalnutDbContext: LuckDbContextBase
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.HasDefaultSchema("luck.walnut");
+        modelBuilder.HasDefaultSchema("luck.walnut.kube");
 
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
