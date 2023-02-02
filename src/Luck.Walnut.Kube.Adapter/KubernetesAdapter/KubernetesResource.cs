@@ -2,6 +2,7 @@ using k8s;
 using k8s.Models;
 using Luck.KubeWalnut.Adapter.Constants;
 using Luck.Walnut.Kube.Adapter.Factories;
+using Luck.Walnut.Kube.Domain.AggregateRoots.ApplicationDeployments;
 using Luck.Walnut.Kube.Domain.AggregateRoots.Kubernetes;
 
 namespace Luck.Walnut.Kube.Adapter.KubernetesAdapter;
@@ -110,8 +111,9 @@ public class KubernetesResource : IKubernetesResource
         return "";
     }
 
-    public Task Create()
+    public Task CreateDeploymentAsync(V1Deployment v1Deployment)
     {
+
         throw new NotImplementedException();
     }
 

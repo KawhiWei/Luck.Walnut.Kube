@@ -1,3 +1,5 @@
+using k8s.Models;
+
 using Luck.Framework.Infrastructure.DependencyInjectionModule;
 using Luck.Walnut.Kube.Domain.AggregateRoots.Kubernetes;
 
@@ -17,6 +19,6 @@ public interface IKubernetesResource:IScopedDependency
      
      Task<object> GetPodListAsync(string config,string nameSpace);
 
-     Task Create();
+     Task CreateDeploymentAsync(V1Deployment v1Deployment);
 
 }

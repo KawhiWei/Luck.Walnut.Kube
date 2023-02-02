@@ -46,12 +46,12 @@ public class ApplicationContainer : FullEntity
     /// <summary>
     /// 容器Cpu资源限制
     /// </summary>
-    public ContainerResourceQuantity CpuContainerResourceQuantity { get; private set; } = default!;
+    public ContainerResourceQuantity Limits { get; private set; } = default!;
 
     /// <summary>
     /// 容器内存资源限制
     /// </summary>
-    public ContainerResourceQuantity MemoryContainerResourceQuantity { get; private set; } = default!;
+    public ContainerResourceQuantity Memory { get; private set; } = default!;
 
     /// <summary>
     /// 环境变量

@@ -5,13 +5,18 @@ namespace Luck.Walnut.Kube.Domain.AggregateRoots.ApplicationDeployments;
 /// </summary>
 public class ContainerResourceQuantity
 {
+
     /// <summary>
     /// /
     /// </summary>
-    public string Limit { get; private set; } = default!;
+    public string Name { get; private set; } = default!;
 
     /// <summary>
     /// 
     /// </summary>
-    public string Request { get; private set; } = default!;
+    public string Memory { get; private set; } = default!;
+    /// <summary>
+    /// 
+    /// </summary>
+    public string Cpu { get; private set; } = default!;
 }
