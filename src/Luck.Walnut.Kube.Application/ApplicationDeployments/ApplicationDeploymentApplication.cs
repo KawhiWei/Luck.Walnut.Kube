@@ -81,67 +81,64 @@ public class ApplicationDeploymentApplication : IApplicationDeploymentApplicatio
 
 
 
-    //private V1Deployment GetDeployment(ApplicationDeployment applicationDeployment)
-    //{
-    //    var v1Deployment = new V1Deployment();
+    private V1Deployment GetDeployment(ApplicationDeployment applicationDeployment)
+    {
+        var v1Deployment = new V1Deployment();
 
 
-    //    v1Deployment.Metadata.Name= applicationDeployment.Name;
-    //    v1Deployment.Spec.Replicas = applicationDeployment.Replicas;
-    //    v1Deployment.Metadata.NamespaceProperty = applicationDeployment.KubernetesNameSpaceId;
+        v1Deployment.Metadata.Name = applicationDeployment.Name;
+        v1Deployment.Spec.Replicas = applicationDeployment.Replicas;
+        v1Deployment.Metadata.NamespaceProperty = applicationDeployment.KubernetesNameSpaceId;
 
-    //    applicationDeployment
-    //        .ApplicationContainers.Where(x => x.IsInitContainer).ForEach(a =>
-    //        {
-    //            var limits = new Dictionary<string, ResourceQuantity>();
+        applicationDeployment
+            .ApplicationContainers.Where(x => x.IsInitContainer).ForEach(a =>
+            {
+                var limits = new Dictionary<string, ResourceQuantity>();
 
-    //            var v1Container = new V1Container
-    //            {
-    //                Name = a.ContainerName,
+                var v1Container = new V1Container
+                {
+                    Name = a.ContainerName,
 
-    //                Image = ""
-    //            };
+                    Image = ""
+                };
 
-    //            if (a.ReadinessProbe is not null )
-    //            {
-    //                v1Container.ReadinessProbe = new V1Probe()
-    //                {
-    //                    PeriodSeconds = v1Container.ReadinessProbe.PeriodSeconds,
-    //                    InitialDelaySeconds = v1Container.ReadinessProbe.InitialDelaySeconds,
-    //                };
-    //            }
+                if (a.ReadinessProbe is not null)
+                {
+                    v1Container.ReadinessProbe = new V1Probe()
+                    {
+                        PeriodSeconds = v1Container.ReadinessProbe.PeriodSeconds,
+                        InitialDelaySeconds = v1Container.ReadinessProbe.InitialDelaySeconds,
+                    };
+                }
 
-    //            if (a.LiveNessProbe is not null)
-    //            {
-    //                v1Container.LivenessProbe = new V1Probe()
-    //                {
-    //                    PeriodSeconds = v1Container.LivenessProbe.PeriodSeconds,
-    //                    InitialDelaySeconds = v1Container.LivenessProbe.InitialDelaySeconds,
-    //                };
-    //            }
-    //            v1Container.Resources = new V1ResourceRequirements();
-               
-    //            if (a.Limits is not null)
-    //            {
-    //                limits.Add(a.Limits.Name, new ResourceQuantity(a.Limits.Cpu));
-    //                limits.Add(a.Limits.Memory, new ResourceQuantity(a.Limits.Memory));
-    //                v1Container.Resources.Limits = limits;
-    //            }
+                if (a.LiveNessProbe is not null)
+                {
+                    v1Container.LivenessProbe = new V1Probe()
+                    {
+                        PeriodSeconds = v1Container.LivenessProbe.PeriodSeconds,
+                        InitialDelaySeconds = v1Container.LivenessProbe.InitialDelaySeconds,
+                    };
+                }
+                v1Container.Resources = new V1ResourceRequirements();
 
-
-
-
-
-    //            v1Deployment.Spec.Template.Spec.InitContainers.Add(v1Container);
-    //        });
+                if (a.Limits is not null)
+                {
+                    limits.Add(a.Limits.Name, new ResourceQuantity(a.Limits.Cpu));
+                    limits.Add(a.Limits.Memory, new ResourceQuantity(a.Limits.Memory));
+                    v1Container.Resources.Limits = limits;
+                }
 
 
 
 
 
+                v1Deployment.Spec.Template.Spec.InitContainers.Add(v1Container);
+            });
+
+        return v1Deployment;
 
 
 
 
-    //}
+    }
 }

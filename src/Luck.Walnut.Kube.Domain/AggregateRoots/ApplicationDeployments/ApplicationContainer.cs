@@ -51,7 +51,7 @@ public class ApplicationContainer : FullEntity
     /// <summary>
     /// 容器内存资源限制
     /// </summary>
-    public ContainerResourceQuantity Memory { get; private set; } = default!;
+    public ContainerResourceQuantity Requests { get; private set; } = default!;
 
     /// <summary>
     /// 环境变量
