@@ -12,6 +12,15 @@ public class ApplicationDeploymentRepository : EfCoreAggregateRootRepository<App
 
     public Task<ApplicationDeployment?> GetApplicationDeploymentByIdAsync(string id)
         => FindAll().FirstOrDefaultAsync(x => x.Id == id);
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="appId"></param>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public Task<ApplicationDeployment?> GetApplicationDeploymentByAppIdAndNameAsync(string appId,string name)
+        => FindAll().FirstOrDefaultAsync(x => x.Id == name && x.AppId==appId);
 
 
     public Task<List<ApplicationDeployment>> GetApplicationDeploymentByAppIdListAsync(string appId)

@@ -5,13 +5,19 @@ namespace Luck.Walnut.Kube.Domain.AggregateRoots.NameSpaces;
 /// </summary>
 public class NameSpace: FullAggregateRoot
 {
+    public NameSpace(string chineseName, string name)
+    {
+        ChineseName = chineseName;
+        Name = name;
+    }
+
     /// <summary>
     /// 中文名称
     /// </summary>
-    public string ChineseName { get; private set; } = default!;
+    public string ChineseName { get; private set; }
 
     /// <summary>
     /// 明明空间名称
     /// </summary>
-    public string Name { get; private set; } = default!;
+    public string Name { get; private set; }
 }

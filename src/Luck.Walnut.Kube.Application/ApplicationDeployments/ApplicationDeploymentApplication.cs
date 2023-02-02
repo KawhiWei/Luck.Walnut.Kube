@@ -19,6 +19,11 @@ public class ApplicationDeploymentApplication : IApplicationDeploymentApplicatio
 
     public async Task CreateApplicationDeploymentAsync(ApplicationDeploymentInputDto input)
     {
+        if (await CheckIsExitApplicationDeploymentAsync(input.AppId, input.Name))
+        {
+            throw new BusinessException($"[{input.Name}]已存在，请刷新页面");
+        }
+
         var applicationDeployment = new ApplicationDeployment(input.EnvironmentName,
             input.ApplicationRuntimeType, input.DeploymentType, input.ChineseName, input.Name, input.AppId,
             input.KubernetesNameSpaceId, input.Replicas, input.MaxUnavailable, input.ImagePullSecretId);
@@ -28,18 +33,28 @@ public class ApplicationDeploymentApplication : IApplicationDeploymentApplicatio
 
     public async Task UpdateApplicationDeploymentAsync(string id, ApplicationDeploymentInputDto input)
     {
-        var applicationDeployment = await CheckIsExitApplicationDeploymentAsync(id);
-
+        var applicationDeployment = await GetAndCheckApplicationDeploymentAsync(id);
         applicationDeployment.SetApplicationDeployment(input);
         await _unitOfWork.CommitAsync();
     }
 
-    public Task DeleteApplicationDeploymentAsync(string id)
+    public async Task DeleteApplicationDeploymentAsync(string id)
     {
-        throw new NotImplementedException();
+        var applicationDeployment = await GetAndCheckApplicationDeploymentAsync(id);
+        _applicationDeploymentRepository.Remove(applicationDeployment);
+        await _unitOfWork.CommitAsync();
     }
 
-    private async Task<ApplicationDeployment> CheckIsExitApplicationDeploymentAsync(string id)
+
+    public async Task DeleteApplicationContainerAsync(string id, string applicationContainerId)
+    {
+        var applicationDeployment = await GetAndCheckApplicationDeploymentAsync(id);
+        applicationDeployment.RemoveContainer(applicationContainerId);
+        await _unitOfWork.CommitAsync();
+    }
+
+
+    private async Task<ApplicationDeployment> GetAndCheckApplicationDeploymentAsync(string id)
     {
         var cluster = await _applicationDeploymentRepository.GetApplicationDeploymentByIdAsync(id);
         if (cluster is null)
@@ -48,5 +63,16 @@ public class ApplicationDeploymentApplication : IApplicationDeploymentApplicatio
         }
 
         return cluster;
+    }
+
+    private async Task<bool> CheckIsExitApplicationDeploymentAsync(string appId, string name)
+    {
+        var cluster = await _applicationDeploymentRepository.GetApplicationDeploymentByAppIdAndNameAsync(appId, name);
+        if (cluster is null)
+        {
+            return false;
+        }
+
+        return true;
     }
 }

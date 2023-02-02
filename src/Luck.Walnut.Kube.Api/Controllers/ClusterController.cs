@@ -12,7 +12,6 @@ namespace Luck.Walnut.Kube.Api.Controllers;
 [Route("api/clusters")]
 public class ClusterController : BaseController
 {
-    
     /// <summary>
     /// 添加一个资源
     /// </summary>
@@ -23,7 +22,6 @@ public class ClusterController : BaseController
     public Task CreateCluster([FromServices] IClusterApplication clusterApplication, [FromBody] ClusterInputDto input)
         => clusterApplication.CreateClusterAsync(input);
 
-    
 
     /// <summary>
     /// 修改集群
@@ -33,7 +31,7 @@ public class ClusterController : BaseController
     /// <param name="input"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public Task UpdateCluster([FromServices] IClusterApplication clusterApplication,string id, [FromBody] ClusterInputDto input)
+    public Task UpdateCluster([FromServices] IClusterApplication clusterApplication, string id, [FromBody] ClusterInputDto input)
         => clusterApplication.CreateClusterAsync(input);
 
 

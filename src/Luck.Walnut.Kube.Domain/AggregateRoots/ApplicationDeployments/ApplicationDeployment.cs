@@ -1,3 +1,4 @@
+using Luck.Framework.Exceptions;
 using Luck.Walnut.Kube.Domain.Shared.Enums;
 using Luck.Walnut.Kube.Dto.ApplicationDeployments;
 
@@ -76,7 +77,7 @@ public class ApplicationDeployment : FullAggregateRoot
     /// <summary>
     /// 应用容器配置
     /// </summary>
-    public ICollection<ApplicationContainer> ApplicationContainers { get; private set; } = new HashSet<ApplicationContainer>();
+    public ICollection<ApplicationContainer> ApplicationContainers { get; private set; } = default!;
 
     /// <summary>
     /// 
@@ -89,12 +90,28 @@ public class ApplicationDeployment : FullAggregateRoot
         ApplicationRuntimeType = input.ApplicationRuntimeType;
         DeploymentType = input.DeploymentType;
         ChineseName = input.ChineseName;
-        Name = input.Name;
         AppId = input.AppId;
         KubernetesNameSpaceId = input.KubernetesNameSpaceId;
         Replicas = input.Replicas;
         MaxUnavailable = input.MaxUnavailable;
         ImagePullSecretId = input.ImagePullSecretId;
+        return this;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="applicationContainerId"></param>
+    /// <returns></returns>
+    public ApplicationDeployment RemoveContainer(string applicationContainerId)
+    {
+        var applicationContainer = ApplicationContainers.FirstOrDefault(x => x.Id == applicationContainerId);
+        if (applicationContainer is null)
+        {
+            throw new BusinessException($"容器配置不存在，请刷新页面");
+        }
+
+        ApplicationContainers.Remove(applicationContainer);
         return this;
     }
 }

@@ -11,8 +11,13 @@ public class NameSpaceRepository : EfCoreAggregateRootRepository<NameSpace, stri
     }
 
 
-    public async Task<object> GetAllClusterListAsync()
+    public async Task<NameSpace?> FIndNameSpaceByNameAsync(string name)
     {
-        return await this.FindAll().ToListAsync();
+        return await this.FindAll().FirstOrDefaultAsync(x => x.Name == name);
+    }
+    
+    public async Task<NameSpace?> FIndNameSpaceByIdAsync(string id)
+    {
+        return await this.FindAll().FirstOrDefaultAsync(x => x.Name == id);
     }
 }

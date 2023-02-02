@@ -5,5 +5,9 @@ namespace Luck.Walnut.Kube.Domain.Repositories;
 
 public interface INameSpaceRepository: IAggregateRootRepository<NameSpace,string>,IScopedDependency
 {
-    
+
+    Task<NameSpace?> FIndNameSpaceByNameAsync(string name);
+
+
+    Task<NameSpace?> FIndNameSpaceByIdAsync(string id);
 }
