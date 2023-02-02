@@ -6,7 +6,7 @@ namespace Luck.Walnut.Kube.Domain.AggregateRoots.Services;
 /// <summary>
 /// 服务配置
 /// </summary>
-public class NameSpace : FullAggregateRoot
+public class Service : FullAggregateRoot
 {
     public Service(string name, string applicationDeploymentId)
     {
