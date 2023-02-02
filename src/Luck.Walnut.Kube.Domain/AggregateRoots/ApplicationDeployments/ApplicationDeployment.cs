@@ -10,7 +10,7 @@ namespace Luck.Walnut.Kube.Domain.AggregateRoots.ApplicationDeployments;
 public class ApplicationDeployment : FullAggregateRoot
 {
     public ApplicationDeployment(string environmentName, ApplicationRuntimeTypeEnum applicationRuntimeType, DeploymentTypeEnum deploymentType, string chineseName, string name, string appId,
-        string kubernetesNameSpaceId, int replicas, int maxUnavailable, string? imagePullSecretId)
+        string kubernetesNameSpaceId, int replicas, int maxUnavailable, string? imagePullSecretId, bool isPublish)
     {
         EnvironmentName = environmentName;
         ApplicationRuntimeType = applicationRuntimeType;
@@ -22,6 +22,7 @@ public class ApplicationDeployment : FullAggregateRoot
         Replicas = replicas;
         MaxUnavailable = maxUnavailable;
         ImagePullSecretId = imagePullSecretId;
+        IsPublish = isPublish;
     }
 
     /// <summary>
@@ -77,7 +78,7 @@ public class ApplicationDeployment : FullAggregateRoot
     /// <summary>
     /// 是否发布
     /// </summary>
-    public bool IsPublish { get; private set; }
+    public bool IsPublish { get; private set; } = default!;
     /// <summary>
     /// 应用容器配置
     /// </summary>

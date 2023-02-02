@@ -26,7 +26,7 @@ public class ApplicationDeploymentApplication : IApplicationDeploymentApplicatio
 
         var applicationDeployment = new ApplicationDeployment(input.EnvironmentName,
             input.ApplicationRuntimeType, input.DeploymentType, input.ChineseName, input.Name, input.AppId,
-            input.KubernetesNameSpaceId, input.Replicas, input.MaxUnavailable, input.ImagePullSecretId);
+            input.KubernetesNameSpaceId, input.Replicas, input.MaxUnavailable, input.ImagePullSecretId, false);
         _applicationDeploymentRepository.Add(applicationDeployment);
         await _unitOfWork.CommitAsync();
     }

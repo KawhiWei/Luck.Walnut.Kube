@@ -24,7 +24,7 @@ public class NameSpaceApplication : INameSpaceApplication
             throw new BusinessException($"[{input.Name}]已存在，请刷新页面");
         }
 
-        var nameSpace = new NameSpace(input.ChineseName, input.Name);
+        var nameSpace = new NameSpace(input.ChineseName, input.Name, false);
         _nameSpaceRepository.Add(nameSpace);
         await _unitOfWork.CommitAsync();
     }
