@@ -75,6 +75,10 @@ public class ApplicationDeployment : FullAggregateRoot
     public string? ImagePullSecretId { get; private set; }
 
     /// <summary>
+    /// 是否发布
+    /// </summary>
+    public bool IsPublish { get; private set; }
+    /// <summary>
     /// 应用容器配置
     /// </summary>
     public ICollection<ApplicationContainer> ApplicationContainers { get; private set; } = default!;
