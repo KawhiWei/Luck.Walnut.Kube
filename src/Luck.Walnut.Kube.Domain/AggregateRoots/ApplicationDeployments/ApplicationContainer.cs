@@ -18,50 +18,50 @@ public class ApplicationContainer : FullEntity
     /// <summary>
     /// 是否初始容器
     /// </summary>
-    public bool IsInitContainer { get; private set; } = default!;
+    public bool IsInitContainer { get; private set; }
 
 
     /// <summary>
     /// 重启策略
     /// </summary>
 
-    public string RestartPolicy { get; private set; } = default!;
+    public string RestartPolicy { get; private set; }
 
     /// <summary>
     /// 镜像拉取策略
     /// </summary>
 
-    public string ImagePullPolicy { get; private set; } = default!;
+    public string ImagePullPolicy { get; private set; }
 
     /// <summary>
     /// 准备完成探针配置
     /// </summary>
-    public ContainerSurviveConfiguration ReadinessProbe { get; private set; } = default!;
+    public ContainerSurviveConfiguration? ReadinessProbe { get; private set; } = default!;
 
     /// <summary>
     /// 存活探针配置
     /// </summary>
-    public ContainerSurviveConfiguration LiveNessProbe { get; private set; } = default!;
+    public ContainerSurviveConfiguration? LiveNessProbe { get; private set; } = default!;
 
     /// <summary>
     /// 容器Cpu资源限制
     /// </summary>
-    public ContainerResourceQuantity Limits { get; private set; } = default!;
+    public ContainerResourceQuantity? Limits { get; private set; } = default!;
 
     /// <summary>
     /// 容器内存资源限制
     /// </summary>
-    public ContainerResourceQuantity Requests { get; private set; } = default!;
+    public ContainerResourceQuantity? Requests { get; private set; } = default!;
 
     /// <summary>
     /// 环境变量
     /// </summary>
-    public EnvironmentConfiguration Environments { get; private set; } = default!;
+    public EnvironmentConfiguration? Environments { get; private set; } = default!;
 
     /// <summary>
     /// 容器端口配置
     /// </summary>
-    public ICollection<ContainerPortConfiguration> ContainerPortConfigurations = new HashSet<ContainerPortConfiguration>();
+    public ICollection<ContainerPortConfiguration> ContainerPortConfigurations { get; private set; } = new HashSet<ContainerPortConfiguration>();
 
 
     /// <summary>
@@ -71,5 +71,4 @@ public class ApplicationContainer : FullEntity
 
 
     public string ApplicationDeploymentId { get; private set; } = default!;
-
 }

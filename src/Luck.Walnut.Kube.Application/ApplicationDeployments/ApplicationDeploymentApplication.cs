@@ -1,5 +1,4 @@
 using k8s.Models;
-
 using Luck.Framework.Exceptions;
 using Luck.Framework.Extensions;
 using Luck.Framework.UnitOfWorks;
@@ -80,7 +79,6 @@ public class ApplicationDeploymentApplication : IApplicationDeploymentApplicatio
     }
 
 
-
     private V1Deployment GetDeployment(ApplicationDeployment applicationDeployment)
     {
         var v1Deployment = new V1Deployment();
@@ -90,55 +88,57 @@ public class ApplicationDeploymentApplication : IApplicationDeploymentApplicatio
         v1Deployment.Spec.Replicas = applicationDeployment.Replicas;
         v1Deployment.Metadata.NamespaceProperty = applicationDeployment.KubernetesNameSpaceId;
 
-        applicationDeployment
-            .ApplicationContainers.Where(x => x.IsInitContainer).ForEach(a =>
-            {
-                var limits = new Dictionary<string, ResourceQuantity>();
-
-                var v1Container = new V1Container
-                {
-                    Name = a.ContainerName,
-
-                    Image = ""
-                };
-
-                if (a.ReadinessProbe is not null)
-                {
-                    v1Container.ReadinessProbe = new V1Probe()
-                    {
-                        PeriodSeconds = v1Container.ReadinessProbe.PeriodSeconds,
-                        InitialDelaySeconds = v1Container.ReadinessProbe.InitialDelaySeconds,
-                    };
-                }
-
-                if (a.LiveNessProbe is not null)
-                {
-                    v1Container.LivenessProbe = new V1Probe()
-                    {
-                        PeriodSeconds = v1Container.LivenessProbe.PeriodSeconds,
-                        InitialDelaySeconds = v1Container.LivenessProbe.InitialDelaySeconds,
-                    };
-                }
-                v1Container.Resources = new V1ResourceRequirements();
-
-                if (a.Limits is not null)
-                {
-                    limits.Add(a.Limits.Name, new ResourceQuantity(a.Limits.Cpu));
-                    limits.Add(a.Limits.Memory, new ResourceQuantity(a.Limits.Memory));
-                    v1Container.Resources.Limits = limits;
-                }
-
-
-
-
-
-                v1Deployment.Spec.Template.Spec.InitContainers.Add(v1Container);
-            });
-
+        v1Deployment.Spec.Template.Spec.InitContainers = GetV1Containers(applicationDeployment.ApplicationContainers.Where(x => x.IsInitContainer));
+        v1Deployment.Spec.Template.Spec.Containers = GetV1Containers(applicationDeployment.ApplicationContainers.Where(x => !x.IsInitContainer));
         return v1Deployment;
+    }
 
+    private List<V1Container> GetV1Containers(IEnumerable<ApplicationContainer> applicationContainers)
+    {
+        var containers = applicationContainers.ToList();
+        var v1Containers = new List<V1Container>(containers.Count);
 
+        foreach (var applicationContainer in containers)
+        {
+            var limits = new Dictionary<string, ResourceQuantity>();
 
+            var v1Container = new V1Container
+            {
+                Name = applicationContainer.ContainerName,
 
+                Image = ""
+            };
+
+            if (applicationContainer.ReadinessProbe is not null)
+            {
+                v1Container.ReadinessProbe = new V1Probe()
+                {
+                    PeriodSeconds = v1Container.ReadinessProbe.PeriodSeconds,
+                    InitialDelaySeconds = v1Container.ReadinessProbe.InitialDelaySeconds,
+                };
+            }
+
+            if (applicationContainer.LiveNessProbe is not null)
+            {
+                v1Container.LivenessProbe = new V1Probe()
+                {
+                    PeriodSeconds = v1Container.LivenessProbe.PeriodSeconds,
+                    InitialDelaySeconds = v1Container.LivenessProbe.InitialDelaySeconds,
+                };
+            }
+
+            v1Container.Resources = new V1ResourceRequirements();
+
+            if (applicationContainer.Limits is not null)
+            {
+                limits.Add(applicationContainer.Limits.Name, new ResourceQuantity(applicationContainer.Limits.Cpu));
+                limits.Add(applicationContainer.Limits.Memory, new ResourceQuantity(applicationContainer.Limits.Memory));
+                v1Container.Resources.Limits = limits;
+            }
+
+            v1Containers.Add(v1Container);
+        }
+
+        return v1Containers;
     }
 }
