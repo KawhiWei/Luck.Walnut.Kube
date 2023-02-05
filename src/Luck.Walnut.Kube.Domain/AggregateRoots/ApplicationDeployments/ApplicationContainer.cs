@@ -2,12 +2,13 @@ namespace Luck.Walnut.Kube.Domain.AggregateRoots.ApplicationDeployments;
 
 public class ApplicationContainer : FullEntity
 {
-    public ApplicationContainer(string containerName, string restartPolicy, string imagePullPolicy, bool isInitContainer)
+    public ApplicationContainer(string containerName, string restartPolicy, string imagePullPolicy, bool isInitContainer, string image)
     {
         ContainerName = containerName;
         RestartPolicy = restartPolicy;
         ImagePullPolicy = imagePullPolicy;
         IsInitContainer = isInitContainer;
+        Image = image;
     }
 
     /// <summary>
@@ -20,6 +21,11 @@ public class ApplicationContainer : FullEntity
     /// </summary>
     public bool IsInitContainer { get; private set; }
 
+    /// <summary>
+    /// 镜像名称
+    /// </summary>
+    public string Image { get; private set; }
+    
 
     /// <summary>
     /// 重启策略

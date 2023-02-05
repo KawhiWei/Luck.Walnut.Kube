@@ -105,10 +105,8 @@ public class ApplicationDeploymentApplication : IApplicationDeploymentApplicatio
             var v1Container = new V1Container
             {
                 Name = applicationContainer.ContainerName,
-
-                Image = ""
+                Image = applicationContainer.Image
             };
-
             if (applicationContainer.ReadinessProbe is not null)
             {
                 v1Container.ReadinessProbe = new V1Probe()
