@@ -12,12 +12,20 @@ public class ApplicationContainerBaseDto
     /// </summary>
 
     public string RestartPolicy { get; set; } = default!;
-
+    /// <summary>
+    /// 是否初始容器
+    /// </summary>
+    public bool IsInitContainer { get;  set; }
     /// <summary>
     /// 镜像拉取策略
     /// </summary>
 
     public string ImagePullPolicy { get; set; } = default!;
+    
+    /// <summary>
+    /// 镜像名称
+    /// </summary>
+    public string Image { get;  set; } = default!;
 
     /// <summary>
     /// 准备完成探针配置

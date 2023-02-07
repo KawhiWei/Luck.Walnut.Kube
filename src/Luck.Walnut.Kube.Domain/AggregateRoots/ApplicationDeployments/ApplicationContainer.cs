@@ -1,3 +1,5 @@
+using Luck.Walnut.Kube.Dto.ApplicationDeployments;
+
 namespace Luck.Walnut.Kube.Domain.AggregateRoots.ApplicationDeployments;
 
 public class ApplicationContainer : FullEntity
@@ -25,7 +27,7 @@ public class ApplicationContainer : FullEntity
     /// 镜像名称
     /// </summary>
     public string Image { get; private set; }
-    
+
 
     /// <summary>
     /// 重启策略
@@ -77,4 +79,45 @@ public class ApplicationContainer : FullEntity
 
 
     public string ApplicationDeploymentId { get; private set; } = default!;
+
+
+    public ApplicationContainer Update(ApplicationContainerInputDto input)
+    {
+        ContainerName = input.ContainerName;
+        RestartPolicy = input.RestartPolicy;
+        ImagePullPolicy = input.ImagePullPolicy;
+        IsInitContainer = input.IsInitContainer;
+        Image = input.Image;
+        return this;
+    }
+
+    public ApplicationContainer SetReadinessProbe()
+    {
+        return this;
+    }
+
+    public ApplicationContainer SetLiveNessProbe()
+    {
+        return this;
+    }
+
+    public ApplicationContainer SetLimits()
+    {
+        return this;
+    }
+
+    public ApplicationContainer SetRequests()
+    {
+        return this;
+    }
+
+    public ApplicationContainer SetEnvironments()
+    {
+        return this;
+    }
+
+    public ApplicationContainer SetContainerPortConfigurations()
+    {
+        return this;
+    }
 }

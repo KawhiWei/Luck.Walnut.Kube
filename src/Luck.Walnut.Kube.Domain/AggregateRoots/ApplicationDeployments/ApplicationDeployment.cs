@@ -78,11 +78,12 @@ public class ApplicationDeployment : FullAggregateRoot
     /// <summary>
     /// 是否发布
     /// </summary>
-    public bool IsPublish { get; private set; } = default!;
+    public bool IsPublish { get; private set; }
+
     /// <summary>
     /// 应用容器配置
     /// </summary>
-    public ICollection<ApplicationContainer> ApplicationContainers { get; private set; } = default!;
+    public ICollection<ApplicationContainer> ApplicationContainers { get; private set; } = new HashSet<ApplicationContainer>();
 
     /// <summary>
     /// 
@@ -117,6 +118,87 @@ public class ApplicationDeployment : FullAggregateRoot
         }
 
         ApplicationContainers.Remove(applicationContainer);
+        return this;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="input"></param>
+    /// <returns></returns>
+    public ApplicationDeployment AddApplicationContainer(ApplicationDeploymentInputDto input)
+    {
+        if (CheckApplicationContainerName(input.ContainerName))
+        {
+            throw new BusinessException($"【{input.ContainerName}】已存在");
+        }
+
+        if (input.ApplicationContainers is not null)
+        {
+            foreach (var applicationContainer in input.ApplicationContainers)
+            {
+                AddApplicationContainer(applicationContainer);
+            }
+        }
+
+        return this;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="input"></param>
+    /// <returns></returns>
+    public ApplicationDeployment AddApplicationContainer(ApplicationContainerInputDto input)
+    {
+        if (CheckApplicationContainerName(input.ContainerName))
+        {
+            throw new BusinessException($"【{input.ContainerName}】已存在");
+        }
+
+        ApplicationContainers.Add(new ApplicationContainer(input.ContainerName,
+            input.RestartPolicy, input.ImagePullPolicy, input.IsInitContainer, input.Image));
+
+        return this;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="containerName"></param>
+    /// <param name="currentId"></param>
+    /// <param name="isUpdate"></param>
+    /// <returns></returns>
+    private bool CheckApplicationContainerName(string containerName, string currentId = "", bool isUpdate = false)
+    {
+        if (isUpdate)
+        {
+            return ApplicationContainers.Any(x => x.ContainerName == containerName && x.Id != currentId);
+        }
+
+        return ApplicationContainers.Any(x => x.ContainerName == containerName);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="applicationContainerId"></param>
+    /// <param name="input"></param>
+    /// <returns></returns>
+    public ApplicationDeployment UpdateApplicationContainer(string applicationContainerId, ApplicationContainerInputDto input)
+    {
+        var applicationContainer = ApplicationContainers.FirstOrDefault(x => x.Id == applicationContainerId);
+        if (applicationContainer is null)
+        {
+            throw new BusinessException($"容器配置不存在，请刷新页面");
+        }
+
+        if (CheckApplicationContainerName(input.ContainerName, applicationContainerId, true))
+        {
+            throw new BusinessException($"【{input.ContainerName}】已存在");
+        }
+
+        applicationContainer.Update(input);
         return this;
     }
 }

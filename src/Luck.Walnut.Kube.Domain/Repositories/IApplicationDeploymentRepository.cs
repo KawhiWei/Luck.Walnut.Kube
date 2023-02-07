@@ -28,4 +28,3 @@ public interface IApplicationDeploymentRepository : IAggregateRootRepository<App
     /// <returns></returns>
     Task<List<ApplicationDeployment>> GetApplicationDeploymentByAppIdListAsync(string appId);
 }
-

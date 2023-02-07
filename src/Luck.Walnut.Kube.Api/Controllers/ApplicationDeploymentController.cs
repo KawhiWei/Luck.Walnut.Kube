@@ -17,7 +17,7 @@ public class ApplicationDeploymentController : BaseController
     /// <param name="input"></param>
     /// <returns></returns>
     [HttpPost]
-    public Task CreateCluster([FromServices] IApplicationDeploymentApplication applicationDeploymentApplication, [FromBody] ApplicationDeploymentInputDto input)
+    public Task CreateApplicationDeployment([FromServices] IApplicationDeploymentApplication applicationDeploymentApplication, [FromBody] ApplicationDeploymentInputDto input)
         => applicationDeploymentApplication.CreateApplicationDeploymentAsync(input);
 
 
@@ -29,6 +29,17 @@ public class ApplicationDeploymentController : BaseController
     /// <param name="input"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public Task UpdateCluster([FromServices] IApplicationDeploymentApplication applicationDeploymentApplication, string id, [FromBody] ApplicationDeploymentInputDto input)
+    public Task UpdateApplicationDeployment([FromServices] IApplicationDeploymentApplication applicationDeploymentApplication, string id, [FromBody] ApplicationDeploymentInputDto input)
         => applicationDeploymentApplication.UpdateApplicationDeploymentAsync(id, input);
+    
+    /// <summary>
+    /// 添加容器配置
+    /// </summary>
+    /// <param name="applicationDeploymentApplication"></param>
+    /// <param name="id"></param>
+    /// <param name="input"></param>
+    /// <returns></returns>
+    [HttpPost("{id}")]
+    public Task CreateApplicationContainer([FromServices] IApplicationDeploymentApplication applicationDeploymentApplication, string id, [FromBody] ApplicationContainerInputDto input)
+        => applicationDeploymentApplication.CreateApplicationContainerAsync(id, input);
 }
