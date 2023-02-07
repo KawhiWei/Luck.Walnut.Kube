@@ -36,27 +36,27 @@ public class ApplicationContainer : FullEntity
     /// <summary>
     /// 准备完成探针配置
     /// </summary>
-    public ContainerSurviveConfiguration ReadinessProbe { get; private set; } = default!;
+    public ContainerSurviveConfiguration? ReadinessProbe { get; private set; } = default!;
 
     /// <summary>
     /// 存活探针配置
     /// </summary>
-    public ContainerSurviveConfiguration LiveNessProbe { get; private set; } = default!;
+    public ContainerSurviveConfiguration? LiveNessProbe { get; private set; } = default!;
 
     /// <summary>
     /// 容器Cpu资源限制
     /// </summary>
-    public ContainerResourceQuantity Limits { get; private set; } = default!;
+    public ContainerResourceQuantity? Limits { get; private set; } = default!;
 
     /// <summary>
     /// 容器内存资源限制
     /// </summary>
-    public ContainerResourceQuantity Requests { get; private set; } = default!;
+    public ContainerResourceQuantity? Requests { get; private set; } = default!;
 
     /// <summary>
     /// 环境变量
     /// </summary>
-    public EnvironmentConfiguration Environments { get; private set; } = default!;
+    public EnvironmentConfiguration? Environments { get; private set; } = default!;
 
     /// <summary>
     /// 容器端口配置
@@ -67,7 +67,7 @@ public class ApplicationContainer : FullEntity
     /// <summary>
     /// 
     /// </summary>
-    public ApplicationDeployment ApplicationDeployment { get; } = default!;
+    public ApplicationDeployment ApplicationDeployment { get; private set; } = default!;
 
 
     public string ApplicationDeploymentId { get; private set; } = default!;

@@ -128,10 +128,6 @@ public class ApplicationDeploymentApplication : IApplicationDeploymentApplicatio
                     v1Container.Resources.Limits = limits;
                 }
 
-
-
-
-
                 v1Deployment.Spec.Template.Spec.InitContainers.Add(v1Container);
             });
 
