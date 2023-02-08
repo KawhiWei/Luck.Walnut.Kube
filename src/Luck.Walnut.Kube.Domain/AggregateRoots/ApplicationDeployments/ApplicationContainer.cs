@@ -75,9 +75,12 @@ public class ApplicationContainer : FullEntity
     /// <summary>
     /// 
     /// </summary>
-    public ApplicationDeployment ApplicationDeployment { get; private set; } = default!;
+    public ApplicationDeployment ApplicationDeployment { get; } = default!;
 
 
+    /// <summary>
+    /// 
+    /// </summary>
     public string ApplicationDeploymentId { get; private set; } = default!;
 
 

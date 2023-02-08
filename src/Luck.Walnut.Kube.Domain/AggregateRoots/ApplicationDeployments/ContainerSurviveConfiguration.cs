@@ -37,5 +37,5 @@ public class ContainerSurviveConfiguration
     /// <summary>
     /// 端口
     /// </summary>
-    public uint PeriodSeconds { get; private set; } = default!;
+    public uint PeriodSeconds { get; private set; }
 }

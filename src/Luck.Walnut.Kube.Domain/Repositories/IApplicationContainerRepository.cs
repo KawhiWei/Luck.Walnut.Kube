@@ -19,5 +19,5 @@ public interface IApplicationContainerRepository : IEntityRepository<Application
     /// </summary>
     /// <param name="applicationDeploymentId"></param>
     /// <returns></returns>
-    Task<List<ApplicationContainerOutputDto>> GetByApplicationDeploymentIdListAsync(string applicationDeploymentId);
+    Task<List<ApplicationContainerOutputDto>> GetListByApplicationDeploymentIdAsync(string applicationDeploymentId);
 }

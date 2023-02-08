@@ -120,30 +120,7 @@ public class ApplicationDeployment : FullAggregateRoot
         ApplicationContainers.Remove(applicationContainer);
         return this;
     }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="input"></param>
-    /// <returns></returns>
-    public ApplicationDeployment AddApplicationContainer(ApplicationDeploymentInputDto input)
-    {
-        if (CheckApplicationContainerName(input.ContainerName))
-        {
-            throw new BusinessException($"【{input.ContainerName}】已存在");
-        }
-
-        if (input.ApplicationContainers is not null)
-        {
-            foreach (var applicationContainer in input.ApplicationContainers)
-            {
-                AddApplicationContainer(applicationContainer);
-            }
-        }
-
-        return this;
-    }
-
+    
     /// <summary>
     /// 
     /// </summary>

@@ -9,6 +9,7 @@ public class MigrationModule: AppModule
     public override void ApplicationInitialization(ApplicationContext context)
     {
 
+        //drop schema "luck.walnut.kube" cascade;
         var moduleDbContext = context.ServiceProvider.GetService<KubeWalnutDbContext>();
         moduleDbContext?.Database.EnsureCreated();
     }

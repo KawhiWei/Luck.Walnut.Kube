@@ -2,7 +2,7 @@ using Luck.Walnut.Kube.Domain.Shared.Enums;
 
 namespace Luck.Walnut.Kube.Dto.ApplicationDeployments;
 
-public class ApplicationDeploymentBaseDto : ApplicationContainerBaseDto
+public class ApplicationDeploymentBaseDto
 {
     /// <summary>
     /// 部署环境

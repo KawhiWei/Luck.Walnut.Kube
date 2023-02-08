@@ -20,9 +20,7 @@ public class KubeWalnutDbContext: LuckDbContextBase
     public DbSet<ApplicationDeployment> ApplicationDeployments => Set<ApplicationDeployment>();
 
     public DbSet<NameSpace> NameSpaces => Set<NameSpace>();
-
-    public DbSet<NameSpace> NameSpacens => Set<NameSpace>();
-
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
