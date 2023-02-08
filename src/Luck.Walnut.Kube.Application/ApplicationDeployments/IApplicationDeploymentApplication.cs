@@ -12,4 +12,10 @@ public interface IApplicationDeploymentApplication : IScopedDependency
 
 
     Task CreateApplicationContainerAsync(string id, ApplicationContainerInputDto input);
+
+
+    Task UpdateApplicationContainerAsync(string id, string applicationContainerId, ApplicationContainerInputDto input);
+
+
+    Task DeleteApplicationContainerAsync(string id, string applicationContainerId);
 }
