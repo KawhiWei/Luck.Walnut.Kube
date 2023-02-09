@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.", "1.", "{83ED3162-18BA-457D-B3BB-F84446C22A71}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Api", "1.Api", "{83ED3162-18BA-457D-B3BB-F84446C22A71}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.", "2.", "{04FD0339-6CFF-41AB-985E-A33673CA432F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Application", "2.Application", "{04FD0339-6CFF-41AB-985E-A33673CA432F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.", "3.", "{2EB9CA52-6C6B-4A4D-870B-755FD88927F2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Domain", "3.Domain", "{2EB9CA52-6C6B-4A4D-870B-755FD88927F2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Luck.Walnut.Kube.Api", "src\Luck.Walnut.Kube.Api\Luck.Walnut.Kube.Api.csproj", "{D43A0588-E061-4C00-A5D4-38A24DBD028F}"
 EndProject
@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Luck.Walnut.Kube.Domain", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Luck.Walnut.Kube.Application", "src\Luck.Walnut.Kube.Application\Luck.Walnut.Kube.Application.csproj", "{D720D9D9-42E7-4B3A-BED4-75579E2FF60E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.", "4.", "{A88DFC4D-5FBC-4583-A3ED-5835B07F92A5}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Infrastructure", "4.Infrastructure", "{A88DFC4D-5FBC-4583-A3ED-5835B07F92A5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Luck.Walnut.Kube.Persistence", "src\Luck.Walnut.Kube.Persistence\Luck.Walnut.Kube.Persistence.csproj", "{83434A41-8A5C-4163-97E8-68D79EFA62A0}"
 EndProject
