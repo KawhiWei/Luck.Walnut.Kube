@@ -32,6 +32,21 @@ public class NameSpaceApplication : INameSpaceApplication
     public async Task UpdateNameSpaceAsync(string id, NameSpaceInputDto input)
     {
         var nameSpace = await GetAndCheckNameSpaceAsync(id);
+        nameSpace.Update(input.ChineseName, input.Name);
+        await _unitOfWork.CommitAsync();
+    }
+
+    public async Task PublishNameSpaceAsync(string id)
+    {
+        var nameSpace = await GetAndCheckNameSpaceAsync(id);
+        nameSpace.SetIsPublish(true);
+        await _unitOfWork.CommitAsync();
+    }
+
+    public async Task DeleteNameSpaceAsync(string id)
+    {
+        var nameSpace = await GetAndCheckNameSpaceAsync(id);
+        _nameSpaceRepository.Remove(nameSpace);
         await _unitOfWork.CommitAsync();
     }
 

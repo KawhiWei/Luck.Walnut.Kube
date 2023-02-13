@@ -3,7 +3,7 @@ namespace Luck.Walnut.Kube.Domain.AggregateRoots.NameSpaces;
 /// <summary>
 /// 命名空间
 /// </summary>
-public class NameSpace: FullAggregateRoot
+public class NameSpace : FullAggregateRoot
 {
     public NameSpace(string chineseName, string name, bool isPublish)
     {
@@ -25,5 +25,18 @@ public class NameSpace: FullAggregateRoot
     /// <summary>
     /// 是否发布
     /// </summary>
-    public bool IsPublish { get; private set; } = default!;
+    public bool IsPublish { get; private set; }
+
+    public NameSpace Update(string chineseName, string name)
+    {
+        ChineseName = chineseName;
+        Name = name;
+        return this;
+    }
+
+    public NameSpace SetIsPublish(bool isPublish)
+    {
+        IsPublish = isPublish;
+        return this;
+    }
 }
