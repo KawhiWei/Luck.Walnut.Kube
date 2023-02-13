@@ -1,4 +1,5 @@
 using Luck.Walnut.Kube.Application.ApplicationDeployments;
+using Luck.Walnut.Kube.Dto;
 using Luck.Walnut.Kube.Dto.ApplicationDeployments;
 using Luck.Walnut.Kube.Query.ApplicationDeployments;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +13,19 @@ namespace Luck.Walnut.Kube.Api.Controllers;
 public class ApplicationDeploymentController : BaseController
 {
     #region 部署配置接口
+
+    /// <summary>
+    /// 分页查询部署配置
+    /// </summary>
+    /// <param name="applicationDeploymentApplication"></param>
+    /// <param name="appId"></param>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    [HttpGet("{appId}/page/list")]
+    public Task<PageBaseResult<ApplicationDeploymentOutputDto>> GetApplicationDeploymentPageList([FromServices] IApplicationDeploymentQueryService applicationDeploymentQueryService, string appId, [FromQuery] ApplicationDeploymentQueryDto query)
+        => applicationDeploymentQueryService.GetApplicationDeploymentPageListAsync(appId, query);
+
+
 
     /// <summary>
     /// 添加部署
