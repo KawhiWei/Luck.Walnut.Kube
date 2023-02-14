@@ -1,4 +1,5 @@
-﻿namespace Luck.Walnut.Kube.Dto.ApplicationDeployments;
+﻿//using Luck.Framework.Extensions;
+namespace Luck.Walnut.Kube.Dto.ApplicationDeployments;
 
 public class ApplicationDeploymentOutputDto : ApplicationDeploymentBaseDto
 {
@@ -6,4 +7,6 @@ public class ApplicationDeploymentOutputDto : ApplicationDeploymentBaseDto
     /// 唯一Id
     /// </summary>
     public string Id { get; set; } = default!;
+
+    //public string ApplicationRuntimeTypeName => ApplicationRuntimeType.ToDescription();
 }

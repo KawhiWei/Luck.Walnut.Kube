@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Luck.Walnut.Kube.Domain.Shared\Luck.Walnut.Kube.Domain.Shared.csproj" />
+    <ProjectReference Include="..\Luck.Walnut.Kube.Infrastructure\Luck.Walnut.Kube.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
