@@ -52,7 +52,7 @@ public class NameSpaceApplication : INameSpaceApplication
 
     private async Task<NameSpace> GetAndCheckNameSpaceAsync(string id)
     {
-        var nameSpace = await _nameSpaceRepository.FIndNameSpaceByIdAsync(id);
+        var nameSpace = await _nameSpaceRepository.FindNameSpaceByIdAsync(id);
         if (nameSpace is null)
         {
             throw new BusinessException($"NameSpace不存在，请刷新页面");
@@ -63,12 +63,7 @@ public class NameSpaceApplication : INameSpaceApplication
 
     private async Task<bool> CheckIsExitNameSpaceAsync(string name)
     {
-        var nameSpace = await _nameSpaceRepository.FIndNameSpaceByNameAsync(name);
-        if (nameSpace is null)
-        {
-            return false;
-        }
-
-        return true;
+        var nameSpace = await _nameSpaceRepository.FindNameSpaceByNameAsync(name);
+        return nameSpace is not null;
     }
 }
