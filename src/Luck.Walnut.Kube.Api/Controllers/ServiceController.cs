@@ -40,7 +40,7 @@ public class ServiceController : BaseController
     /// <param name="serviceApplication"></param>
     /// <param name="id"></param>
     /// <returns></returns>
-    [HttpPut("{id}")]
+    [HttpPut("{id}/publish")]
     public Task PublishService([FromServices] IServiceApplication serviceApplication, string id)
         => serviceApplication.PublishServiceAsync(id);
 
@@ -61,7 +61,7 @@ public class ServiceController : BaseController
     /// <param name="serviceApplication"></param>
     /// <param name="id"></param>
     /// <returns></returns>
-    [HttpPut("{id}")]
+    [HttpPut("{id}/off/publish")]
     public Task OffPublishService([FromServices] IServiceApplication serviceApplication, string id)
         => serviceApplication.OffPublishServiceAsync(id);
 }

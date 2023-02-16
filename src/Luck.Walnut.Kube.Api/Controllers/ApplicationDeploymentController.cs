@@ -17,7 +17,7 @@ public class ApplicationDeploymentController : BaseController
     /// <summary>
     /// 分页查询部署配置
     /// </summary>
-    /// <param name="applicationDeploymentApplication"></param>
+    /// <param name="applicationDeploymentQueryService"></param>
     /// <param name="appId"></param>
     /// <param name="query"></param>
     /// <returns></returns>
