@@ -10,10 +10,15 @@ public class ApplicationDeploymentOutputDto : ApplicationDeploymentBaseDto
     public string Id { get; set; } = default!;
 
     /// <summary>
+    /// 应用容器配置
+    /// </summary>
+    public ICollection<ApplicationContainerInputDto>? ApplicationContainers { get; set; } = default!;
+
+    /// <summary>
     /// 
     /// </summary>
     public string ApplicationRuntimeTypeName => ApplicationRuntimeType.ToDescription();
-    
+
     /// <summary>
     /// 部署名称
     /// </summary>

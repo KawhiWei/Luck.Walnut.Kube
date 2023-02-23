@@ -53,9 +53,5 @@ public class ApplicationDeploymentBaseDto
     /// 镜像拉取证书
     /// </summary>
     public string? ImagePullSecretId { get; set; }
-
-    /// <summary>
-    /// 应用容器配置
-    /// </summary>
-    public ICollection<ApplicationContainerInputDto>? ApplicationContainers { get; set; } = default!;
+    
 }
