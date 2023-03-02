@@ -120,7 +120,7 @@ public class ApplicationDeployment : FullAggregateRoot
         ApplicationContainers.Remove(applicationContainer);
         return this;
     }
-    
+
     /// <summary>
     /// 
     /// </summary>
@@ -133,8 +133,34 @@ public class ApplicationDeployment : FullAggregateRoot
             throw new BusinessException($"【{input.ContainerName}】已存在");
         }
 
-        ApplicationContainers.Add(new ApplicationContainer(input.ContainerName,
-            input.RestartPolicy, input.ImagePullPolicy, input.IsInitContainer, input.Image));
+        var applicationContainer = new ApplicationContainer(input.ContainerName,
+            input.RestartPolicy, input.ImagePullPolicy, input.IsInitContainer, input.Image);
+        if (input.Limits is not null)
+        {
+            applicationContainer.SetLimits(input.Limits);
+        }
+
+        if (input.Requests is not null)
+        {
+            applicationContainer.SetRequests(input.Requests);
+        }
+
+        if (input.LiveNessProbe is not null)
+        {
+            applicationContainer.SetLiveNessProbe(input.LiveNessProbe);
+        }
+
+        if (input.ReadinessProbe is not null)
+        {
+            applicationContainer.SetReadinessProbe(input.ReadinessProbe);
+        }
+
+        if (input.Environments is not null)
+        {
+            applicationContainer.SetEnvironments(input.Environments);
+        }
+
+        ApplicationContainers.Add(applicationContainer);
 
         return this;
     }

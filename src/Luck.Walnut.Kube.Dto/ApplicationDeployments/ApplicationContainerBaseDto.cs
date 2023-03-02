@@ -40,12 +40,12 @@ public class ApplicationContainerBaseDto
     /// <summary>
     /// 容器Cpu资源限制
     /// </summary>
-    public ContainerResourceQuantityDto? CpuContainerResourceQuantity { get; set; } = default!;
+    public ContainerResourceQuantityDto? Limits { get; set; } = default!;
 
     /// <summary>
     /// 容器内存资源限制
     /// </summary>
-    public ContainerResourceQuantityDto? MemoryContainerResourceQuantity { get; set; } = default!;
+    public ContainerResourceQuantityDto? Requests { get; set; } = default!;
 
     /// <summary>
     /// 环境变量
@@ -56,5 +56,5 @@ public class ApplicationContainerBaseDto
     /// <summary>
     /// 容器端口配置
     /// </summary>
-    public ICollection<ContainerPortConfigurationDto>? ContainerPortConfigurations { get; set; } = default!;
+    public List<ContainerPortConfigurationDto>? ContainerPortConfigurations { get; set; } = default!;
 }

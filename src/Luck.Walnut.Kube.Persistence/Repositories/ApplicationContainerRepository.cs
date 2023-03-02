@@ -23,15 +23,8 @@ public class ApplicationContainerRepository : EfCoreEntityRepository<Application
     /// <param name="applicationDeploymentId"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public Task<List<ApplicationContainerOutputDto>> GetListByApplicationDeploymentIdAsync(string applicationDeploymentId)
+    public Task<List<ApplicationContainer>> GetListByApplicationDeploymentIdAsync(string applicationDeploymentId)
     {
-        return FindAll(x => x.ApplicationDeploymentId == applicationDeploymentId).Select(x => new ApplicationContainerOutputDto
-        {
-            Id = x.Id,
-            ContainerName = x.ContainerName,
-            RestartPolicy = x.RestartPolicy,
-            ImagePullPolicy = x.ImagePullPolicy,
-            Image = x.Image
-        }).ToListAsync();
+        return FindAll(x => x.ApplicationDeploymentId == applicationDeploymentId).ToListAsync();
     }
 }

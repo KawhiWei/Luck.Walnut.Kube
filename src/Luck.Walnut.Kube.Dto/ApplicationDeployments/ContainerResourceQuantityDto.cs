@@ -8,10 +8,15 @@ public class ContainerResourceQuantityDto
     /// <summary>
     /// /
     /// </summary>
-    public string Limit { get; set; } = default!;
+    public string Name { get; set; } = default!;
 
     /// <summary>
     /// 
     /// </summary>
-    public string Request { get; set; } = default!;
+    public string Memory { get; set; } = default!;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public string Cpu { get; set; } = default!;
 }

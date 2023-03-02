@@ -64,7 +64,7 @@ public class ApplicationContainer : FullEntity
     /// <summary>
     /// 环境变量
     /// </summary>
-    public EnvironmentConfiguration? Environments { get; private set; } = default!;
+    public Dictionary<string, string>? Environments { get; private set; } = default!;
 
     /// <summary>
     /// 容器端口配置
@@ -94,28 +94,34 @@ public class ApplicationContainer : FullEntity
         return this;
     }
 
-    public ApplicationContainer SetReadinessProbe()
+    public ApplicationContainer SetReadinessProbe(ContainerSurviveConfigurationDto readinessProbe)
     {
+        ReadinessProbe = new ContainerSurviveConfiguration(readinessProbe.Scheme, readinessProbe.Path, readinessProbe.Port, readinessProbe.InitialDelaySeconds, readinessProbe.PeriodSeconds);
+
         return this;
     }
 
-    public ApplicationContainer SetLiveNessProbe()
+    public ApplicationContainer SetLiveNessProbe(ContainerSurviveConfigurationDto liveNessProbe)
     {
+        LiveNessProbe = new ContainerSurviveConfiguration(liveNessProbe.Scheme, liveNessProbe.Path, liveNessProbe.Port, liveNessProbe.InitialDelaySeconds, liveNessProbe.PeriodSeconds);
         return this;
     }
 
-    public ApplicationContainer SetLimits()
+    public ApplicationContainer SetLimits(ContainerResourceQuantityDto limits)
     {
+        Requests = new ContainerResourceQuantity(limits.Name, limits.Memory, limits.Cpu);
         return this;
     }
 
-    public ApplicationContainer SetRequests()
+    public ApplicationContainer SetRequests(ContainerResourceQuantityDto requests)
     {
+        Requests = new ContainerResourceQuantity(requests.Name, requests.Memory, requests.Cpu);
         return this;
     }
 
-    public ApplicationContainer SetEnvironments()
+    public ApplicationContainer SetEnvironments(Dictionary<string, string> environments)
     {
+        Environments = new Dictionary<string, string>(environments);
         return this;
     }
 
