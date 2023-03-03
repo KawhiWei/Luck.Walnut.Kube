@@ -44,27 +44,27 @@ public class ApplicationContainer : FullEntity
     /// <summary>
     /// 准备完成探针配置
     /// </summary>
-    public ContainerSurviveConfiguration? ReadinessProbe { get; private set; } = default!;
+    public ContainerSurviveConfiguration? ReadinessProbe { get; private set; }
 
     /// <summary>
     /// 存活探针配置
     /// </summary>
-    public ContainerSurviveConfiguration? LiveNessProbe { get; private set; } = default!;
+    public ContainerSurviveConfiguration? LiveNessProbe { get; private set; }
 
     /// <summary>
     /// 容器Cpu资源限制
     /// </summary>
-    public ContainerResourceQuantity? Limits { get; private set; } = default!;
+    public ContainerResourceQuantity? Limits { get; private set; }
 
     /// <summary>
     /// 容器内存资源限制
     /// </summary>
-    public ContainerResourceQuantity? Requests { get; private set; } = default!;
+    public ContainerResourceQuantity? Requests { get; private set; }
 
     /// <summary>
     /// 环境变量
     /// </summary>
-    public Dictionary<string, string>? Environments { get; private set; } = default!;
+    public Dictionary<string, string>? Environments { get; private set; }
 
     /// <summary>
     /// 容器端口配置
@@ -109,13 +109,33 @@ public class ApplicationContainer : FullEntity
 
     public ApplicationContainer SetLimits(ContainerResourceQuantityDto limits)
     {
-        Requests = new ContainerResourceQuantity(limits.Name, limits.Memory, limits.Cpu);
+        Limits = new ContainerResourceQuantity();
+        if (limits.Cpu is not null)
+        {
+            Limits.SetCpu(limits.Cpu);
+        }
+
+        if (limits.Memory is not null)
+        {
+            Limits.SetMemory(limits.Memory);
+        }
+
         return this;
     }
 
     public ApplicationContainer SetRequests(ContainerResourceQuantityDto requests)
     {
-        Requests = new ContainerResourceQuantity(requests.Name, requests.Memory, requests.Cpu);
+        Requests = new ContainerResourceQuantity();
+        if (requests.Cpu is not null)
+        {
+            Requests.SetCpu(requests.Cpu);
+        }
+
+        if (requests.Memory is not null)
+        {
+            Requests.SetMemory(requests.Memory);
+        }
+
         return this;
     }
 

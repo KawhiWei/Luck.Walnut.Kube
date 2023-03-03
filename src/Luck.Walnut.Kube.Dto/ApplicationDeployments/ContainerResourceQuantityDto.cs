@@ -6,17 +6,12 @@ namespace Luck.Walnut.Kube.Dto.ApplicationDeployments;
 public class ContainerResourceQuantityDto
 {
     /// <summary>
-    /// /
+    /// 
     /// </summary>
-    public string Name { get; set; } = default!;
+    public string? Cpu { get; set; }
 
     /// <summary>
     /// 
     /// </summary>
-    public string Memory { get; set; } = default!;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public string Cpu { get; set; } = default!;
+    public string? Memory { get; set; }
 }

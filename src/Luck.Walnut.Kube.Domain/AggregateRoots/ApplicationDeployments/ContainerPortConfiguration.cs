@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace Luck.Walnut.Kube.Domain.AggregateRoots.ApplicationDeployments;
 
 /// <summary>
@@ -5,6 +7,7 @@ namespace Luck.Walnut.Kube.Domain.AggregateRoots.ApplicationDeployments;
 /// </summary>
 public class ContainerPortConfiguration
 {
+    [JsonConstructor]//这个特性 可以写私有，标识你要用哪个构造函数
     public ContainerPortConfiguration(string name, uint containerPort, string protocol)
     {
         Name = name;

@@ -1,5 +1,6 @@
 using k8s;
 using k8s.Models;
+using Luck.Framework.Extensions;
 using Luck.KubeWalnut.Adapter.Constants;
 using Luck.Walnut.Kube.Adapter.Factories;
 using Luck.Walnut.Kube.Domain.AggregateRoots.ApplicationDeployments;
@@ -184,6 +185,8 @@ public class KubernetesResource : IKubernetesResource
     {
         return v1Deployments.Select(v1Deployment =>
         {
+            // v1Deployment.Spec.Template.Spec.Containers.ForEach(a=>a.Resources.Limits)
+
             var kubernetesDaemonSet =
                 new KubernetesDeployment(v1Deployment.Metadata.Name, v1Deployment.Status.Replicas, v1Deployment.Status.ReadyReplicas, v1Deployment.Status.AvailableReplicas);
             return kubernetesDaemonSet;

@@ -53,22 +53,22 @@ public class ApplicationContainerQueryService : IApplicationContainerQueryServic
 
                 if (x.Limits is not null)
                 {
-                    applicationContainerOutputDto.Limits = new ContainerResourceQuantityDto()
+                    applicationContainerOutputDto.Limits = new ContainerResourceQuantityDto();
+                    if (x.Limits is not null)
                     {
-                        Name = x.Limits.Name,
-                        Memory = x.Limits.Memory,
-                        Cpu = x.Limits.Cpu,
-                    };
+                        applicationContainerOutputDto.Limits.Cpu = x.Limits.Cpu;
+                        applicationContainerOutputDto.Limits.Memory = x.Limits.Memory;
+                    }
                 }
 
                 if (x.Requests is not null)
                 {
-                    applicationContainerOutputDto.Requests = new ContainerResourceQuantityDto()
+                    applicationContainerOutputDto.Requests = new ContainerResourceQuantityDto();
+                    if (x.Requests is not null)
                     {
-                        Name = x.Requests.Name,
-                        Memory = x.Requests.Memory,
-                        Cpu = x.Requests.Cpu,
-                    };
+                        applicationContainerOutputDto.Requests.Cpu = x.Requests.Cpu;
+                        applicationContainerOutputDto.Requests.Memory = x.Requests.Memory;
+                    }
                 }
 
                 applicationContainerOutputDto.ContainerPortConfigurations = new List<ContainerPortConfigurationDto>();

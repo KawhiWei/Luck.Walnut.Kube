@@ -172,12 +172,12 @@ public class ApplicationDeploymentApplication : IApplicationDeploymentApplicatio
 
                 v1Container.Resources = new V1ResourceRequirements();
 
-                if (a.Limits is not null)
-                {
-                    limits.Add(a.Limits.Name, new ResourceQuantity(a.Limits.Cpu));
-                    limits.Add(a.Limits.Memory, new ResourceQuantity(a.Limits.Memory));
-                    v1Container.Resources.Limits = limits;
-                }
+                // if (a.Limits is not null)
+                // {
+                //     limits.Add(a.Limits.Name, new ResourceQuantity(a.Limits.Cpu));
+                //     limits.Add(a.Limits.Memory, new ResourceQuantity(a.Limits.Memory));
+                //     v1Container.Resources.Limits = limits;
+                // }
 
                 v1Deployment.Spec.Template.Spec.InitContainers.Add(v1Container);
             });

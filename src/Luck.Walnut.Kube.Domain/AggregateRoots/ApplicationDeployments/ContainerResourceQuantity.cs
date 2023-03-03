@@ -1,3 +1,6 @@
+using System.Text.Json.Serialization;
+using Luck.Walnut.Kube.Dto.ApplicationDeployments;
+
 namespace Luck.Walnut.Kube.Domain.AggregateRoots.ApplicationDeployments;
 
 /// <summary>
@@ -5,24 +8,23 @@ namespace Luck.Walnut.Kube.Domain.AggregateRoots.ApplicationDeployments;
 /// </summary>
 public class ContainerResourceQuantity
 {
-    public ContainerResourceQuantity(string name, string memory, string cpu)
+    [JsonConstructor] //这个特性 可以写私有，标识你要用哪个构造函数
+    public ContainerResourceQuantity()
     {
-        Name = name;
-        Memory = memory;
-        Cpu = cpu;
     }
 
-    /// <summary>
-    /// /
-    /// </summary>
-    public string Name { get; private set; } 
+    public string Cpu { get; private set; } = default!;
+    public string Memory { get; private set; } = default!;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public string Memory { get; private set; } 
-    /// <summary>
-    /// 
-    /// </summary>
-    public string Cpu { get; private set; }
+    public ContainerResourceQuantity SetCpu(string cpu)
+    {
+        Cpu = cpu;
+        return this;
+    }
+
+    public ContainerResourceQuantity SetMemory(string memory)
+    {
+        Memory = memory;
+        return this;
+    }
 }
