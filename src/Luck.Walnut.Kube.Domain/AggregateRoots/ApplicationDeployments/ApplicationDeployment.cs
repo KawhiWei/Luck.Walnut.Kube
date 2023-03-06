@@ -154,10 +154,17 @@ public class ApplicationDeployment : FullAggregateRoot
         {
             applicationContainer.SetReadinessProbe(input.ReadinessProbe);
         }
+        applicationContainer.SetEnvironments(input.Environments ?? new List<KeyValuePair<string, string>>());
 
-        if (input.Environments is not null)
+
+        if (applicationContainer.Environments != null)
         {
-            applicationContainer.SetEnvironments(input.Environments);
+            var testsArray = applicationContainer.Environments.ToArray();
+
+            foreach (var test in testsArray)
+            {
+                // test.Key
+            }
         }
 
         ApplicationContainers.Add(applicationContainer);

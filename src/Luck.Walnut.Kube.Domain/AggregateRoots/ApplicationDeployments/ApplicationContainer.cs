@@ -1,4 +1,5 @@
 using Luck.Walnut.Kube.Dto.ApplicationDeployments;
+using Microsoft.Extensions.Hosting;
 
 namespace Luck.Walnut.Kube.Domain.AggregateRoots.ApplicationDeployments;
 
@@ -64,7 +65,7 @@ public class ApplicationContainer : FullEntity
     /// <summary>
     /// 环境变量
     /// </summary>
-    public Dictionary<string, string>? Environments { get; private set; }
+    public List<KeyValuePair<string, string>> Environments { get; private set; } = default!;
 
     /// <summary>
     /// 容器端口配置
@@ -82,8 +83,7 @@ public class ApplicationContainer : FullEntity
     /// 
     /// </summary>
     public string ApplicationDeploymentId { get; private set; } = default!;
-
-
+    
     public ApplicationContainer Update(ApplicationContainerInputDto input)
     {
         ContainerName = input.ContainerName;
@@ -139,9 +139,9 @@ public class ApplicationContainer : FullEntity
         return this;
     }
 
-    public ApplicationContainer SetEnvironments(Dictionary<string, string> environments)
+    public ApplicationContainer SetEnvironments(List<KeyValuePair<string,string>> environments)
     {
-        Environments = new Dictionary<string, string>(environments);
+        Environments =environments;
         return this;
     }
 

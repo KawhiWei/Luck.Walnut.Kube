@@ -50,7 +50,7 @@ public class ApplicationContainerBaseDto
     /// <summary>
     /// 环境变量
     /// </summary>
-    public Dictionary<string, string>? Environments { get; set; } = default!;
+    public List<KeyValuePair<string,string>>? Environments { get; set; }
 
 
     /// <summary>
