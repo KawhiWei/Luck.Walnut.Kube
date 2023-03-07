@@ -10,7 +10,7 @@ public class EntityFrameworkCoreModule: EntityFrameworkCoreBaseModule
     {
         services.AddLuckDbContext<KubeWalnutDbContext>(x =>
         {
-            x.ConnnectionString = "User ID=postgres;Password=wzw0126..;Host=47.100.213.49;Port=8832;Database=luck.walnut.kube";
+            x.ConnnectionString = "User ID=postgres;Password=wzw0126..;Host=39.101.165.187;Port=8832;Database=luck.walnut.kube";
             x.Type = DataBaseType.PostgreSQL;
         });
     }

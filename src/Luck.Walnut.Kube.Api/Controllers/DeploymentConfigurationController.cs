@@ -1,7 +1,8 @@
-using Luck.Walnut.Kube.Application.ApplicationDeployments;
+using Luck.Walnut.Kube.Application.DeploymentConfigurations;
 using Luck.Walnut.Kube.Dto;
 using Luck.Walnut.Kube.Dto.ApplicationDeployments;
 using Luck.Walnut.Kube.Query.ApplicationDeployments;
+using Luck.Walnut.Kube.Query.DeploymentConfigurations;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Luck.Walnut.Kube.Api.Controllers;
@@ -10,7 +11,7 @@ namespace Luck.Walnut.Kube.Api.Controllers;
 /// 应用部署管理
 /// </summary>
 [Route("api/application/deployments")]
-public class ApplicationDeploymentController : BaseController
+public class DeploymentConfigurationController : BaseController
 {
     #region 部署配置接口
 
@@ -22,8 +23,8 @@ public class ApplicationDeploymentController : BaseController
     /// <param name="query"></param>
     /// <returns></returns>
     [HttpGet("{appId}/page/list")]
-    public Task<PageBaseResult<ApplicationDeploymentOutputDto>> GetApplicationDeploymentPageList([FromServices] IApplicationDeploymentQueryService applicationDeploymentQueryService, string appId, [FromQuery] ApplicationDeploymentQueryDto query)
-        => applicationDeploymentQueryService.GetApplicationDeploymentPageListAsync(appId, query);
+    public Task<PageBaseResult<DeploymentConfigurationOutputDto>> GetApplicationDeploymentPageList([FromServices] IDeploymentConfigurationQueryService applicationDeploymentQueryService, string appId, [FromQuery] DeploymentConfigurationQueryDto query)
+        => applicationDeploymentQueryService.GetDeploymentConfigurationPageListAsync(appId, query);
 
 
 
@@ -34,8 +35,8 @@ public class ApplicationDeploymentController : BaseController
     /// <param name="input"></param>
     /// <returns></returns>
     [HttpPost]
-    public Task CreateApplicationDeployment([FromServices] IApplicationDeploymentApplication applicationDeploymentApplication, [FromBody] ApplicationDeploymentInputDto input)
-        => applicationDeploymentApplication.CreateApplicationDeploymentAsync(input);
+    public Task CreateApplicationDeployment([FromServices] IDeploymentConfigurationApplication applicationDeploymentApplication, [FromBody] DeploymentConfigurationInputDto input)
+        => applicationDeploymentApplication.CreateDeploymentConfigurationAsync(input);
 
 
     /// <summary>
@@ -46,8 +47,8 @@ public class ApplicationDeploymentController : BaseController
     /// <param name="input"></param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public Task UpdateApplicationDeployment([FromServices] IApplicationDeploymentApplication applicationDeploymentApplication, string id, [FromBody] ApplicationDeploymentInputDto input)
-        => applicationDeploymentApplication.UpdateApplicationDeploymentAsync(id, input);
+    public Task UpdateApplicationDeployment([FromServices] IDeploymentConfigurationApplication applicationDeploymentApplication, string id, [FromBody] DeploymentConfigurationInputDto input)
+        => applicationDeploymentApplication.UpdateDeploymentConfigurationAsync(id, input);
 
     /// <summary>
     /// 删除部署
@@ -56,8 +57,8 @@ public class ApplicationDeploymentController : BaseController
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public Task DeleteApplicationDeployment([FromServices] IApplicationDeploymentApplication applicationDeploymentApplication, string id)
-        => applicationDeploymentApplication.DeleteApplicationDeploymentAsync(id);
+    public Task DeleteApplicationDeployment([FromServices] IDeploymentConfigurationApplication applicationDeploymentApplication, string id)
+        => applicationDeploymentApplication.DeleteDeploymentConfigurationAsync(id);
 
     #endregion
 
@@ -71,8 +72,8 @@ public class ApplicationDeploymentController : BaseController
     /// <param name="input"></param>
     /// <returns></returns>
     [HttpPost("{id}/container")]
-    public Task CreateApplicationContainer([FromServices] IApplicationDeploymentApplication applicationDeploymentApplication, string id, [FromBody] ApplicationContainerInputDto input)
-        => applicationDeploymentApplication.CreateApplicationContainerAsync(id, input);
+    public Task CreateApplicationContainer([FromServices] IDeploymentConfigurationApplication applicationDeploymentApplication, string id, [FromBody] DeploymentContainerConfigurationInputDto input)
+        => applicationDeploymentApplication.CreateDeploymentContainerAsync(id, input);
 
     /// <summary>
     /// 修改容器配置
@@ -83,8 +84,8 @@ public class ApplicationDeploymentController : BaseController
     /// <param name="input"></param>
     /// <returns></returns>
     [HttpPut("{id}/{applicationContainerId}/container")]
-    public Task UpdateApplicationContainer([FromServices] IApplicationDeploymentApplication applicationDeploymentApplication, string id, string applicationContainerId, [FromBody] ApplicationContainerInputDto input)
-        => applicationDeploymentApplication.UpdateApplicationContainerAsync(id, applicationContainerId, input);
+    public Task UpdateApplicationContainer([FromServices] IDeploymentConfigurationApplication applicationDeploymentApplication, string id, string applicationContainerId, [FromBody] DeploymentContainerConfigurationInputDto input)
+        => applicationDeploymentApplication.UpdateDeploymentContainerAsync(id, applicationContainerId, input);
 
 
     /// <summary>
@@ -95,8 +96,8 @@ public class ApplicationDeploymentController : BaseController
     /// <param name="applicationContainerId"></param>
     /// <returns></returns>
     [HttpDelete("{id}/{applicationContainerId}/container")]
-    public Task DeleteApplicationContainer([FromServices] IApplicationDeploymentApplication applicationDeploymentApplication, string id, string applicationContainerId)
-        => applicationDeploymentApplication.DeleteApplicationContainerAsync(id, applicationContainerId);
+    public Task DeleteApplicationContainer([FromServices] IDeploymentConfigurationApplication applicationDeploymentApplication, string id, string applicationContainerId)
+        => applicationDeploymentApplication.DeleteDeploymentContainerAsync(id, applicationContainerId);
 
 
     /// <summary>
@@ -106,7 +107,7 @@ public class ApplicationDeploymentController : BaseController
     /// <param name="applicationDeploymentId"></param>
     /// <returns></returns>
     [HttpGet("{applicationDeploymentId}/container/list")]
-    public Task<List<ApplicationContainerOutputDto>> GetApplicationContainerList([FromServices] IApplicationContainerQueryService applicationContainerQueryService, string applicationDeploymentId)
+    public Task<List<DeploymentContainerConfigurationOutputDto>> GetApplicationContainerList([FromServices] IDeploymentContainerConfigurationQueryService applicationContainerQueryService, string applicationDeploymentId)
         => applicationContainerQueryService.GetListByApplicationDeploymentIdAsync(applicationDeploymentId);
 
     #endregion

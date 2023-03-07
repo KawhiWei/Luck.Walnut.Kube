@@ -2,7 +2,7 @@
 
 namespace Luck.Walnut.Kube.Dto.ApplicationDeployments;
 
-public class ApplicationDeploymentOutputDto : ApplicationDeploymentBaseDto
+public class DeploymentConfigurationOutputDto : DeploymentConfigurationBaseDto
 {
     /// <summary>
     /// 唯一Id
@@ -12,7 +12,7 @@ public class ApplicationDeploymentOutputDto : ApplicationDeploymentBaseDto
     /// <summary>
     /// 应用容器配置
     /// </summary>
-    public ICollection<ApplicationContainerInputDto>? ApplicationContainers { get; set; } = default!;
+    public ICollection<DeploymentContainerConfigurationInputDto>? ApplicationContainers { get; set; } = default!;
 
     /// <summary>
     /// 

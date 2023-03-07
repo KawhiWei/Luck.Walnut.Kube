@@ -4,21 +4,21 @@ using Luck.Walnut.Kube.Dto.ApplicationDeployments;
 
 namespace Luck.Walnut.Kube.Query.ApplicationDeployments;
 
-public class ApplicationContainerQueryService : IApplicationContainerQueryService
+public class DeploymentContainerConfigurationQueryService : IDeploymentContainerConfigurationQueryService
 {
-    private readonly IApplicationContainerRepository _applicationContainerRepository;
+    private readonly IDeploymentContainerConfigurationRepository _applicationContainerRepository;
 
-    public ApplicationContainerQueryService(IApplicationContainerRepository applicationContainerRepository)
+    public DeploymentContainerConfigurationQueryService(IDeploymentContainerConfigurationRepository applicationContainerRepository)
     {
         _applicationContainerRepository = applicationContainerRepository;
     }
 
-    public async Task<List<ApplicationContainerOutputDto>> GetListByApplicationDeploymentIdAsync(string applicationDeploymentId)
+    public async Task<List<DeploymentContainerConfigurationOutputDto>> GetListByApplicationDeploymentIdAsync(string applicationDeploymentId)
     {
         var applicationContainerList = await _applicationContainerRepository.GetListByApplicationDeploymentIdAsync(applicationDeploymentId);
         return applicationContainerList.Select(x =>
             {
-                var applicationContainerOutputDto = new ApplicationContainerOutputDto
+                var applicationContainerOutputDto = new DeploymentContainerConfigurationOutputDto
                 {
                     Id = x.Id,
                     ContainerName = x.ContainerName,
@@ -86,4 +86,12 @@ public class ApplicationContainerQueryService : IApplicationContainerQueryServic
             }
         ).ToList();
     }
+
+    //public async Task<ApplicationContainerOutputDto> FindApplicationContainerByIdFirstOrDefaultAsync(string id)
+    //{
+
+
+    //    var aoo _applicationContainerRepository.FindApplicationContainerByIdFirstOrDefaultAsync(id);
+
+    //}
 }

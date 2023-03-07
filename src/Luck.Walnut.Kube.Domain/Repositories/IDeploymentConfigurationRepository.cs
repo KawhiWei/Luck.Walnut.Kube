@@ -5,7 +5,7 @@ using Luck.Walnut.Kube.Dto.ApplicationDeployments;
 
 namespace Luck.Walnut.Kube.Domain.Repositories;
 
-public interface IApplicationDeploymentRepository : IAggregateRootRepository<ApplicationDeployment, string>, IScopedDependency
+public interface IDeploymentConfigurationRepository : IAggregateRootRepository<DeploymentConfiguration, string>, IScopedDependency
 {
 
     /// <summary>
@@ -14,14 +14,14 @@ public interface IApplicationDeploymentRepository : IAggregateRootRepository<App
     /// <param name="appId"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    Task<(ApplicationDeploymentOutputDto[] Data, int TotalCount)> GetApplicationDeploymentPageListAsync(string appId, ApplicationDeploymentQueryDto query);
+    Task<(DeploymentConfigurationOutputDto[] Data, int TotalCount)> GetDeploymentConfigurationPageListAsync(string appId, DeploymentConfigurationQueryDto query);
 
     /// <summary>
     /// 根据Id获取一个应用部署数据
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    Task<ApplicationDeployment?> GetApplicationDeploymentByIdAsync(string id);
+    Task<DeploymentConfiguration?> GetApplicationDeploymentByIdAsync(string id);
 
 
     /// <summary>
@@ -30,11 +30,11 @@ public interface IApplicationDeploymentRepository : IAggregateRootRepository<App
     /// <param name="appId"></param>
     /// <param name="name"></param>
     /// <returns></returns>
-    Task<ApplicationDeployment?> GetApplicationDeploymentByAppIdAndNameAsync(string appId, string name);
+    Task<DeploymentConfiguration?> GetApplicationDeploymentByAppIdAndNameAsync(string appId, string name);
     /// <summary>
     /// 根据AppID获取部署列表
     /// </summary>
     /// <param name="appId"></param>
     /// <returns></returns>
-    Task<List<ApplicationDeployment>> GetApplicationDeploymentByAppIdListAsync(string appId);
+    Task<List<DeploymentConfiguration>> GetApplicationDeploymentByAppIdListAsync(string appId);
 }

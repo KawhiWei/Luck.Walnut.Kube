@@ -1,7 +1,7 @@
 
 using System.Reflection;
 using Luck.EntityFrameworkCore.DbContexts;
-using Luck.Walnut.Kube.Domain.AggregateRoots.ApplicationDeployments;
+using Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
 using Luck.Walnut.Kube.Domain.AggregateRoots.Clusters;
 using Luck.Walnut.Kube.Domain.AggregateRoots.NameSpaces;
 
@@ -15,9 +15,9 @@ public class KubeWalnutDbContext: LuckDbContextBase
     
     public DbSet<Cluster> Clusters => Set<Cluster>();
 
-    public DbSet<ApplicationContainer> ApplicationContainers => Set<ApplicationContainer>();
+    public DbSet<DeploymentContainerConfiguration> ApplicationContainers => Set<DeploymentContainerConfiguration>();
 
-    public DbSet<ApplicationDeployment> ApplicationDeployments => Set<ApplicationDeployment>();
+    public DbSet<DeploymentConfiguration> ApplicationDeployments => Set<DeploymentConfiguration>();
 
     public DbSet<NameSpace> NameSpaces => Set<NameSpace>();
     

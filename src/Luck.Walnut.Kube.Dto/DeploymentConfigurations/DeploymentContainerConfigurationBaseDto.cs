@@ -1,6 +1,6 @@
 namespace Luck.Walnut.Kube.Dto.ApplicationDeployments;
 
-public class ApplicationContainerBaseDto
+public class DeploymentContainerConfigurationBaseDto
 {
     /// <summary>
     /// 容器名称

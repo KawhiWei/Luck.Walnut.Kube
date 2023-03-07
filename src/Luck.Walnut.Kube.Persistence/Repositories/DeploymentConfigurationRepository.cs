@@ -5,15 +5,15 @@ using Luck.Walnut.Kube.Dto.ApplicationDeployments;
 
 namespace Luck.Walnut.Kube.Persistence.Repositories;
 
-public class ApplicationDeploymentRepository : EfCoreAggregateRootRepository<ApplicationDeployment, string>, IApplicationDeploymentRepository
+public class DeploymentConfigurationRepository : EfCoreAggregateRootRepository<DeploymentConfiguration, string>, IDeploymentConfigurationRepository
 {
-    public ApplicationDeploymentRepository(ILuckDbContext dbContext) : base(dbContext)
+    public DeploymentConfigurationRepository(ILuckDbContext dbContext) : base(dbContext)
     {
     }
 
-    public async Task<(ApplicationDeploymentOutputDto[] Data, int TotalCount)> GetApplicationDeploymentPageListAsync(string appId, ApplicationDeploymentQueryDto query)
+    public async Task<(DeploymentConfigurationOutputDto[] Data, int TotalCount)> GetDeploymentConfigurationPageListAsync(string appId, DeploymentConfigurationQueryDto query)
     {
-        var queryable = FindAll(x => x.AppId == appId).Select(x => new ApplicationDeploymentOutputDto
+        var queryable = FindAll(x => x.AppId == appId).Select(x => new DeploymentConfigurationOutputDto
         {
             Id= x.Id,
             AppId = x.AppId,
@@ -35,7 +35,7 @@ public class ApplicationDeploymentRepository : EfCoreAggregateRootRepository<App
     }
 
 
-    public Task<ApplicationDeployment?> GetApplicationDeploymentByIdAsync(string id)
+    public Task<DeploymentConfiguration?> GetApplicationDeploymentByIdAsync(string id)
         => FindAll().FirstOrDefaultAsync(x => x.Id == id);
 
     /// <summary>
@@ -44,11 +44,11 @@ public class ApplicationDeploymentRepository : EfCoreAggregateRootRepository<App
     /// <param name="appId"></param>
     /// <param name="name"></param>
     /// <returns></returns>
-    public Task<ApplicationDeployment?> GetApplicationDeploymentByAppIdAndNameAsync(string appId, string name)
+    public Task<DeploymentConfiguration?> GetApplicationDeploymentByAppIdAndNameAsync(string appId, string name)
         => FindAll().FirstOrDefaultAsync(x => x.Id == name && x.AppId == appId);
 
 
-    public Task<List<ApplicationDeployment>> GetApplicationDeploymentByAppIdListAsync(string appId)
+    public Task<List<DeploymentConfiguration>> GetApplicationDeploymentByAppIdListAsync(string appId)
     {
         throw new NotImplementedException();
     }

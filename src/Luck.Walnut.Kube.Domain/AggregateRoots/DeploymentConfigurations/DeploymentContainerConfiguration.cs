@@ -1,11 +1,11 @@
 using Luck.Walnut.Kube.Dto.ApplicationDeployments;
 using Microsoft.Extensions.Hosting;
 
-namespace Luck.Walnut.Kube.Domain.AggregateRoots.ApplicationDeployments;
+namespace Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
 
-public class ApplicationContainer : FullEntity
+public class DeploymentContainerConfiguration : FullEntity
 {
-    public ApplicationContainer(string containerName, string restartPolicy, string imagePullPolicy, bool isInitContainer, string image)
+    public DeploymentContainerConfiguration(string containerName, string restartPolicy, string imagePullPolicy, bool isInitContainer, string image)
     {
         ContainerName = containerName;
         RestartPolicy = restartPolicy;
@@ -76,7 +76,7 @@ public class ApplicationContainer : FullEntity
     /// <summary>
     /// 
     /// </summary>
-    public ApplicationDeployment ApplicationDeployment { get; } = default!;
+    public DeploymentConfiguration DeploymentConfiguration { get; } = default!;
 
 
     /// <summary>
@@ -84,7 +84,7 @@ public class ApplicationContainer : FullEntity
     /// </summary>
     public string ApplicationDeploymentId { get; private set; } = default!;
     
-    public ApplicationContainer Update(ApplicationContainerInputDto input)
+    public DeploymentContainerConfiguration Update(DeploymentContainerConfigurationInputDto input)
     {
         ContainerName = input.ContainerName;
         RestartPolicy = input.RestartPolicy;
@@ -94,20 +94,20 @@ public class ApplicationContainer : FullEntity
         return this;
     }
 
-    public ApplicationContainer SetReadinessProbe(ContainerSurviveConfigurationDto readinessProbe)
+    public DeploymentContainerConfiguration SetReadinessProbe(ContainerSurviveConfigurationDto readinessProbe)
     {
         ReadinessProbe = new ContainerSurviveConfiguration(readinessProbe.Scheme, readinessProbe.Path, readinessProbe.Port, readinessProbe.InitialDelaySeconds, readinessProbe.PeriodSeconds);
 
         return this;
     }
 
-    public ApplicationContainer SetLiveNessProbe(ContainerSurviveConfigurationDto liveNessProbe)
+    public DeploymentContainerConfiguration SetLiveNessProbe(ContainerSurviveConfigurationDto liveNessProbe)
     {
         LiveNessProbe = new ContainerSurviveConfiguration(liveNessProbe.Scheme, liveNessProbe.Path, liveNessProbe.Port, liveNessProbe.InitialDelaySeconds, liveNessProbe.PeriodSeconds);
         return this;
     }
 
-    public ApplicationContainer SetLimits(ContainerResourceQuantityDto limits)
+    public DeploymentContainerConfiguration SetLimits(ContainerResourceQuantityDto limits)
     {
         Limits = new ContainerResourceQuantity();
         if (limits.Cpu is not null)
@@ -123,7 +123,7 @@ public class ApplicationContainer : FullEntity
         return this;
     }
 
-    public ApplicationContainer SetRequests(ContainerResourceQuantityDto requests)
+    public DeploymentContainerConfiguration SetRequests(ContainerResourceQuantityDto requests)
     {
         Requests = new ContainerResourceQuantity();
         if (requests.Cpu is not null)
@@ -139,13 +139,13 @@ public class ApplicationContainer : FullEntity
         return this;
     }
 
-    public ApplicationContainer SetEnvironments(List<KeyValuePair<string,string>> environments)
+    public DeploymentContainerConfiguration SetEnvironments(List<KeyValuePair<string,string>> environments)
     {
         Environments =environments;
         return this;
     }
 
-    public ApplicationContainer SetContainerPortConfigurations()
+    public DeploymentContainerConfiguration SetContainerPortConfigurations()
     {
         return this;
     }

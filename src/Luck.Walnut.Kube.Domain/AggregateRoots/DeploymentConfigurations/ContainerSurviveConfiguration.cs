@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Luck.Walnut.Kube.Domain.AggregateRoots.ApplicationDeployments;
+namespace Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
 
 /// <summary>
 /// 探针配置

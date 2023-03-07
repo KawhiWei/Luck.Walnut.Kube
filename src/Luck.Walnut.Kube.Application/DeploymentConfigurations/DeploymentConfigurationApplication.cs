@@ -6,14 +6,14 @@ using Luck.Walnut.Kube.Domain.AggregateRoots.ApplicationDeployments;
 using Luck.Walnut.Kube.Domain.Repositories;
 using Luck.Walnut.Kube.Dto.ApplicationDeployments;
 
-namespace Luck.Walnut.Kube.Application.ApplicationDeployments;
+namespace Luck.Walnut.Kube.Application.DeploymentConfigurations;
 
-public class ApplicationDeploymentApplication : IApplicationDeploymentApplication
+public class DeploymentConfigurationApplication : IDeploymentConfigurationApplication
 {
-    private readonly IApplicationDeploymentRepository _applicationDeploymentRepository;
+    private readonly IDeploymentConfigurationRepository _applicationDeploymentRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public ApplicationDeploymentApplication(IApplicationDeploymentRepository applicationDeploymentRepository, IUnitOfWork unitOfWork)
+    public DeploymentConfigurationApplication(IDeploymentConfigurationRepository applicationDeploymentRepository, IUnitOfWork unitOfWork)
     {
         _applicationDeploymentRepository = applicationDeploymentRepository;
         _unitOfWork = unitOfWork;
@@ -24,14 +24,14 @@ public class ApplicationDeploymentApplication : IApplicationDeploymentApplicatio
     /// </summary>
     /// <param name="input"></param>
     /// <exception cref="BusinessException"></exception>
-    public async Task CreateApplicationDeploymentAsync(ApplicationDeploymentInputDto input)
+    public async Task CreateDeploymentConfigurationAsync(DeploymentConfigurationInputDto input)
     {
         if (await CheckIsExitApplicationDeploymentAsync(input.AppId, input.Name))
         {
             throw new BusinessException($"[{input.Name}]已存在，请刷新页面");
         }
 
-        var applicationDeployment = new ApplicationDeployment(input.EnvironmentName,
+        var applicationDeployment = new DeploymentConfiguration(input.EnvironmentName,
             input.ApplicationRuntimeType, input.DeploymentType, input.ChineseName, input.Name, input.AppId,
             input.KubernetesNameSpaceId, input.Replicas, input.MaxUnavailable, input.ImagePullSecretId, false);
         _applicationDeploymentRepository.Add(applicationDeployment);
@@ -43,7 +43,7 @@ public class ApplicationDeploymentApplication : IApplicationDeploymentApplicatio
     /// </summary>
     /// <param name="id"></param>
     /// <param name="input"></param>
-    public async Task UpdateApplicationDeploymentAsync(string id, ApplicationDeploymentInputDto input)
+    public async Task UpdateDeploymentConfigurationAsync(string id, DeploymentConfigurationInputDto input)
     {
         var applicationDeployment = await GetAndCheckApplicationDeploymentAsync(id);
         applicationDeployment.SetApplicationDeployment(input);
@@ -54,7 +54,7 @@ public class ApplicationDeploymentApplication : IApplicationDeploymentApplicatio
     /// 删除部署
     /// </summary>
     /// <param name="id"></param>
-    public async Task DeleteApplicationDeploymentAsync(string id)
+    public async Task DeleteDeploymentConfigurationAsync(string id)
     {
         var applicationDeployment = await GetAndCheckApplicationDeploymentAsync(id);
         _applicationDeploymentRepository.Remove(applicationDeployment);
@@ -69,7 +69,7 @@ public class ApplicationDeploymentApplication : IApplicationDeploymentApplicatio
     /// </summary>
     /// <param name="id"></param>
     /// <param name="input"></param>
-    public async Task CreateApplicationContainerAsync(string id, ApplicationContainerInputDto input)
+    public async Task CreateDeploymentContainerAsync(string id, DeploymentContainerConfigurationInputDto input)
     {
         var applicationDeployment = await GetAndCheckApplicationDeploymentAsync(id);
 
@@ -83,7 +83,7 @@ public class ApplicationDeploymentApplication : IApplicationDeploymentApplicatio
     /// <param name="id"></param>
     /// <param name="applicationContainerId"></param>
     /// <param name="input"></param>
-    public async Task UpdateApplicationContainerAsync(string id, string applicationContainerId, ApplicationContainerInputDto input)
+    public async Task UpdateDeploymentContainerAsync(string id, string applicationContainerId, DeploymentContainerConfigurationInputDto input)
     {
         var applicationDeployment = await GetAndCheckApplicationDeploymentAsync(id);
         applicationDeployment.UpdateApplicationContainer(applicationContainerId, input);
@@ -95,7 +95,7 @@ public class ApplicationDeploymentApplication : IApplicationDeploymentApplicatio
     /// </summary>
     /// <param name="id"></param>
     /// <param name="applicationContainerId"></param>
-    public async Task DeleteApplicationContainerAsync(string id, string applicationContainerId)
+    public async Task DeleteDeploymentContainerAsync(string id, string applicationContainerId)
     {
         var applicationDeployment = await GetAndCheckApplicationDeploymentAsync(id);
         applicationDeployment.RemoveContainer(applicationContainerId);
@@ -107,7 +107,7 @@ public class ApplicationDeploymentApplication : IApplicationDeploymentApplicatio
 
     #region 私有Check方法
 
-    private async Task<ApplicationDeployment> GetAndCheckApplicationDeploymentAsync(string id)
+    private async Task<DeploymentConfiguration> GetAndCheckApplicationDeploymentAsync(string id)
     {
         var cluster = await _applicationDeploymentRepository.GetApplicationDeploymentByIdAsync(id);
         if (cluster is null)
@@ -131,7 +131,7 @@ public class ApplicationDeploymentApplication : IApplicationDeploymentApplicatio
 
     #endregion
 
-    private V1Deployment GetDeployment(ApplicationDeployment applicationDeployment)
+    private V1Deployment GetDeployment(DeploymentConfiguration applicationDeployment)
     {
         var v1Deployment = new V1Deployment();
 

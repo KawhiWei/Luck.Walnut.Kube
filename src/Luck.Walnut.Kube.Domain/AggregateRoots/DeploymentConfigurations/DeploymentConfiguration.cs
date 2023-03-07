@@ -2,14 +2,14 @@ using Luck.Framework.Exceptions;
 using Luck.Walnut.Kube.Domain.Shared.Enums;
 using Luck.Walnut.Kube.Dto.ApplicationDeployments;
 
-namespace Luck.Walnut.Kube.Domain.AggregateRoots.ApplicationDeployments;
+namespace Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
 
 /// <summary>
 /// 应用部署配置
 /// </summary>
-public class ApplicationDeployment : FullAggregateRoot
+public class DeploymentConfiguration : FullAggregateRoot
 {
-    public ApplicationDeployment(string environmentName, ApplicationRuntimeTypeEnum applicationRuntimeType, DeploymentTypeEnum deploymentType, string chineseName, string name, string appId,
+    public DeploymentConfiguration(string environmentName, ApplicationRuntimeTypeEnum applicationRuntimeType, DeploymentTypeEnum deploymentType, string chineseName, string name, string appId,
         string kubernetesNameSpaceId, int replicas, int maxUnavailable, string? imagePullSecretId, bool isPublish)
     {
         EnvironmentName = environmentName;
@@ -83,14 +83,14 @@ public class ApplicationDeployment : FullAggregateRoot
     /// <summary>
     /// 应用容器配置
     /// </summary>
-    public ICollection<ApplicationContainer> ApplicationContainers { get; private set; } = new HashSet<ApplicationContainer>();
+    public ICollection<DeploymentContainerConfiguration> DeploymentContainers { get; private set; } = new HashSet<DeploymentContainerConfiguration>();
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
-    public ApplicationDeployment SetApplicationDeployment(ApplicationDeploymentInputDto input)
+    public DeploymentConfiguration SetApplicationDeployment(DeploymentConfigurationInputDto input)
     {
         EnvironmentName = input.EnvironmentName;
         ApplicationRuntimeType = input.ApplicationRuntimeType;
@@ -109,7 +109,7 @@ public class ApplicationDeployment : FullAggregateRoot
     /// </summary>
     /// <param name="applicationContainerId"></param>
     /// <returns></returns>
-    public ApplicationDeployment RemoveContainer(string applicationContainerId)
+    public DeploymentConfiguration RemoveContainer(string applicationContainerId)
     {
         var applicationContainer = ApplicationContainers.FirstOrDefault(x => x.Id == applicationContainerId);
         if (applicationContainer is null)
@@ -126,14 +126,14 @@ public class ApplicationDeployment : FullAggregateRoot
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
-    public ApplicationDeployment AddApplicationContainer(ApplicationContainerInputDto input)
+    public DeploymentConfiguration AddApplicationContainer(DeploymentContainerConfigurationInputDto input)
     {
         if (CheckApplicationContainerName(input.ContainerName))
         {
             throw new BusinessException($"【{input.ContainerName}】已存在");
         }
 
-        var applicationContainer = new ApplicationContainer(input.ContainerName,
+        var applicationContainer = new DeploymentContainerConfiguration(input.ContainerName,
             input.RestartPolicy, input.ImagePullPolicy, input.IsInitContainer, input.Image);
         if (input.Limits is not null)
         {
@@ -195,7 +195,7 @@ public class ApplicationDeployment : FullAggregateRoot
     /// <param name="applicationContainerId"></param>
     /// <param name="input"></param>
     /// <returns></returns>
-    public ApplicationDeployment UpdateApplicationContainer(string applicationContainerId, ApplicationContainerInputDto input)
+    public DeploymentConfiguration UpdateApplicationContainer(string applicationContainerId, DeploymentContainerConfigurationInputDto input)
     {
         var applicationContainer = ApplicationContainers.FirstOrDefault(x => x.Id == applicationContainerId);
         if (applicationContainer is null)
