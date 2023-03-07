@@ -25,7 +25,7 @@ public class DeploymentContainerConfigurationBaseDto
     /// <summary>
     /// 镜像名称
     /// </summary>
-    public string Image { get;  set; } = default!;
+    public string? Image { get;  set; } = default!;
 
     /// <summary>
     /// 准备完成探针配置

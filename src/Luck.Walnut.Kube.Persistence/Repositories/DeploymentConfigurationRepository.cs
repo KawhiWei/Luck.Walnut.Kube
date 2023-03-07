@@ -1,5 +1,5 @@
 using Luck.EntityFrameworkCore.DbContexts;
-using Luck.Walnut.Kube.Domain.AggregateRoots.ApplicationDeployments;
+using Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
 using Luck.Walnut.Kube.Domain.Repositories;
 using Luck.Walnut.Kube.Dto.ApplicationDeployments;
 
@@ -35,8 +35,9 @@ public class DeploymentConfigurationRepository : EfCoreAggregateRootRepository<D
     }
 
 
-    public Task<DeploymentConfiguration?> GetApplicationDeploymentByIdAsync(string id)
-        => FindAll().FirstOrDefaultAsync(x => x.Id == id);
+    public Task<DeploymentConfiguration?> FindApplicationDeploymentByIdAsync(string id)
+        => FindAll()
+        .Include(x=>x.).FirstOrDefaultAsync(x => x.Id == id);
 
     /// <summary>
     /// 
@@ -44,11 +45,11 @@ public class DeploymentConfigurationRepository : EfCoreAggregateRootRepository<D
     /// <param name="appId"></param>
     /// <param name="name"></param>
     /// <returns></returns>
-    public Task<DeploymentConfiguration?> GetApplicationDeploymentByAppIdAndNameAsync(string appId, string name)
+    public Task<DeploymentConfiguration?> FindDeploymentConfigurationByAppIdAndNameAsync(string appId, string name)
         => FindAll().FirstOrDefaultAsync(x => x.Id == name && x.AppId == appId);
 
 
-    public Task<List<DeploymentConfiguration>> GetApplicationDeploymentByAppIdListAsync(string appId)
+    public Task<List<DeploymentConfiguration>> GetDeploymentConfigurationByAppIdListAsync(string appId)
     {
         throw new NotImplementedException();
     }

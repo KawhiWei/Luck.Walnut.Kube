@@ -1,5 +1,5 @@
 using Luck.DDD.Domain.Repositories;
-using Luck.Walnut.Kube.Domain.AggregateRoots.ApplicationDeployments;
+using Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
 using Luck.Walnut.Kube.Domain.AggregateRoots.NameSpaces;
 using Luck.Walnut.Kube.Dto.ApplicationDeployments;
 
@@ -21,7 +21,7 @@ public interface IDeploymentConfigurationRepository : IAggregateRootRepository<D
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    Task<DeploymentConfiguration?> GetApplicationDeploymentByIdAsync(string id);
+    Task<DeploymentConfiguration?> FindApplicationDeploymentByIdAsync(string id);
 
 
     /// <summary>
@@ -30,11 +30,11 @@ public interface IDeploymentConfigurationRepository : IAggregateRootRepository<D
     /// <param name="appId"></param>
     /// <param name="name"></param>
     /// <returns></returns>
-    Task<DeploymentConfiguration?> GetApplicationDeploymentByAppIdAndNameAsync(string appId, string name);
+    Task<DeploymentConfiguration?> FindDeploymentConfigurationByAppIdAndNameAsync(string appId, string name);
     /// <summary>
     /// 根据AppID获取部署列表
     /// </summary>
     /// <param name="appId"></param>
     /// <returns></returns>
-    Task<List<DeploymentConfiguration>> GetApplicationDeploymentByAppIdListAsync(string appId);
+    Task<List<DeploymentConfiguration>> GetDeploymentConfigurationByAppIdListAsync(string appId);
 }

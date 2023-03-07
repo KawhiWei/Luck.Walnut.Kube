@@ -3,7 +3,7 @@ using k8s.Models;
 using Luck.Framework.Extensions;
 using Luck.KubeWalnut.Adapter.Constants;
 using Luck.Walnut.Kube.Adapter.Factories;
-using Luck.Walnut.Kube.Domain.AggregateRoots.ApplicationDeployments;
+using Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
 using Luck.Walnut.Kube.Domain.AggregateRoots.Kubernetes;
 
 namespace Luck.Walnut.Kube.Adapter.KubernetesAdapter;

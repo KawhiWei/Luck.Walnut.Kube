@@ -2,7 +2,7 @@ using k8s.Models;
 using Luck.Framework.Exceptions;
 using Luck.Framework.Extensions;
 using Luck.Framework.UnitOfWorks;
-using Luck.Walnut.Kube.Domain.AggregateRoots.ApplicationDeployments;
+using Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
 using Luck.Walnut.Kube.Domain.Repositories;
 using Luck.Walnut.Kube.Dto.ApplicationDeployments;
 
@@ -109,7 +109,7 @@ public class DeploymentConfigurationApplication : IDeploymentConfigurationApplic
 
     private async Task<DeploymentConfiguration> GetAndCheckApplicationDeploymentAsync(string id)
     {
-        var cluster = await _applicationDeploymentRepository.GetApplicationDeploymentByIdAsync(id);
+        var cluster = await _applicationDeploymentRepository.FindApplicationDeploymentByIdAsync(id);
         if (cluster is null)
         {
             throw new BusinessException("部署不存在，请刷新页面");
@@ -120,7 +120,7 @@ public class DeploymentConfigurationApplication : IDeploymentConfigurationApplic
 
     private async Task<bool> CheckIsExitApplicationDeploymentAsync(string appId, string name)
     {
-        var cluster = await _applicationDeploymentRepository.GetApplicationDeploymentByAppIdAndNameAsync(appId, name);
+        var cluster = await _applicationDeploymentRepository.FindDeploymentConfigurationByAppIdAndNameAsync(appId, name);
         if (cluster is null)
         {
             return false;
@@ -141,7 +141,7 @@ public class DeploymentConfigurationApplication : IDeploymentConfigurationApplic
         v1Deployment.Metadata.NamespaceProperty = applicationDeployment.KubernetesNameSpaceId;
 
         applicationDeployment
-            .ApplicationContainers.Where(x => x.IsInitContainer).ForEach(a =>
+            .DeploymentContainers.Where(x => x.IsInitContainer).ForEach(a =>
             {
                 var limits = new Dictionary<string, ResourceQuantity>();
 

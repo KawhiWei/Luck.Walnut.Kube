@@ -1,4 +1,4 @@
-using Luck.Walnut.Kube.Domain.AggregateRoots.ApplicationDeployments;
+using Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
 
 namespace Luck.Walnut.Kube.Persistence.Configurations;
 

@@ -27,6 +27,16 @@ public class DeploymentConfigurationController : BaseController
         => applicationDeploymentQueryService.GetDeploymentConfigurationPageListAsync(appId, query);
 
 
+    /// <summary>
+    /// 根据Id查询一个部署配置
+    /// </summary>
+    /// <param name="applicationDeploymentQueryService"></param>
+    /// <param name="appId"></param>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    [HttpGet("{id}")]
+    public Task<DeploymentConfigurationOutputDto?> GetApplicationDeploymentDetailByIdAsync([FromServices] IDeploymentConfigurationQueryService applicationDeploymentQueryService, string id)
+        => applicationDeploymentQueryService.GetApplicationDeploymentDetailByIdAsync(id);
 
     /// <summary>
     /// 添加部署

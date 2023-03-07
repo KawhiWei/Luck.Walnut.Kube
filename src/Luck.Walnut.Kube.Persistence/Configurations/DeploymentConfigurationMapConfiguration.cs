@@ -1,4 +1,4 @@
-using Luck.Walnut.Kube.Domain.AggregateRoots.ApplicationDeployments;
+using Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
 
 namespace Luck.Walnut.Kube.Persistence.Configurations;
 
@@ -7,7 +7,7 @@ public class DeploymentConfigurationMapConfiguration : IEntityTypeConfiguration<
     public void Configure(EntityTypeBuilder<DeploymentConfiguration> builder)
     {
         builder.HasKey(x => x.Id);
-        builder.HasMany(o => o.ApplicationContainers)
+        builder.HasMany(o => o.DeploymentContainers)
             .WithOne()
             .HasForeignKey(x => x.ApplicationDeploymentId)
             .OnDelete(DeleteBehavior.Cascade);

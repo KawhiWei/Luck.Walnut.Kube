@@ -1,5 +1,5 @@
 using Luck.EntityFrameworkCore.DbContexts;
-using Luck.Walnut.Kube.Domain.AggregateRoots.ApplicationDeployments;
+using Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
 using Luck.Walnut.Kube.Domain.Repositories;
 using Luck.Walnut.Kube.Dto.ApplicationDeployments;
 

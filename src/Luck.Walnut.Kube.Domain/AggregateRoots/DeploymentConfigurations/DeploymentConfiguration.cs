@@ -111,13 +111,13 @@ public class DeploymentConfiguration : FullAggregateRoot
     /// <returns></returns>
     public DeploymentConfiguration RemoveContainer(string applicationContainerId)
     {
-        var applicationContainer = ApplicationContainers.FirstOrDefault(x => x.Id == applicationContainerId);
+        var applicationContainer = DeploymentContainers.FirstOrDefault(x => x.Id == applicationContainerId);
         if (applicationContainer is null)
         {
             throw new BusinessException($"容器配置不存在，请刷新页面");
         }
 
-        ApplicationContainers.Remove(applicationContainer);
+        DeploymentContainers.Remove(applicationContainer);
         return this;
     }
 
@@ -167,7 +167,7 @@ public class DeploymentConfiguration : FullAggregateRoot
             }
         }
 
-        ApplicationContainers.Add(applicationContainer);
+        DeploymentContainers.Add(applicationContainer);
 
         return this;
     }
@@ -183,10 +183,10 @@ public class DeploymentConfiguration : FullAggregateRoot
     {
         if (isUpdate)
         {
-            return ApplicationContainers.Any(x => x.ContainerName == containerName && x.Id != currentId);
+            return DeploymentContainers.Any(x => x.ContainerName == containerName && x.Id != currentId);
         }
 
-        return ApplicationContainers.Any(x => x.ContainerName == containerName);
+        return DeploymentContainers.Any(x => x.ContainerName == containerName);
     }
 
     /// <summary>
@@ -197,7 +197,7 @@ public class DeploymentConfiguration : FullAggregateRoot
     /// <returns></returns>
     public DeploymentConfiguration UpdateApplicationContainer(string applicationContainerId, DeploymentContainerConfigurationInputDto input)
     {
-        var applicationContainer = ApplicationContainers.FirstOrDefault(x => x.Id == applicationContainerId);
+        var applicationContainer = DeploymentContainers.FirstOrDefault(x => x.Id == applicationContainerId);
         if (applicationContainer is null)
         {
             throw new BusinessException($"容器配置不存在，请刷新页面");

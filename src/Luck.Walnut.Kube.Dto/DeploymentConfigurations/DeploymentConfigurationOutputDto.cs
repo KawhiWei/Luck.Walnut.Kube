@@ -12,7 +12,7 @@ public class DeploymentConfigurationOutputDto : DeploymentConfigurationBaseDto
     /// <summary>
     /// 应用容器配置
     /// </summary>
-    public ICollection<DeploymentContainerConfigurationInputDto>? ApplicationContainers { get; set; } = default!;
+    public ICollection<DeploymentContainerConfigurationOutputDto>? DeploymentContainerConfigurations { get; set; } = default!;
 
     /// <summary>
     /// 

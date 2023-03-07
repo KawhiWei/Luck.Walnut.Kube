@@ -16,4 +16,6 @@ public interface IDeploymentConfigurationQueryService:IScopedDependency
     /// <returns></returns>
     Task<PageBaseResult<DeploymentConfigurationOutputDto>> GetDeploymentConfigurationPageListAsync(string appId, DeploymentConfigurationQueryDto query);
 
+
+    Task<DeploymentConfigurationOutputDto?> GetApplicationDeploymentDetailByIdAsync(string id);
 }
