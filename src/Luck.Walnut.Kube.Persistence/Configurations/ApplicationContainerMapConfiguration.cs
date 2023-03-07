@@ -13,6 +13,6 @@ public class ApplicationContainerMapConfiguration : IEntityTypeConfiguration<App
         builder.Property(e => e.Requests).HasJsonConversion();
         builder.Property(e => e.Environments).HasJsonConversion();
         builder.Property(e => e.ContainerPortConfigurations).HasJsonConversion();
-        builder.ToTable("application_container");
+        builder.ToTable("deployment_configuration_container");
     }
 }

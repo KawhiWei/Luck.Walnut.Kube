@@ -7,6 +7,6 @@ public class NameSpaceMapConfiguration : IEntityTypeConfiguration<NameSpace>
     public void Configure(EntityTypeBuilder<NameSpace> builder)
     {
         builder.HasKey(x => x.Id);
-        builder.ToTable("namespaces");
+        builder.ToTable("kubernetes_namespaces");
     }
 }

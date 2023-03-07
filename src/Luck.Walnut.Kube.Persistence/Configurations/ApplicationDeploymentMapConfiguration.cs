@@ -12,8 +12,7 @@ public class ApplicationDeploymentMapConfiguration : IEntityTypeConfiguration<Ap
             .HasForeignKey(x => x.ApplicationDeploymentId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasIndex(x => x.AppId, "appid_unique_index")
-                .IsUnique();
-        builder.ToTable("application_deployment");
+        builder.HasIndex(x => x.AppId, "appid_unique_index");
+        builder.ToTable("deployment_configuration");
     }
 }

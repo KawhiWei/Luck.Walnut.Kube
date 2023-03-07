@@ -8,6 +8,6 @@ public class ServiceMapConfiguration : IEntityTypeConfiguration<Service>
     {
         builder.HasKey(x => x.Id);
         builder.Property(x => x.ServicePorts).HasJsonConversion().HasColumnName("service_ports");
-        builder.ToTable("services");
+        builder.ToTable("kubernetes_services");
     }
 }
