@@ -53,7 +53,6 @@ public class DeploymentConfigurationQueryService : IDeploymentConfigurationQuery
                     PeriodSeconds = x.LiveNessProbe.PeriodSeconds,
                 };
             }
-
             if (x.Limits is not null)
             {
                 deploymentContainerConfiguration.Limits = new ContainerResourceQuantityDto
@@ -75,8 +74,6 @@ public class DeploymentConfigurationQueryService : IDeploymentConfigurationQuery
                 deploymentContainerConfiguration.Environments = x.Environments;
             }
             return deploymentContainerConfiguration;
-
-
         }).ToList();
 
         return new DeploymentConfigurationOutputDto
