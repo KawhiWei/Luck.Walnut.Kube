@@ -1,6 +1,6 @@
-using Luck.Walnut.Kube.Dto.ApplicationDeployments;
+using Luck.Walnut.Kube.Dto.DeploymentConfigurations;
 
-namespace Luck.Walnut.Kube.Query.ApplicationDeployments;
+namespace Luck.Walnut.Kube.Query.DeploymentConfigurations;
 
 public interface IDeploymentContainerConfigurationQueryService : IScopedDependency
 {
@@ -9,5 +9,12 @@ public interface IDeploymentContainerConfigurationQueryService : IScopedDependen
     /// </summary>
     /// <param name="applicationDeploymentId"></param>
     /// <returns></returns>
-    Task<List<DeploymentContainerConfigurationOutputDto>> GetListByApplicationDeploymentIdAsync(string applicationDeploymentId);
+    Task<List<DeploymentContainerConfigurationOutputDto>> GetDeploymentContainerConfigurationListByDeploymentIdAsync(string applicationDeploymentId);
+
+    /// <summary>
+    /// 根据Id获取一个容器配置
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    Task<DeploymentContainerConfigurationOutputDto?> GetApplicationContainerByIdFirstOrDefaultAsync(string id);
 }

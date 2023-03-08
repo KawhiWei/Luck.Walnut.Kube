@@ -1,6 +1,6 @@
 
 
-using Luck.Walnut.Kube.Dto.ApplicationDeployments;
+using Luck.Walnut.Kube.Dto.DeploymentConfigurations;
 using Luck.Walnut.Kube.Dto;
 
 namespace Luck.Walnut.Kube.Query.DeploymentConfigurations;
@@ -9,7 +9,7 @@ public interface IDeploymentConfigurationQueryService:IScopedDependency
 {
 
     /// <summary>
-    /// ·ÖÒ³²éÑ¯²¿ÊðÅäÖÃ
+    /// ï¿½ï¿½Ò³ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     /// <param name="appId"></param>
     /// <param name="query"></param>
@@ -17,5 +17,5 @@ public interface IDeploymentConfigurationQueryService:IScopedDependency
     Task<PageBaseResult<DeploymentConfigurationOutputDto>> GetDeploymentConfigurationPageListAsync(string appId, DeploymentConfigurationQueryDto query);
 
 
-    Task<DeploymentConfigurationOutputDto?> GetApplicationDeploymentDetailByIdAsync(string id);
+    Task<DeploymentConfigurationOutputDto?> GetDeploymentConfigurationDetailByIdAsync(string id);
 }

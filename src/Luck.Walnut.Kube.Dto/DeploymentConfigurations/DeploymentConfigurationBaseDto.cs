@@ -1,6 +1,6 @@
 using Luck.Walnut.Kube.Domain.Shared.Enums;
 
-namespace Luck.Walnut.Kube.Dto.ApplicationDeployments;
+namespace Luck.Walnut.Kube.Dto.DeploymentConfigurations;
 
 public class DeploymentConfigurationBaseDto
 {

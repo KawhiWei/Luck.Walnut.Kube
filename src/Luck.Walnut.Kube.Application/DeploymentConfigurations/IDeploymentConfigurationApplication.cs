@@ -1,4 +1,4 @@
-using Luck.Walnut.Kube.Dto.ApplicationDeployments;
+using Luck.Walnut.Kube.Dto.DeploymentConfigurations;
 
 namespace Luck.Walnut.Kube.Application.DeploymentConfigurations;
 
@@ -11,11 +11,11 @@ public interface IDeploymentConfigurationApplication : IScopedDependency
     Task DeleteDeploymentConfigurationAsync(string id);
 
 
-    Task CreateDeploymentContainerAsync(string id, DeploymentContainerConfigurationInputDto input);
+    Task CreateDeploymentContainerConfigurationAsync(string deploymentConfigurationId, DeploymentContainerConfigurationInputDto input);
 
 
-    Task UpdateDeploymentContainerAsync(string id, string applicationContainerId, DeploymentContainerConfigurationInputDto input);
+    Task UpdateDeploymentContainerConfigurationAsync(string deploymentConfigurationId, string deploymentContainerConfigurationId, DeploymentContainerConfigurationInputDto input);
 
 
-    Task DeleteDeploymentContainerAsync(string id, string applicationContainerId);
+    Task DeleteDeploymentContainerConfigurationAsync(string deploymentConfigurationId, string deploymentContainerConfigurationId);
 }

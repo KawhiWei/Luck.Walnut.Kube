@@ -1,6 +1,6 @@
 using Luck.Framework.Exceptions;
 using Luck.Walnut.Kube.Domain.Shared.Enums;
-using Luck.Walnut.Kube.Dto.ApplicationDeployments;
+using Luck.Walnut.Kube.Dto.DeploymentConfigurations;
 
 namespace Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
 
@@ -109,7 +109,7 @@ public class DeploymentConfiguration : FullAggregateRoot
     /// </summary>
     /// <param name="applicationContainerId"></param>
     /// <returns></returns>
-    public DeploymentConfiguration RemoveContainer(string applicationContainerId)
+    public DeploymentConfiguration RemoveDeploymentContainerConfiguration(string applicationContainerId)
     {
         var applicationContainer = DeploymentContainers.FirstOrDefault(x => x.Id == applicationContainerId);
         if (applicationContainer is null)
@@ -126,7 +126,7 @@ public class DeploymentConfiguration : FullAggregateRoot
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
-    public DeploymentConfiguration AddApplicationContainer(DeploymentContainerConfigurationInputDto input)
+    public DeploymentConfiguration AddDeploymentContainerConfiguration(DeploymentContainerConfigurationInputDto input)
     {
         if (CheckApplicationContainerName(input.ContainerName))
         {
@@ -155,18 +155,6 @@ public class DeploymentConfiguration : FullAggregateRoot
             applicationContainer.SetReadinessProbe(input.ReadinessProbe);
         }
         applicationContainer.SetEnvironments(input.Environments ?? new List<KeyValuePair<string, string>>());
-
-
-        if (applicationContainer.Environments != null)
-        {
-            var testsArray = applicationContainer.Environments.ToArray();
-
-            foreach (var test in testsArray)
-            {
-                // test.Key
-            }
-        }
-
         DeploymentContainers.Add(applicationContainer);
 
         return this;
@@ -195,7 +183,7 @@ public class DeploymentConfiguration : FullAggregateRoot
     /// <param name="applicationContainerId"></param>
     /// <param name="input"></param>
     /// <returns></returns>
-    public DeploymentConfiguration UpdateApplicationContainer(string applicationContainerId, DeploymentContainerConfigurationInputDto input)
+    public DeploymentConfiguration UpdateDeploymentContainerConfiguration(string applicationContainerId, DeploymentContainerConfigurationInputDto input)
     {
         var applicationContainer = DeploymentContainers.FirstOrDefault(x => x.Id == applicationContainerId);
         if (applicationContainer is null)

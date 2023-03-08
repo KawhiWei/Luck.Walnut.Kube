@@ -1,5 +1,4 @@
-using Luck.Walnut.Kube.Dto.ApplicationDeployments;
-using Microsoft.Extensions.Hosting;
+using Luck.Walnut.Kube.Dto.DeploymentConfigurations;
 
 namespace Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
 
@@ -27,7 +26,7 @@ public class DeploymentContainerConfiguration : FullEntity
     /// <summary>
     /// 镜像名称
     /// </summary>
-    public string Image { get; private set; }
+    public string? Image { get; private set; }
 
 
     /// <summary>
@@ -139,9 +138,11 @@ public class DeploymentContainerConfiguration : FullEntity
         return this;
     }
 
-    public DeploymentContainerConfiguration SetEnvironments(List<KeyValuePair<string,string>> environments)
+    public DeploymentContainerConfiguration SetEnvironments(List<KeyValuePair<string,string>>? environments)
     {
-        Environments =environments;
+        
+        
+        Environments =environments??new List<KeyValuePair<string, string>>();
         return this;
     }
 

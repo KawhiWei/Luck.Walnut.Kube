@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using Luck.Walnut.Kube.Dto.ApplicationDeployments;
+using Luck.Walnut.Kube.Dto.DeploymentConfigurations;
 
 namespace Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
 

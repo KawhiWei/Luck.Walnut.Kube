@@ -1,6 +1,6 @@
 ﻿using Luck.Framework.Extensions;
 
-namespace Luck.Walnut.Kube.Dto.ApplicationDeployments;
+namespace Luck.Walnut.Kube.Dto.DeploymentConfigurations;
 
 public class DeploymentConfigurationOutputDto : DeploymentConfigurationBaseDto
 {

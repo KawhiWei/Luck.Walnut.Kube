@@ -1,29 +1,29 @@
-namespace Luck.Walnut.Kube.Dto.ApplicationDeployments;
+namespace Luck.Walnut.Kube.Dto.DeploymentConfigurations;
 
 public class ContainerSurviveConfigurationDto
 {
     /// <summary>
     /// 
     /// </summary>
-    public string Scheme { get; set; } = default!;
+    public string? Scheme { get; set; } 
 
     /// <summary>
     /// 
     /// </summary>
-    public string Path { get; set; } = default!;
+    public string? Path { get; set; }
 
     /// <summary>
     /// 端口
     /// </summary>
-    public uint Port { get; set; } = default!;
+    public uint? Port { get; set; } 
 
     /// <summary>
     /// 端口
     /// </summary>
-    public uint InitialDelaySeconds { get; set; } = default!;
+    public uint? InitialDelaySeconds { get; set; } 
 
     /// <summary>
     /// 端口
     /// </summary>
-    public uint PeriodSeconds { get; set; } = default!;
+    public uint? PeriodSeconds { get; set; }
 }

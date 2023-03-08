@@ -1,4 +1,4 @@
-namespace Luck.Walnut.Kube.Dto.ApplicationDeployments;
+namespace Luck.Walnut.Kube.Dto.DeploymentConfigurations;
 
 public class DeploymentContainerConfigurationBaseDto
 {
@@ -25,27 +25,27 @@ public class DeploymentContainerConfigurationBaseDto
     /// <summary>
     /// 镜像名称
     /// </summary>
-    public string? Image { get;  set; } = default!;
+    public string? Image { get;  set; }
 
     /// <summary>
     /// 准备完成探针配置
     /// </summary>
-    public ContainerSurviveConfigurationDto? ReadinessProbe { get; set; } = default!;
+    public ContainerSurviveConfigurationDto? ReadinessProbe { get; set; }
 
     /// <summary>
     /// 存活探针配置
     /// </summary>
-    public ContainerSurviveConfigurationDto? LiveNessProbe { get; set; } = default!;
+    public ContainerSurviveConfigurationDto? LiveNessProbe { get; set; }
 
     /// <summary>
     /// 容器Cpu资源限制
     /// </summary>
-    public ContainerResourceQuantityDto? Limits { get; set; } = default!;
+    public ContainerResourceQuantityDto? Limits { get; set; }
 
     /// <summary>
     /// 容器内存资源限制
     /// </summary>
-    public ContainerResourceQuantityDto? Requests { get; set; } = default!;
+    public ContainerResourceQuantityDto? Requests { get; set; }
 
     /// <summary>
     /// 环境变量
@@ -56,5 +56,5 @@ public class DeploymentContainerConfigurationBaseDto
     /// <summary>
     /// 容器端口配置
     /// </summary>
-    public List<ContainerPortConfigurationDto>? ContainerPortConfigurations { get; set; } = default!;
+    public List<ContainerPortConfigurationDto>? ContainerPortConfigurations { get; set; }
 }

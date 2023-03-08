@@ -4,18 +4,18 @@ using Luck.Framework.Extensions;
 using Luck.Framework.UnitOfWorks;
 using Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
 using Luck.Walnut.Kube.Domain.Repositories;
-using Luck.Walnut.Kube.Dto.ApplicationDeployments;
+using Luck.Walnut.Kube.Dto.DeploymentConfigurations;
 
 namespace Luck.Walnut.Kube.Application.DeploymentConfigurations;
 
 public class DeploymentConfigurationApplication : IDeploymentConfigurationApplication
 {
-    private readonly IDeploymentConfigurationRepository _applicationDeploymentRepository;
+    private readonly IDeploymentConfigurationRepository _deploymentConfigurationRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public DeploymentConfigurationApplication(IDeploymentConfigurationRepository applicationDeploymentRepository, IUnitOfWork unitOfWork)
+    public DeploymentConfigurationApplication(IDeploymentConfigurationRepository deploymentConfigurationRepository, IUnitOfWork unitOfWork)
     {
-        _applicationDeploymentRepository = applicationDeploymentRepository;
+        _deploymentConfigurationRepository = deploymentConfigurationRepository;
         _unitOfWork = unitOfWork;
     }
 
@@ -26,7 +26,7 @@ public class DeploymentConfigurationApplication : IDeploymentConfigurationApplic
     /// <exception cref="BusinessException"></exception>
     public async Task CreateDeploymentConfigurationAsync(DeploymentConfigurationInputDto input)
     {
-        if (await CheckIsExitApplicationDeploymentAsync(input.AppId, input.Name))
+        if (await CheckIsExitDeploymentConfigurationAsync(input.AppId, input.Name))
         {
             throw new BusinessException($"[{input.Name}]已存在，请刷新页面");
         }
@@ -34,7 +34,7 @@ public class DeploymentConfigurationApplication : IDeploymentConfigurationApplic
         var applicationDeployment = new DeploymentConfiguration(input.EnvironmentName,
             input.ApplicationRuntimeType, input.DeploymentType, input.ChineseName, input.Name, input.AppId,
             input.KubernetesNameSpaceId, input.Replicas, input.MaxUnavailable, input.ImagePullSecretId, false);
-        _applicationDeploymentRepository.Add(applicationDeployment);
+        _deploymentConfigurationRepository.Add(applicationDeployment);
         await _unitOfWork.CommitAsync();
     }
 
@@ -45,7 +45,7 @@ public class DeploymentConfigurationApplication : IDeploymentConfigurationApplic
     /// <param name="input"></param>
     public async Task UpdateDeploymentConfigurationAsync(string id, DeploymentConfigurationInputDto input)
     {
-        var applicationDeployment = await GetAndCheckApplicationDeploymentAsync(id);
+        var applicationDeployment = await GetAndCheckDeploymentConfigurationAsync(id);
         applicationDeployment.SetApplicationDeployment(input);
         await _unitOfWork.CommitAsync();
     }
@@ -56,8 +56,8 @@ public class DeploymentConfigurationApplication : IDeploymentConfigurationApplic
     /// <param name="id"></param>
     public async Task DeleteDeploymentConfigurationAsync(string id)
     {
-        var applicationDeployment = await GetAndCheckApplicationDeploymentAsync(id);
-        _applicationDeploymentRepository.Remove(applicationDeployment);
+        var applicationDeployment = await GetAndCheckDeploymentConfigurationAsync(id);
+        _deploymentConfigurationRepository.Remove(applicationDeployment);
         await _unitOfWork.CommitAsync();
     }
 
@@ -67,38 +67,38 @@ public class DeploymentConfigurationApplication : IDeploymentConfigurationApplic
     /// <summary>
     /// 添加容器配置
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="deploymentConfigurationId"></param>
     /// <param name="input"></param>
-    public async Task CreateDeploymentContainerAsync(string id, DeploymentContainerConfigurationInputDto input)
+    public async Task CreateDeploymentContainerConfigurationAsync(string deploymentConfigurationId, DeploymentContainerConfigurationInputDto input)
     {
-        var applicationDeployment = await GetAndCheckApplicationDeploymentAsync(id);
+        var applicationDeployment = await GetAndCheckDeploymentConfigurationAsync(deploymentConfigurationId);
 
-        applicationDeployment.AddApplicationContainer(input);
+        applicationDeployment.AddDeploymentContainerConfiguration(input);
         await _unitOfWork.CommitAsync();
     }
 
     /// <summary>
     /// 删除容器配置
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="applicationContainerId"></param>
+    /// <param name="deploymentConfigurationId"></param>
+    /// <param name="deploymentContainerConfigurationId"></param>
     /// <param name="input"></param>
-    public async Task UpdateDeploymentContainerAsync(string id, string applicationContainerId, DeploymentContainerConfigurationInputDto input)
+    public async Task UpdateDeploymentContainerConfigurationAsync(string deploymentConfigurationId, string deploymentContainerConfigurationId, DeploymentContainerConfigurationInputDto input)
     {
-        var applicationDeployment = await GetAndCheckApplicationDeploymentAsync(id);
-        applicationDeployment.UpdateApplicationContainer(applicationContainerId, input);
+        var applicationDeployment = await GetAndCheckDeploymentConfigurationAsync(deploymentConfigurationId);
+        applicationDeployment.UpdateDeploymentContainerConfiguration(deploymentContainerConfigurationId, input);
         await _unitOfWork.CommitAsync();
     }
 
     /// <summary>
     /// 删除容器配置
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="applicationContainerId"></param>
-    public async Task DeleteDeploymentContainerAsync(string id, string applicationContainerId)
+    /// <param name="deploymentConfigurationId"></param>
+    /// <param name="deploymentContainerConfigurationId"></param>
+    public async Task DeleteDeploymentContainerConfigurationAsync(string deploymentConfigurationId, string deploymentContainerConfigurationId)
     {
-        var applicationDeployment = await GetAndCheckApplicationDeploymentAsync(id);
-        applicationDeployment.RemoveContainer(applicationContainerId);
+        var applicationDeployment = await GetAndCheckDeploymentConfigurationAsync(deploymentConfigurationId);
+        applicationDeployment.RemoveDeploymentContainerConfiguration(deploymentContainerConfigurationId);
         await _unitOfWork.CommitAsync();
     }
 
@@ -107,9 +107,9 @@ public class DeploymentConfigurationApplication : IDeploymentConfigurationApplic
 
     #region 私有Check方法
 
-    private async Task<DeploymentConfiguration> GetAndCheckApplicationDeploymentAsync(string id)
+    private async Task<DeploymentConfiguration> GetAndCheckDeploymentConfigurationAsync(string id)
     {
-        var cluster = await _applicationDeploymentRepository.FindApplicationDeploymentByIdAsync(id);
+        var cluster = await _deploymentConfigurationRepository.FindDeploymentConfigurationByIdAsync(id);
         if (cluster is null)
         {
             throw new BusinessException("部署不存在，请刷新页面");
@@ -118,9 +118,9 @@ public class DeploymentConfigurationApplication : IDeploymentConfigurationApplic
         return cluster;
     }
 
-    private async Task<bool> CheckIsExitApplicationDeploymentAsync(string appId, string name)
+    private async Task<bool> CheckIsExitDeploymentConfigurationAsync(string appId, string name)
     {
-        var cluster = await _applicationDeploymentRepository.FindDeploymentConfigurationByAppIdAndNameAsync(appId, name);
+        var cluster = await _deploymentConfigurationRepository.FindDeploymentConfigurationByAppIdAndNameAsync(appId, name);
         if (cluster is null)
         {
             return false;

@@ -2,7 +2,7 @@ using IdentityModel.OidcClient;
 using Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
 using Luck.Walnut.Kube.Domain.Repositories;
 using Luck.Walnut.Kube.Dto;
-using Luck.Walnut.Kube.Dto.ApplicationDeployments;
+using Luck.Walnut.Kube.Dto.DeploymentConfigurations;
 using Microsoft.Extensions.Hosting;
 
 namespace Luck.Walnut.Kube.Query.DeploymentConfigurations;
@@ -17,9 +17,9 @@ public class DeploymentConfigurationQueryService : IDeploymentConfigurationQuery
         _deploymentConfigurationRepository = applicationDeploymentRepository;
     }
 
-    public async Task<DeploymentConfigurationOutputDto?> GetApplicationDeploymentDetailByIdAsync(string id)
+    public async Task<DeploymentConfigurationOutputDto?> GetDeploymentConfigurationDetailByIdAsync(string id)
     {
-        var deploymentConfiguration = await _deploymentConfigurationRepository.FindApplicationDeploymentByIdAsync(id);
+        var deploymentConfiguration = await _deploymentConfigurationRepository.FindDeploymentConfigurationByIdAsync(id);
         if (deploymentConfiguration is null)
 
         {

@@ -1,8 +1,8 @@
 using Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
 using Luck.Walnut.Kube.Domain.Repositories;
-using Luck.Walnut.Kube.Dto.ApplicationDeployments;
+using Luck.Walnut.Kube.Dto.DeploymentConfigurations;
 
-namespace Luck.Walnut.Kube.Query.ApplicationDeployments;
+namespace Luck.Walnut.Kube.Query.DeploymentConfigurations;
 
 public class DeploymentContainerConfigurationQueryService : IDeploymentContainerConfigurationQueryService
 {
@@ -13,7 +13,7 @@ public class DeploymentContainerConfigurationQueryService : IDeploymentContainer
         _applicationContainerRepository = applicationContainerRepository;
     }
 
-    public async Task<List<DeploymentContainerConfigurationOutputDto>> GetListByApplicationDeploymentIdAsync(string applicationDeploymentId)
+    public async Task<List<DeploymentContainerConfigurationOutputDto>> GetDeploymentContainerConfigurationListByDeploymentIdAsync(string applicationDeploymentId)
     {
         var applicationContainerList = await _applicationContainerRepository.GetListByApplicationDeploymentIdAsync(applicationDeploymentId);
         return applicationContainerList.Select(x =>
@@ -87,11 +87,69 @@ public class DeploymentContainerConfigurationQueryService : IDeploymentContainer
         ).ToList();
     }
 
-    //public async Task<ApplicationContainerOutputDto> FindApplicationContainerByIdFirstOrDefaultAsync(string id)
-    //{
+    public async Task<DeploymentContainerConfigurationOutputDto?> GetApplicationContainerByIdFirstOrDefaultAsync(string id)
+    {
+        var deploymentContainerConfiguration = await _applicationContainerRepository.FindApplicationContainerByIdFirstOrDefaultAsync(id);
+        if (deploymentContainerConfiguration is null)
+        {
+            return null;
+        }
+
+        var deploymentContainerConfigurationDto = new DeploymentContainerConfigurationOutputDto
+        {
+            Id = deploymentContainerConfiguration.Id,
+            ContainerName = deploymentContainerConfiguration.ContainerName,
+            RestartPolicy = deploymentContainerConfiguration.RestartPolicy,
+            IsInitContainer = deploymentContainerConfiguration.IsInitContainer,
+            ImagePullPolicy = deploymentContainerConfiguration.ImagePullPolicy,
+            Image = deploymentContainerConfiguration.Image,
+        };
+
+        if (deploymentContainerConfiguration.ReadinessProbe is not null)
+        {
+            deploymentContainerConfigurationDto.ReadinessProbe = new ContainerSurviveConfigurationDto
+            {
+                Scheme = deploymentContainerConfiguration.ReadinessProbe.Scheme,
+                Path = deploymentContainerConfiguration.ReadinessProbe.Path,
+                Port = deploymentContainerConfiguration.ReadinessProbe.Port,
+                InitialDelaySeconds = deploymentContainerConfiguration.ReadinessProbe.InitialDelaySeconds,
+                PeriodSeconds = deploymentContainerConfiguration.ReadinessProbe.PeriodSeconds,
+            };
+        }
+
+        if (deploymentContainerConfiguration.LiveNessProbe is not null)
+        {
+            deploymentContainerConfigurationDto.LiveNessProbe = new ContainerSurviveConfigurationDto
+            {
+                Scheme = deploymentContainerConfiguration.LiveNessProbe.Scheme,
+                Path = deploymentContainerConfiguration.LiveNessProbe.Path,
+                Port = deploymentContainerConfiguration.LiveNessProbe.Port,
+                InitialDelaySeconds = deploymentContainerConfiguration.LiveNessProbe.InitialDelaySeconds,
+                PeriodSeconds = deploymentContainerConfiguration.LiveNessProbe.PeriodSeconds,
+            };
+        }
+
+        if (deploymentContainerConfiguration.Limits is not null)
+        {
+            deploymentContainerConfigurationDto.Limits = new ContainerResourceQuantityDto
+            {
+                Cpu = deploymentContainerConfiguration.Limits.Cpu,
+                Memory = deploymentContainerConfiguration.Limits.Memory,
+            };
+        }
+
+        if (deploymentContainerConfiguration.Requests is not null)
+        {
+            deploymentContainerConfigurationDto.Requests = new ContainerResourceQuantityDto
+            {
+                Cpu = deploymentContainerConfiguration.Requests.Cpu,
+                Memory = deploymentContainerConfiguration.Requests.Memory,
+            };
+        }
+
+        deploymentContainerConfigurationDto.Environments = deploymentContainerConfiguration.Environments;
 
 
-    //    var aoo _applicationContainerRepository.FindApplicationContainerByIdFirstOrDefaultAsync(id);
-
-    //}
+        return deploymentContainerConfigurationDto;
+    }
 }
