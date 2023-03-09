@@ -101,6 +101,7 @@ public class DeploymentConfiguration : FullAggregateRoot
         Replicas = input.Replicas;
         MaxUnavailable = input.MaxUnavailable;
         ImagePullSecretId = input.ImagePullSecretId;
+        Name=input.Name;
         return this;
     }
 
