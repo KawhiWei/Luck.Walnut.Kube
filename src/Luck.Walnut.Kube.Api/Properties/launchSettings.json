@@ -2,7 +2,7 @@
   "profiles": {
     "Luck.Walnut.Kube.Api": {
       "commandName": "Project",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "kube/swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
