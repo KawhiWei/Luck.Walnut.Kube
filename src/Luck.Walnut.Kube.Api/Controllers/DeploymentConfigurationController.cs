@@ -80,7 +80,7 @@ public class DeploymentConfigurationController : BaseController
     /// <param name="input"></param>
     /// <returns></returns>
     [HttpPost("{deploymentId}/container")]
-    public Task CreateDeploymentContainerConfiguration([FromServices] IDeploymentConfigurationApplication deploymentConfigurationApplication, string deploymentId, [FromBody] DeploymentContainerConfigurationInputDto input)
+    public Task CreateDeploymentContainerConfiguration([FromServices] IDeploymentConfigurationApplication deploymentConfigurationApplication, string deploymentId, [FromBody] MasterContainerConfigurationInputDto input)
         => deploymentConfigurationApplication.CreateDeploymentContainerConfigurationAsync(deploymentId, input);
 
     /// <summary>
@@ -92,7 +92,7 @@ public class DeploymentConfigurationController : BaseController
     /// <param name="input"></param>
     /// <returns></returns>
     [HttpPut("{deploymentId}/{id}/container")]
-    public Task UpdateDeploymentContainerConfiguration([FromServices] IDeploymentConfigurationApplication deploymentConfigurationApplication, string deploymentId, string id, [FromBody] DeploymentContainerConfigurationInputDto input)
+    public Task UpdateDeploymentContainerConfiguration([FromServices] IDeploymentConfigurationApplication deploymentConfigurationApplication, string deploymentId, string id, [FromBody] MasterContainerConfigurationInputDto input)
         => deploymentConfigurationApplication.UpdateDeploymentContainerConfigurationAsync(deploymentId, id, input);
 
 
@@ -115,7 +115,7 @@ public class DeploymentConfigurationController : BaseController
     /// <param name="deploymentId"></param>
     /// <returns></returns>
     [HttpGet("{deploymentId}/container/list")]
-    public Task<List<DeploymentContainerConfigurationOutputDto>> GetDeploymentContainerConfigurationListByDeploymentId([FromServices] IDeploymentContainerConfigurationQueryService deploymentContainerConfigurationQueryService, string deploymentId)
+    public Task<List<MasterContainerConfigurationOutputDto>> GetDeploymentContainerConfigurationListByDeploymentId([FromServices] IMasterContainerConfigurationQueryService deploymentContainerConfigurationQueryService, string deploymentId)
         => deploymentContainerConfigurationQueryService.GetDeploymentContainerConfigurationListByDeploymentIdAsync(deploymentId);
 
     
@@ -126,7 +126,7 @@ public class DeploymentConfigurationController : BaseController
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}/container")]
-    public Task<DeploymentContainerConfigurationOutputDto?> GetDeploymentContainerConfigurationById([FromServices] IDeploymentContainerConfigurationQueryService deploymentContainerConfigurationQueryService, string id)
+    public Task<MasterContainerConfigurationOutputDto?> GetDeploymentContainerConfigurationById([FromServices] IMasterContainerConfigurationQueryService deploymentContainerConfigurationQueryService, string id)
         => deploymentContainerConfigurationQueryService.GetApplicationContainerByIdFirstOrDefaultAsync(id);
     #endregion
 }

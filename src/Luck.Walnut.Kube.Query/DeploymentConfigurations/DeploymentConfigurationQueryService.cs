@@ -26,10 +26,10 @@ public class DeploymentConfigurationQueryService : IDeploymentConfigurationQuery
             return null;
         }
 
-        var deploymentContainerConfigurations = deploymentConfiguration.DeploymentContainers.Select(x =>
+        var deploymentContainerConfigurations = deploymentConfiguration.MasterContainers.Select(x =>
         {
 
-            var deploymentContainerConfiguration = new DeploymentContainerConfigurationOutputDto { Id = x.Id, ContainerName = x.ContainerName, RestartPolicy = x.RestartPolicy, IsInitContainer = x.IsInitContainer, ImagePullPolicy = x.ImagePullPolicy, Image = x.Image, };
+            var deploymentContainerConfiguration = new MasterContainerConfigurationOutputDto { Id = x.Id, ContainerName = x.ContainerName, RestartPolicy = x.RestartPolicy, IsInitContainer = x.IsInitContainer, ImagePullPolicy = x.ImagePullPolicy, Image = x.Image, };
             if (x.ReadinessProbe is not null)
             {
                 deploymentContainerConfiguration.ReadinessProbe = new ContainerSurviveConfigurationDto

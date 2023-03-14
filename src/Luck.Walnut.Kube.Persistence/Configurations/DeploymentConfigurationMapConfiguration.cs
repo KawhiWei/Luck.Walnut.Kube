@@ -7,7 +7,7 @@ public class DeploymentConfigurationMapConfiguration : IEntityTypeConfiguration<
     public void Configure(EntityTypeBuilder<DeploymentConfiguration> builder)
     {
         builder.HasKey(x => x.Id);
-        builder.HasMany(o => o.DeploymentContainers)
+        builder.HasMany(o => o.MasterContainers)
             .WithOne()
             .HasForeignKey(x => x.ApplicationDeploymentId)
             .OnDelete(DeleteBehavior.Cascade);

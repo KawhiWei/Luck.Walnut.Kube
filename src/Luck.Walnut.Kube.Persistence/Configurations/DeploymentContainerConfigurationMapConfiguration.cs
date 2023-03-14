@@ -2,9 +2,9 @@ using Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
 
 namespace Luck.Walnut.Kube.Persistence.Configurations;
 
-public class DeploymentContainerConfigurationMapConfiguration : IEntityTypeConfiguration<DeploymentContainerConfiguration>
+public class DeploymentContainerConfigurationMapConfiguration : IEntityTypeConfiguration<MasterContainerConfiguration>
 {
-    public void Configure(EntityTypeBuilder<DeploymentContainerConfiguration> builder)
+    public void Configure(EntityTypeBuilder<MasterContainerConfiguration> builder)
     {
         builder.HasKey(x => x.Id);
         builder.Property(e => e.ReadinessProbe).HasJsonConversion();

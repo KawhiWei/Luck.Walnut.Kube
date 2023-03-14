@@ -2,9 +2,9 @@ using Luck.Walnut.Kube.Dto.DeploymentConfigurations;
 
 namespace Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
 
-public class DeploymentContainerConfiguration : FullEntity
+public class MasterContainerConfiguration : FullEntity
 {
-    public DeploymentContainerConfiguration(string containerName, string restartPolicy, string imagePullPolicy, bool isInitContainer, string image)
+    public MasterContainerConfiguration(string containerName, string restartPolicy, string imagePullPolicy, bool isInitContainer, string image)
     {
         ContainerName = containerName;
         RestartPolicy = restartPolicy;
@@ -83,7 +83,7 @@ public class DeploymentContainerConfiguration : FullEntity
     /// </summary>
     public string ApplicationDeploymentId { get; private set; } = default!;
     
-    public DeploymentContainerConfiguration Update(DeploymentContainerConfigurationInputDto input)
+    public MasterContainerConfiguration Update(MasterContainerConfigurationInputDto input)
     {
         ContainerName = input.ContainerName;
         RestartPolicy = input.RestartPolicy;
@@ -93,20 +93,20 @@ public class DeploymentContainerConfiguration : FullEntity
         return this;
     }
 
-    public DeploymentContainerConfiguration SetReadinessProbe(ContainerSurviveConfigurationDto readinessProbe)
+    public MasterContainerConfiguration SetReadinessProbe(ContainerSurviveConfigurationDto readinessProbe)
     {
         ReadinessProbe = new ContainerSurviveConfiguration(readinessProbe.Scheme, readinessProbe.Path, readinessProbe.Port, readinessProbe.InitialDelaySeconds, readinessProbe.PeriodSeconds);
 
         return this;
     }
 
-    public DeploymentContainerConfiguration SetLiveNessProbe(ContainerSurviveConfigurationDto liveNessProbe)
+    public MasterContainerConfiguration SetLiveNessProbe(ContainerSurviveConfigurationDto liveNessProbe)
     {
         LiveNessProbe = new ContainerSurviveConfiguration(liveNessProbe.Scheme, liveNessProbe.Path, liveNessProbe.Port, liveNessProbe.InitialDelaySeconds, liveNessProbe.PeriodSeconds);
         return this;
     }
 
-    public DeploymentContainerConfiguration SetLimits(ContainerResourceQuantityDto limits)
+    public MasterContainerConfiguration SetLimits(ContainerResourceQuantityDto limits)
     {
         Limits = new ContainerResourceQuantity();
         if (limits.Cpu is not null)
@@ -122,7 +122,7 @@ public class DeploymentContainerConfiguration : FullEntity
         return this;
     }
 
-    public DeploymentContainerConfiguration SetRequests(ContainerResourceQuantityDto requests)
+    public MasterContainerConfiguration SetRequests(ContainerResourceQuantityDto requests)
     {
         Requests = new ContainerResourceQuantity();
         if (requests.Cpu is not null)
@@ -138,7 +138,7 @@ public class DeploymentContainerConfiguration : FullEntity
         return this;
     }
 
-    public DeploymentContainerConfiguration SetEnvironments(List<KeyValuePair<string,string>>? environments)
+    public MasterContainerConfiguration SetEnvironments(List<KeyValuePair<string,string>>? environments)
     {
         
         
@@ -146,7 +146,7 @@ public class DeploymentContainerConfiguration : FullEntity
         return this;
     }
 
-    public DeploymentContainerConfiguration SetContainerPortConfigurations()
+    public MasterContainerConfiguration SetContainerPortConfigurations()
     {
         return this;
     }

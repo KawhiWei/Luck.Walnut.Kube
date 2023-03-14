@@ -5,14 +5,14 @@ using Luck.Walnut.Kube.Dto.DeploymentConfigurations;
 
 namespace Luck.Walnut.Kube.Persistence.Repositories;
 
-public class DeploymentContainerConfigurationRepository : EfCoreEntityRepository<DeploymentContainerConfiguration, string>, IDeploymentContainerConfigurationRepository
+public class MasterContainerConfigurationRepository : EfCoreEntityRepository<MasterContainerConfiguration, string>, IMasterContainerConfigurationRepository
 {
-    public DeploymentContainerConfigurationRepository(ILuckDbContext dbContext) : base(dbContext)
+    public MasterContainerConfigurationRepository(ILuckDbContext dbContext) : base(dbContext)
     {
     }
 
 
-    public Task<List<DeploymentContainerConfiguration>> GetApplicationContainerListByApplicationDeploymentIdAsync(string applicationDeploymentId)
+    public Task<List<MasterContainerConfiguration>> GetApplicationContainerListByApplicationDeploymentIdAsync(string applicationDeploymentId)
     {
         throw new NotImplementedException();
     }
@@ -23,7 +23,7 @@ public class DeploymentContainerConfigurationRepository : EfCoreEntityRepository
     /// <param name="applicationDeploymentId"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public Task<List<DeploymentContainerConfiguration>> GetListByApplicationDeploymentIdAsync(string applicationDeploymentId)
+    public Task<List<MasterContainerConfiguration>> GetListByApplicationDeploymentIdAsync(string applicationDeploymentId)
     {
         return FindAll(x => x.ApplicationDeploymentId == applicationDeploymentId).ToListAsync();
     }
@@ -33,7 +33,7 @@ public class DeploymentContainerConfigurationRepository : EfCoreEntityRepository
     /// </summary>
     /// <param name="applicationDeploymentId"></param>
     /// <returns></returns>
-    public Task<DeploymentContainerConfiguration?> FindApplicationContainerByIdFirstOrDefaultAsync(string id)
+    public Task<MasterContainerConfiguration?> FindApplicationContainerByIdFirstOrDefaultAsync(string id)
     {
         return FindAll(x => x.Id == id).FirstOrDefaultAsync();
     }

@@ -69,7 +69,7 @@ public class DeploymentConfigurationApplication : IDeploymentConfigurationApplic
     /// </summary>
     /// <param name="deploymentConfigurationId"></param>
     /// <param name="input"></param>
-    public async Task CreateDeploymentContainerConfigurationAsync(string deploymentConfigurationId, DeploymentContainerConfigurationInputDto input)
+    public async Task CreateDeploymentContainerConfigurationAsync(string deploymentConfigurationId, MasterContainerConfigurationInputDto input)
     {
         var applicationDeployment = await GetAndCheckDeploymentConfigurationAsync(deploymentConfigurationId);
 
@@ -83,7 +83,7 @@ public class DeploymentConfigurationApplication : IDeploymentConfigurationApplic
     /// <param name="deploymentConfigurationId"></param>
     /// <param name="deploymentContainerConfigurationId"></param>
     /// <param name="input"></param>
-    public async Task UpdateDeploymentContainerConfigurationAsync(string deploymentConfigurationId, string deploymentContainerConfigurationId, DeploymentContainerConfigurationInputDto input)
+    public async Task UpdateDeploymentContainerConfigurationAsync(string deploymentConfigurationId, string deploymentContainerConfigurationId, MasterContainerConfigurationInputDto input)
     {
         var applicationDeployment = await GetAndCheckDeploymentConfigurationAsync(deploymentConfigurationId);
         applicationDeployment.UpdateDeploymentContainerConfiguration(deploymentContainerConfigurationId, input);
@@ -141,7 +141,7 @@ public class DeploymentConfigurationApplication : IDeploymentConfigurationApplic
         v1Deployment.Metadata.NamespaceProperty = applicationDeployment.KubernetesNameSpaceId;
 
         applicationDeployment
-            .DeploymentContainers.Where(x => x.IsInitContainer).ForEach(a =>
+            .MasterContainers.Where(x => x.IsInitContainer).ForEach(a =>
             {
                 var limits = new Dictionary<string, ResourceQuantity>();
 

@@ -11,10 +11,10 @@ public interface IDeploymentConfigurationApplication : IScopedDependency
     Task DeleteDeploymentConfigurationAsync(string id);
 
 
-    Task CreateDeploymentContainerConfigurationAsync(string deploymentConfigurationId, DeploymentContainerConfigurationInputDto input);
+    Task CreateDeploymentContainerConfigurationAsync(string deploymentConfigurationId, MasterContainerConfigurationInputDto input);
 
 
-    Task UpdateDeploymentContainerConfigurationAsync(string deploymentConfigurationId, string deploymentContainerConfigurationId, DeploymentContainerConfigurationInputDto input);
+    Task UpdateDeploymentContainerConfigurationAsync(string deploymentConfigurationId, string deploymentContainerConfigurationId, MasterContainerConfigurationInputDto input);
 
 
     Task DeleteDeploymentContainerConfigurationAsync(string deploymentConfigurationId, string deploymentContainerConfigurationId);

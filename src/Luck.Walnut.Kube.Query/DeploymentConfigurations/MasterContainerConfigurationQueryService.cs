@@ -4,21 +4,21 @@ using Luck.Walnut.Kube.Dto.DeploymentConfigurations;
 
 namespace Luck.Walnut.Kube.Query.DeploymentConfigurations;
 
-public class DeploymentContainerConfigurationQueryService : IDeploymentContainerConfigurationQueryService
+public class MasterContainerConfigurationQueryService : IMasterContainerConfigurationQueryService
 {
-    private readonly IDeploymentContainerConfigurationRepository _applicationContainerRepository;
+    private readonly IMasterContainerConfigurationRepository _applicationContainerRepository;
 
-    public DeploymentContainerConfigurationQueryService(IDeploymentContainerConfigurationRepository applicationContainerRepository)
+    public MasterContainerConfigurationQueryService(IMasterContainerConfigurationRepository applicationContainerRepository)
     {
         _applicationContainerRepository = applicationContainerRepository;
     }
 
-    public async Task<List<DeploymentContainerConfigurationOutputDto>> GetDeploymentContainerConfigurationListByDeploymentIdAsync(string applicationDeploymentId)
+    public async Task<List<MasterContainerConfigurationOutputDto>> GetDeploymentContainerConfigurationListByDeploymentIdAsync(string applicationDeploymentId)
     {
         var applicationContainerList = await _applicationContainerRepository.GetListByApplicationDeploymentIdAsync(applicationDeploymentId);
         return applicationContainerList.Select(x =>
             {
-                var applicationContainerOutputDto = new DeploymentContainerConfigurationOutputDto
+                var applicationContainerOutputDto = new MasterContainerConfigurationOutputDto
                 {
                     Id = x.Id,
                     ContainerName = x.ContainerName,
@@ -87,7 +87,7 @@ public class DeploymentContainerConfigurationQueryService : IDeploymentContainer
         ).ToList();
     }
 
-    public async Task<DeploymentContainerConfigurationOutputDto?> GetApplicationContainerByIdFirstOrDefaultAsync(string id)
+    public async Task<MasterContainerConfigurationOutputDto?> GetApplicationContainerByIdFirstOrDefaultAsync(string id)
     {
         var deploymentContainerConfiguration = await _applicationContainerRepository.FindApplicationContainerByIdFirstOrDefaultAsync(id);
         if (deploymentContainerConfiguration is null)
@@ -95,7 +95,7 @@ public class DeploymentContainerConfigurationQueryService : IDeploymentContainer
             return null;
         }
 
-        var deploymentContainerConfigurationDto = new DeploymentContainerConfigurationOutputDto
+        var deploymentContainerConfigurationDto = new MasterContainerConfigurationOutputDto
         {
             Id = deploymentContainerConfiguration.Id,
             ContainerName = deploymentContainerConfiguration.ContainerName,

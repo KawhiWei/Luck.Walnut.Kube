@@ -37,7 +37,7 @@ public class DeploymentConfigurationRepository : EfCoreAggregateRootRepository<D
 
     public Task<DeploymentConfiguration?> FindDeploymentConfigurationByIdAsync(string id)
         => FindAll()
-        .Include(x=>x.DeploymentContainers).FirstOrDefaultAsync(x => x.Id == id);
+        .Include(x=>x.MasterContainers).FirstOrDefaultAsync(x => x.Id == id);
 
     /// <summary>
     /// 

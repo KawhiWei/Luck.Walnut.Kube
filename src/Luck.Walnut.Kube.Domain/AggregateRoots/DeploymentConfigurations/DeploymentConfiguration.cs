@@ -83,7 +83,7 @@ public class DeploymentConfiguration : FullAggregateRoot
     /// <summary>
     /// 应用容器配置
     /// </summary>
-    public ICollection<DeploymentContainerConfiguration> DeploymentContainers { get; private set; } = new HashSet<DeploymentContainerConfiguration>();
+    public ICollection<MasterContainerConfiguration> MasterContainers { get; private set; } = new HashSet<MasterContainerConfiguration>();
 
     /// <summary>
     /// 
@@ -112,13 +112,13 @@ public class DeploymentConfiguration : FullAggregateRoot
     /// <returns></returns>
     public DeploymentConfiguration RemoveDeploymentContainerConfiguration(string applicationContainerId)
     {
-        var applicationContainer = DeploymentContainers.FirstOrDefault(x => x.Id == applicationContainerId);
+        var applicationContainer = MasterContainers.FirstOrDefault(x => x.Id == applicationContainerId);
         if (applicationContainer is null)
         {
             throw new BusinessException($"容器配置不存在，请刷新页面");
         }
 
-        DeploymentContainers.Remove(applicationContainer);
+        MasterContainers.Remove(applicationContainer);
         return this;
     }
 
@@ -127,15 +127,15 @@ public class DeploymentConfiguration : FullAggregateRoot
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
-    public DeploymentConfiguration AddDeploymentContainerConfiguration(DeploymentContainerConfigurationInputDto input)
+    public DeploymentConfiguration AddDeploymentContainerConfiguration(MasterContainerConfigurationInputDto input)
     {
         if (CheckApplicationContainerName(input.ContainerName))
         {
             throw new BusinessException($"【{input.ContainerName}】已存在");
         }
 
-        var applicationContainer = new DeploymentContainerConfiguration(input.ContainerName,
-            input.RestartPolicy, input.ImagePullPolicy, input.IsInitContainer, input.Image);
+        var applicationContainer = new MasterContainerConfiguration(input.ContainerName,
+            input.RestartPolicy, input.ImagePullPolicy, input.IsInitContainer, input.Image??"");
         if (input.Limits is not null)
         {
             applicationContainer.SetLimits(input.Limits);
@@ -156,7 +156,7 @@ public class DeploymentConfiguration : FullAggregateRoot
             applicationContainer.SetReadinessProbe(input.ReadinessProbe);
         }
         applicationContainer.SetEnvironments(input.Environments ?? new List<KeyValuePair<string, string>>());
-        DeploymentContainers.Add(applicationContainer);
+        MasterContainers.Add(applicationContainer);
 
         return this;
     }
@@ -172,10 +172,10 @@ public class DeploymentConfiguration : FullAggregateRoot
     {
         if (isUpdate)
         {
-            return DeploymentContainers.Any(x => x.ContainerName == containerName && x.Id != currentId);
+            return MasterContainers.Any(x => x.ContainerName == containerName && x.Id != currentId);
         }
 
-        return DeploymentContainers.Any(x => x.ContainerName == containerName);
+        return MasterContainers.Any(x => x.ContainerName == containerName);
     }
 
     /// <summary>
@@ -184,9 +184,9 @@ public class DeploymentConfiguration : FullAggregateRoot
     /// <param name="applicationContainerId"></param>
     /// <param name="input"></param>
     /// <returns></returns>
-    public DeploymentConfiguration UpdateDeploymentContainerConfiguration(string applicationContainerId, DeploymentContainerConfigurationInputDto input)
+    public DeploymentConfiguration UpdateDeploymentContainerConfiguration(string applicationContainerId, MasterContainerConfigurationInputDto input)
     {
-        var applicationContainer = DeploymentContainers.FirstOrDefault(x => x.Id == applicationContainerId);
+        var applicationContainer = MasterContainers.FirstOrDefault(x => x.Id == applicationContainerId);
         if (applicationContainer is null)
         {
             throw new BusinessException($"容器配置不存在，请刷新页面");
