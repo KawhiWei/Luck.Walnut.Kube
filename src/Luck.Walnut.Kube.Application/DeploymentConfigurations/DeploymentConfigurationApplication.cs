@@ -24,16 +24,22 @@ public class DeploymentConfigurationApplication : IDeploymentConfigurationApplic
     /// </summary>
     /// <param name="input"></param>
     /// <exception cref="BusinessException"></exception>
-    public async Task CreateDeploymentConfigurationAsync(DeploymentConfigurationInputDto input)
+    public async Task CreateDeploymentConfigurationAsync(DeploymentInputDto input)
     {
-        if (await CheckIsExitDeploymentConfigurationAsync(input.AppId, input.Name))
+        var deploymentConfiguration = input.DeploymentConfiguration;
+        var masterContainerConfiguration = input.MasterContainerConfiguration;
+
+        if (await CheckIsExitDeploymentConfigurationAsync(deploymentConfiguration.AppId, deploymentConfiguration.Name))
         {
-            throw new BusinessException($"[{input.Name}]已存在，请刷新页面");
+            throw new BusinessException($"[{deploymentConfiguration.Name}]已存在，请刷新页面");
         }
 
-        var applicationDeployment = new DeploymentConfiguration(input.EnvironmentName,
-            input.ApplicationRuntimeType, input.DeploymentType, input.ChineseName, input.Name, input.AppId,
-            input.KubernetesNameSpaceId, input.Replicas, input.MaxUnavailable, input.ImagePullSecretId, false);
+        var applicationDeployment = new DeploymentConfiguration(deploymentConfiguration.EnvironmentName,
+            deploymentConfiguration.ApplicationRuntimeType, deploymentConfiguration.DeploymentType, deploymentConfiguration.ChineseName, deploymentConfiguration.Name, deploymentConfiguration.AppId,
+            deploymentConfiguration.KubernetesNameSpaceId, deploymentConfiguration.Replicas, deploymentConfiguration.MaxUnavailable, deploymentConfiguration.ImagePullSecretId, false);
+
+        applicationDeployment.SetInitContainers(deploymentConfiguration.InitContainers);
+        applicationDeployment.AddMasterContainerConfiguration(masterContainerConfiguration);
         _deploymentConfigurationRepository.Add(applicationDeployment);
         await _unitOfWork.CommitAsync();
     }
@@ -73,7 +79,7 @@ public class DeploymentConfigurationApplication : IDeploymentConfigurationApplic
     {
         var applicationDeployment = await GetAndCheckDeploymentConfigurationAsync(deploymentConfigurationId);
 
-        applicationDeployment.AddDeploymentContainerConfiguration(input);
+        applicationDeployment.AddMasterContainerConfiguration(input);
         await _unitOfWork.CommitAsync();
     }
 

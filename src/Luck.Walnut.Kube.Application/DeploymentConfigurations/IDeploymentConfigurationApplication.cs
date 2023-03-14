@@ -4,7 +4,7 @@ namespace Luck.Walnut.Kube.Application.DeploymentConfigurations;
 
 public interface IDeploymentConfigurationApplication : IScopedDependency
 {
-    Task CreateDeploymentConfigurationAsync(DeploymentConfigurationInputDto input);
+    Task CreateDeploymentConfigurationAsync(DeploymentInputDto input);
 
     Task UpdateDeploymentConfigurationAsync(string id, DeploymentConfigurationInputDto input);
 

@@ -116,8 +116,13 @@ public class DeploymentConfiguration : FullAggregateRoot
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
-    public DeploymentConfiguration SetApplicationDeployment(List<string> initContainers)
+    public DeploymentConfiguration SetInitContainers(List<string>? initContainers)
     {
+        if(initContainers is null)
+        {
+            return this;
+        }
+
         InitContainers = initContainers;
         return this;
     }
@@ -144,7 +149,7 @@ public class DeploymentConfiguration : FullAggregateRoot
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
-    public DeploymentConfiguration AddDeploymentContainerConfiguration(MasterContainerConfigurationInputDto input)
+    public DeploymentConfiguration AddMasterContainerConfiguration(MasterContainerConfigurationInputDto input)
     {
         if (CheckApplicationContainerName(input.ContainerName))
         {
@@ -172,6 +177,7 @@ public class DeploymentConfiguration : FullAggregateRoot
         {
             applicationContainer.SetReadinessProbe(input.ReadinessProbe);
         }
+        
         applicationContainer.SetEnvironments(input.Environments ?? new List<KeyValuePair<string, string>>());
         MasterContainers.Add(applicationContainer);
 

@@ -43,7 +43,7 @@ public class DeploymentConfigurationController : BaseController
     /// <param name="input"></param>
     /// <returns></returns>
     [HttpPost]
-    public Task CreateDeploymentConfiguration([FromServices] IDeploymentConfigurationApplication deploymentConfigurationApplication, [FromBody] DeploymentConfigurationInputDto input)
+    public Task CreateDeploymentConfiguration([FromServices] IDeploymentConfigurationApplication deploymentConfigurationApplication, [FromBody] DeploymentInputDto input)
         => deploymentConfigurationApplication.CreateDeploymentConfigurationAsync(input);
 
 

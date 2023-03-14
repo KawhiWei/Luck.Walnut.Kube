@@ -53,5 +53,10 @@ public class DeploymentConfigurationBaseDto
     /// 镜像拉取证书
     /// </summary>
     public string? ImagePullSecretId { get; set; }
-    
+
+    /// <summary>
+    /// 初始容器配置列表
+    /// </summary>
+    public List<string>? InitContainers { get;  set; } = default!;
+
 }
