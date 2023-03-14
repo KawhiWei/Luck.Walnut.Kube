@@ -2,7 +2,7 @@ using Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
 
 namespace Luck.Walnut.Kube.Persistence.Configurations;
 
-public class DeploymentContainerConfigurationMapConfiguration : IEntityTypeConfiguration<MasterContainerConfiguration>
+public class MasterContainerConfigurationMapConfiguration : IEntityTypeConfiguration<MasterContainerConfiguration>
 {
     public void Configure(EntityTypeBuilder<MasterContainerConfiguration> builder)
     {
@@ -13,6 +13,6 @@ public class DeploymentContainerConfigurationMapConfiguration : IEntityTypeConfi
         builder.Property(e => e.Requests).HasJsonConversion();
         builder.Property(e => e.Environments).HasJsonConversion();
         builder.Property(e => e.ContainerPortConfigurations).HasJsonConversion();
-        builder.ToTable("deployment_configuration_container");
+        builder.ToTable("master_container_configurations");
     }
 }

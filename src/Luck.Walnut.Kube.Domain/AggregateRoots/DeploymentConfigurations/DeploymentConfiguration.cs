@@ -81,9 +81,14 @@ public class DeploymentConfiguration : FullAggregateRoot
     public bool IsPublish { get; private set; }
 
     /// <summary>
-    /// 应用容器配置
+    /// 主应用容器配置
     /// </summary>
     public ICollection<MasterContainerConfiguration> MasterContainers { get; private set; } = new HashSet<MasterContainerConfiguration>();
+
+    /// <summary>
+    /// 初始容器配置列表
+    /// </summary>
+    public ICollection<string> InitContainers { get; private set; } = new HashSet<string>();
 
     /// <summary>
     /// 
@@ -102,6 +107,18 @@ public class DeploymentConfiguration : FullAggregateRoot
         MaxUnavailable = input.MaxUnavailable;
         ImagePullSecretId = input.ImagePullSecretId;
         Name=input.Name;
+        return this;
+    }
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="input"></param>
+    /// <returns></returns>
+    public DeploymentConfiguration SetApplicationDeployment(List<string> initContainers)
+    {
+        InitContainers = initContainers;
         return this;
     }
 

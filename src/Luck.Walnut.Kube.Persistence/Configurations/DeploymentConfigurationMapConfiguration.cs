@@ -11,7 +11,7 @@ public class DeploymentConfigurationMapConfiguration : IEntityTypeConfiguration<
             .WithOne()
             .HasForeignKey(x => x.ApplicationDeploymentId)
             .OnDelete(DeleteBehavior.Cascade);
-
+        builder.Property(e => e.InitContainers).HasJsonConversion();
         builder.HasIndex(x => x.AppId, "appid_unique_index");
         builder.ToTable("deployment_configurations");
     }
