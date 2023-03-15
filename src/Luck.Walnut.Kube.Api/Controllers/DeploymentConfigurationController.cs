@@ -30,11 +30,12 @@ public class DeploymentConfigurationController : BaseController
     /// 根据Id查询一个部署配置
     /// </summary>
     /// <param name="deploymentConfigurationQueryService"></param>
-    /// <param name="id"></param>
+    /// <param name="deploymentId"></param>
+    /// <param name="masterContainerId"></param>
     /// <returns></returns>
-    [HttpGet("{id}")]
-    public Task<DeploymentConfigurationOutputDto?> GetDeploymentConfigurationDetailByIdAsync([FromServices] IDeploymentConfigurationQueryService deploymentConfigurationQueryService, string id)
-        => deploymentConfigurationQueryService.GetDeploymentConfigurationDetailByIdAsync(id);
+    [HttpGet("{deploymentId}/{masterContainerId}")]
+    public Task<DeploymentOutputDto?> GetDeploymentConfigurationDetailById([FromServices] IDeploymentConfigurationQueryService deploymentConfigurationQueryService, string deploymentId, string masterContainerId)
+        => deploymentConfigurationQueryService.GetDeploymentConfigurationDetailByIdAsync(deploymentId, masterContainerId);
 
     /// <summary>
     /// 添加部署
@@ -57,6 +58,18 @@ public class DeploymentConfigurationController : BaseController
     [HttpPut("{id}")]
     public Task UpdateApplicationDeployment([FromServices] IDeploymentConfigurationApplication deploymentConfigurationApplication, string id, [FromBody] DeploymentConfigurationInputDto input)
         => deploymentConfigurationApplication.UpdateDeploymentConfigurationAsync(id, input);
+
+    /// <summary>
+    /// 修改部署
+    /// </summary>
+    /// <param name="deploymentConfigurationApplication"></param>
+    /// <param name="masterContainerId"></param>
+    /// <param name="input"></param>
+    /// <param name="deploymentId"></param>
+    /// <returns></returns>
+    [HttpPut("{deploymentId}/{masterContainerId}")]
+    public Task UpdateApplicationDeployment([FromServices] IDeploymentConfigurationApplication deploymentConfigurationApplication, string deploymentId, string masterContainerId, [FromBody] DeploymentInputDto input)
+        => deploymentConfigurationApplication.UpdateDeploymentConfigurationAsync(deploymentId, masterContainerId, input);
 
     /// <summary>
     /// 删除部署
@@ -118,7 +131,7 @@ public class DeploymentConfigurationController : BaseController
     public Task<List<MasterContainerConfigurationOutputDto>> GetDeploymentContainerConfigurationListByDeploymentId([FromServices] IMasterContainerConfigurationQueryService deploymentContainerConfigurationQueryService, string deploymentId)
         => deploymentContainerConfigurationQueryService.GetDeploymentContainerConfigurationListByDeploymentIdAsync(deploymentId);
 
-    
+
     /// <summary>
     /// 根据Id查询一个容器配置
     /// </summary>
@@ -128,5 +141,6 @@ public class DeploymentConfigurationController : BaseController
     [HttpGet("{id}/container")]
     public Task<MasterContainerConfigurationOutputDto?> GetDeploymentContainerConfigurationById([FromServices] IMasterContainerConfigurationQueryService deploymentContainerConfigurationQueryService, string id)
         => deploymentContainerConfigurationQueryService.GetApplicationContainerByIdFirstOrDefaultAsync(id);
+
     #endregion
 }

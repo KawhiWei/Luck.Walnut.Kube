@@ -8,11 +8,11 @@ public class DeploymentConfigurationOutputDto : DeploymentConfigurationBaseDto
     /// 唯一Id
     /// </summary>
     public string Id { get; set; } = default!;
-
+    
     /// <summary>
-    /// 应用容器配置
+    /// 唯一Id
     /// </summary>
-    public ICollection<MasterContainerConfigurationOutputDto>? DeploymentContainerConfigurations { get; set; } = default!;
+    public string MasterContainerId { get; set; } = default!;
 
     /// <summary>
     /// 

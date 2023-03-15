@@ -12,7 +12,7 @@ public class MasterContainerConfigurationRepository : EfCoreEntityRepository<Mas
     }
 
 
-    public Task<List<MasterContainerConfiguration>> GetApplicationContainerListByApplicationDeploymentIdAsync(string applicationDeploymentId)
+    public Task<List<MasterContainerConfiguration>> GetApplicationContainerListByApplicationDeploymentIdAsync(string deploymentId)
     {
         throw new NotImplementedException();
     }
@@ -20,22 +20,32 @@ public class MasterContainerConfigurationRepository : EfCoreEntityRepository<Mas
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="applicationDeploymentId"></param>
+    /// <param name="deploymentId"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public Task<List<MasterContainerConfiguration>> GetListByApplicationDeploymentIdAsync(string applicationDeploymentId)
+    public Task<List<MasterContainerConfiguration>> GetListByDeploymentIdAsync(string deploymentId)
     {
-        return FindAll(x => x.ApplicationDeploymentId == applicationDeploymentId).ToListAsync();
+        return FindAll(x => x.DeploymentId == deploymentId).ToListAsync();
     }
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="applicationDeploymentId"></param>
+    /// <param name="id"></param>
     /// <returns></returns>
-    public Task<MasterContainerConfiguration?> FindApplicationContainerByIdFirstOrDefaultAsync(string id)
+    public Task<MasterContainerConfiguration?> FindMasterContainerByIdFirstOrDefaultAsync(string id)
     {
         return FindAll(x => x.Id == id).FirstOrDefaultAsync();
     }
 
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="deploymentIds"></param>
+    /// <returns></returns>
+    public Task<List<MasterContainerConfiguration>> GetListByDeploymentIdsAsync(List<string> deploymentIds)
+    {
+        return FindAll(x => deploymentIds.Contains(x.DeploymentId)).ToListAsync();
+    }
 }

@@ -9,7 +9,7 @@ public class DeploymentConfigurationMapConfiguration : IEntityTypeConfiguration<
         builder.HasKey(x => x.Id);
         builder.HasMany(o => o.MasterContainers)
             .WithOne()
-            .HasForeignKey(x => x.ApplicationDeploymentId)
+            .HasForeignKey(x => x.DeploymentId)
             .OnDelete(DeleteBehavior.Cascade);
         builder.Property(e => e.InitContainers).HasJsonConversion();
         builder.HasIndex(x => x.AppId, "appid_unique_index");

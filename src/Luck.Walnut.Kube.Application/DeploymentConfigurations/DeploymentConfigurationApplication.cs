@@ -52,8 +52,18 @@ public class DeploymentConfigurationApplication : IDeploymentConfigurationApplic
     public async Task UpdateDeploymentConfigurationAsync(string id, DeploymentConfigurationInputDto input)
     {
         var applicationDeployment = await GetAndCheckDeploymentConfigurationAsync(id);
-        applicationDeployment.SetApplicationDeployment(input);
+        applicationDeployment.SetDeploymentInfo(input);
         await _unitOfWork.CommitAsync();
+    }
+
+    public async Task UpdateDeploymentConfigurationAsync(string id, string masterContainerId, DeploymentInputDto input)
+    {
+        var deploymentConfiguration = input.DeploymentConfiguration;
+        var masterContainerConfiguration = input.MasterContainerConfiguration;
+
+        var applicationDeployment = await GetAndCheckDeploymentConfigurationAsync(id);
+        applicationDeployment.UpdateMasterContainerConfiguration(masterContainerId, masterContainerConfiguration);
+        applicationDeployment.SetDeploymentInfo(deploymentConfiguration);
     }
 
     /// <summary>
@@ -92,7 +102,7 @@ public class DeploymentConfigurationApplication : IDeploymentConfigurationApplic
     public async Task UpdateDeploymentContainerConfigurationAsync(string deploymentConfigurationId, string deploymentContainerConfigurationId, MasterContainerConfigurationInputDto input)
     {
         var applicationDeployment = await GetAndCheckDeploymentConfigurationAsync(deploymentConfigurationId);
-        applicationDeployment.UpdateDeploymentContainerConfiguration(deploymentContainerConfigurationId, input);
+        applicationDeployment.UpdateMasterContainerConfiguration(deploymentContainerConfigurationId, input);
         await _unitOfWork.CommitAsync();
     }
 

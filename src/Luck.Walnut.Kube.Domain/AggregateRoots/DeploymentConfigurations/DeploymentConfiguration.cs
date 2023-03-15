@@ -95,7 +95,7 @@ public class DeploymentConfiguration : FullAggregateRoot
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
-    public DeploymentConfiguration SetApplicationDeployment(DeploymentConfigurationInputDto input)
+    public DeploymentConfiguration SetDeploymentInfo(DeploymentConfigurationInputDto input)
     {
         EnvironmentName = input.EnvironmentName;
         ApplicationRuntimeType = input.ApplicationRuntimeType;
@@ -207,7 +207,7 @@ public class DeploymentConfiguration : FullAggregateRoot
     /// <param name="applicationContainerId"></param>
     /// <param name="input"></param>
     /// <returns></returns>
-    public DeploymentConfiguration UpdateDeploymentContainerConfiguration(string applicationContainerId, MasterContainerConfigurationInputDto input)
+    public DeploymentConfiguration UpdateMasterContainerConfiguration(string applicationContainerId, MasterContainerConfigurationInputDto input)
     {
         var applicationContainer = MasterContainers.FirstOrDefault(x => x.Id == applicationContainerId);
         if (applicationContainer is null)

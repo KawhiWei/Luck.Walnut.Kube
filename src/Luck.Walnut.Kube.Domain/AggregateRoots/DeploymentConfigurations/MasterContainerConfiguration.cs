@@ -81,7 +81,7 @@ public class MasterContainerConfiguration : FullEntity
     /// <summary>
     /// 
     /// </summary>
-    public string ApplicationDeploymentId { get; private set; } = default!;
+    public string DeploymentId { get; private set; } = default!;
     
     public MasterContainerConfiguration Update(MasterContainerConfigurationInputDto input)
     {

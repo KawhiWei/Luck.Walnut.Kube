@@ -15,7 +15,7 @@ public class MasterContainerConfigurationQueryService : IMasterContainerConfigur
 
     public async Task<List<MasterContainerConfigurationOutputDto>> GetDeploymentContainerConfigurationListByDeploymentIdAsync(string applicationDeploymentId)
     {
-        var applicationContainerList = await _applicationContainerRepository.GetListByApplicationDeploymentIdAsync(applicationDeploymentId);
+        var applicationContainerList = await _applicationContainerRepository.GetListByDeploymentIdAsync(applicationDeploymentId);
         return applicationContainerList.Select(x =>
             {
                 var applicationContainerOutputDto = new MasterContainerConfigurationOutputDto
@@ -89,7 +89,7 @@ public class MasterContainerConfigurationQueryService : IMasterContainerConfigur
 
     public async Task<MasterContainerConfigurationOutputDto?> GetApplicationContainerByIdFirstOrDefaultAsync(string id)
     {
-        var deploymentContainerConfiguration = await _applicationContainerRepository.FindApplicationContainerByIdFirstOrDefaultAsync(id);
+        var deploymentContainerConfiguration = await _applicationContainerRepository.FindMasterContainerByIdFirstOrDefaultAsync(id);
         if (deploymentContainerConfiguration is null)
         {
             return null;

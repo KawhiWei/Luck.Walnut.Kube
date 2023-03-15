@@ -17,5 +17,5 @@ public interface IDeploymentConfigurationQueryService:IScopedDependency
     Task<PageBaseResult<DeploymentConfigurationOutputDto>> GetDeploymentConfigurationPageListAsync(string appId, DeploymentConfigurationQueryDto query);
 
 
-    Task<DeploymentConfigurationOutputDto?> GetDeploymentConfigurationDetailByIdAsync(string id);
+    Task<DeploymentOutputDto?> GetDeploymentConfigurationDetailByIdAsync(string deploymentId,string masterContainerId);
 }

@@ -25,7 +25,6 @@ public class DeploymentConfigurationRepository : EfCoreAggregateRootRepository<D
             Replicas = x.Replicas,
             MaxUnavailable = x.MaxUnavailable,
             ImagePullSecretId = x.ImagePullSecretId,
-
         });
         var totalCount = await queryable.CountAsync();
         var list = await queryable.ToPage(query.PageIndex, query.PageSize).ToArrayAsync();

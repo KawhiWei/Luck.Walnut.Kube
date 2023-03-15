@@ -9,22 +9,29 @@ public interface IMasterContainerConfigurationRepository : IEntityRepository<Mas
     /// <summary>
     /// 根据Id获取一个应用部署数据
     /// </summary>
-    /// <param name="applicationDeploymentId"></param>
+    /// <param name="deploymentId"></param>
     /// <returns></returns>
-    Task<List<MasterContainerConfiguration>> GetApplicationContainerListByApplicationDeploymentIdAsync(string applicationDeploymentId);
+    Task<List<MasterContainerConfiguration>> GetApplicationContainerListByApplicationDeploymentIdAsync(string deploymentId);
 
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="applicationDeploymentId"></param>
+    /// <param name="deploymentId"></param>
     /// <returns></returns>
-    Task<List<MasterContainerConfiguration>> GetListByApplicationDeploymentIdAsync(string applicationDeploymentId);
+    Task<List<MasterContainerConfiguration>> GetListByDeploymentIdAsync(string deploymentId);
 
     /// <summary>
     /// 根据Id获取一个容器配置
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    Task<MasterContainerConfiguration?> FindApplicationContainerByIdFirstOrDefaultAsync(string id);
+    Task<MasterContainerConfiguration?> FindMasterContainerByIdFirstOrDefaultAsync(string id);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="deploymentIds"></param>
+    /// <returns></returns>
+    Task<List<MasterContainerConfiguration>> GetListByDeploymentIdsAsync(List<string> deploymentIds);
 }

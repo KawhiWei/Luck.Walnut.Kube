@@ -9,26 +9,43 @@ namespace Luck.Walnut.Kube.Query.DeploymentConfigurations;
 
 public class DeploymentConfigurationQueryService : IDeploymentConfigurationQueryService
 {
-
     private readonly IDeploymentConfigurationRepository _deploymentConfigurationRepository;
+    private readonly IMasterContainerConfigurationRepository _masterContainerConfigurationRepository;
 
-    public DeploymentConfigurationQueryService(IDeploymentConfigurationRepository applicationDeploymentRepository)
+    public DeploymentConfigurationQueryService(IDeploymentConfigurationRepository applicationDeploymentRepository, IMasterContainerConfigurationRepository masterContainerConfigurationRepository)
     {
         _deploymentConfigurationRepository = applicationDeploymentRepository;
+        _masterContainerConfigurationRepository = masterContainerConfigurationRepository;
     }
 
-    public async Task<DeploymentConfigurationOutputDto?> GetDeploymentConfigurationDetailByIdAsync(string id)
+
+    public async Task<PageBaseResult<DeploymentConfigurationOutputDto>> GetDeploymentConfigurationPageListAsync(string appId, DeploymentConfigurationQueryDto query)
     {
-        var deploymentConfiguration = await _deploymentConfigurationRepository.FindDeploymentConfigurationByIdAsync(id);
+        var (data, totalCount) = await _deploymentConfigurationRepository.GetDeploymentConfigurationPageListAsync(appId, query);
+        var masterContainerList = await _masterContainerConfigurationRepository.GetListByDeploymentIdsAsync(data.Select(x => x.Id).ToList());
+        foreach (var item in data)
+        {
+            var masterContainer = masterContainerList.FirstOrDefault(x => x.DeploymentId == item.Id);
+            if (masterContainer is not null)
+            {
+                item.MasterContainerId = masterContainer.Id;
+            }
+        }
+
+        return new PageBaseResult<DeploymentConfigurationOutputDto>(totalCount, data);
+    }
+
+    public async Task<DeploymentOutputDto?> GetDeploymentConfigurationDetailByIdAsync(string deploymentId, string masterContainerId)
+    {
+        var deploymentConfiguration = await _deploymentConfigurationRepository.FindDeploymentConfigurationByIdAsync(deploymentId);
         if (deploymentConfiguration is null)
 
         {
             return null;
         }
 
-        var deploymentContainerConfigurations = deploymentConfiguration.MasterContainers.Select(x =>
+        var masterContainerConfigurations = deploymentConfiguration.MasterContainers.Where(x=>x.Id==masterContainerId).Select(x =>
         {
-
             var deploymentContainerConfiguration = new MasterContainerConfigurationOutputDto { Id = x.Id, ContainerName = x.ContainerName, RestartPolicy = x.RestartPolicy, IsInitContainer = x.IsInitContainer, ImagePullPolicy = x.ImagePullPolicy, Image = x.Image, };
             if (x.ReadinessProbe is not null)
             {
@@ -53,6 +70,7 @@ public class DeploymentConfigurationQueryService : IDeploymentConfigurationQuery
                     PeriodSeconds = x.LiveNessProbe.PeriodSeconds,
                 };
             }
+
             if (x.Limits is not null)
             {
                 deploymentContainerConfiguration.Limits = new ContainerResourceQuantityDto
@@ -61,6 +79,7 @@ public class DeploymentConfigurationQueryService : IDeploymentConfigurationQuery
                     Memory = x.Limits.Memory,
                 };
             }
+
             if (x.Requests is not null)
             {
                 deploymentContainerConfiguration.Requests = new ContainerResourceQuantityDto
@@ -69,14 +88,13 @@ public class DeploymentConfigurationQueryService : IDeploymentConfigurationQuery
                     Memory = x.Requests.Memory,
                 };
             }
-            if (x.Environments is not null)
-            {
-                deploymentContainerConfiguration.Environments = x.Environments;
-            }
-            return deploymentContainerConfiguration;
-        }).ToList();
 
-        return new DeploymentConfigurationOutputDto
+            deploymentContainerConfiguration.Environments = x.Environments;
+
+            return deploymentContainerConfiguration;
+        }).FirstOrDefault();
+
+        var deploymentConfigurationOutputDto = new DeploymentConfigurationOutputDto
         {
             Id = deploymentConfiguration.Id,
             EnvironmentName = deploymentConfiguration.EnvironmentName,
@@ -89,17 +107,12 @@ public class DeploymentConfigurationQueryService : IDeploymentConfigurationQuery
             Replicas = deploymentConfiguration.Replicas,
             MaxUnavailable = deploymentConfiguration.MaxUnavailable,
             ImagePullSecretId = deploymentConfiguration.ImagePullSecretId,
-            DeploymentContainerConfigurations = deploymentContainerConfigurations
+        };
 
+        return new DeploymentOutputDto()
+        {
+            DeploymentConfiguration = deploymentConfigurationOutputDto,
+            MasterContainerConfiguration = masterContainerConfigurations,
         };
     }
-
-    public async Task<PageBaseResult<DeploymentConfigurationOutputDto>> GetDeploymentConfigurationPageListAsync(string appId, DeploymentConfigurationQueryDto query)
-    {
-
-        var (Data, TotalCount) = await _deploymentConfigurationRepository.GetDeploymentConfigurationPageListAsync(appId, query);
-        return new PageBaseResult<DeploymentConfigurationOutputDto>(TotalCount, Data);
-    }
-
-
 }
