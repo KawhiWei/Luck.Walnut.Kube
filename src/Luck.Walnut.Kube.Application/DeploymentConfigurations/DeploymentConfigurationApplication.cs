@@ -64,6 +64,7 @@ public class DeploymentConfigurationApplication : IDeploymentConfigurationApplic
         var applicationDeployment = await GetAndCheckDeploymentConfigurationAsync(id);
         applicationDeployment.UpdateMasterContainerConfiguration(masterContainerId, masterContainerConfiguration);
         applicationDeployment.SetDeploymentInfo(deploymentConfiguration);
+        await _unitOfWork.CommitAsync();
     }
 
     /// <summary>

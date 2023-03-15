@@ -1,4 +1,5 @@
 using Luck.Walnut.Kube.Dto.DeploymentConfigurations;
+using MediatR;
 
 namespace Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
 
@@ -82,7 +83,7 @@ public class MasterContainerConfiguration : FullEntity
     /// 
     /// </summary>
     public string DeploymentId { get; private set; } = default!;
-    
+
     public MasterContainerConfiguration Update(MasterContainerConfigurationInputDto input)
     {
         ContainerName = input.ContainerName;
@@ -93,21 +94,34 @@ public class MasterContainerConfiguration : FullEntity
         return this;
     }
 
-    public MasterContainerConfiguration SetReadinessProbe(ContainerSurviveConfigurationDto readinessProbe)
+    public MasterContainerConfiguration SetReadinessProbe(ContainerSurviveConfigurationDto? readinessProbe)
     {
+        if (readinessProbe is null)
+        {
+            return this;
+        }
         ReadinessProbe = new ContainerSurviveConfiguration(readinessProbe.Scheme, readinessProbe.Path, readinessProbe.Port, readinessProbe.InitialDelaySeconds, readinessProbe.PeriodSeconds);
 
         return this;
     }
 
-    public MasterContainerConfiguration SetLiveNessProbe(ContainerSurviveConfigurationDto liveNessProbe)
+    public MasterContainerConfiguration SetLiveNessProbe(ContainerSurviveConfigurationDto? liveNessProbe)
     {
+        if (liveNessProbe is null)
+        {
+            return this;
+        }
         LiveNessProbe = new ContainerSurviveConfiguration(liveNessProbe.Scheme, liveNessProbe.Path, liveNessProbe.Port, liveNessProbe.InitialDelaySeconds, liveNessProbe.PeriodSeconds);
         return this;
     }
 
-    public MasterContainerConfiguration SetLimits(ContainerResourceQuantityDto limits)
+    public MasterContainerConfiguration SetLimits(ContainerResourceQuantityDto? limits)
     {
+        if (limits is null)
+        {
+            return this;
+        }
+
         Limits = new ContainerResourceQuantity();
         if (limits.Cpu is not null)
         {
@@ -122,8 +136,12 @@ public class MasterContainerConfiguration : FullEntity
         return this;
     }
 
-    public MasterContainerConfiguration SetRequests(ContainerResourceQuantityDto requests)
+    public MasterContainerConfiguration SetRequests(ContainerResourceQuantityDto? requests)
     {
+        if (requests is null)
+        {
+            return this;
+        }
         Requests = new ContainerResourceQuantity();
         if (requests.Cpu is not null)
         {
@@ -138,15 +156,14 @@ public class MasterContainerConfiguration : FullEntity
         return this;
     }
 
-    public MasterContainerConfiguration SetEnvironments(List<KeyValuePair<string,string>>? environments)
+    public MasterContainerConfiguration SetEnvironments(List<KeyValuePair<string, string>>? environments)
     {
-        
-        
-        Environments =environments??new List<KeyValuePair<string, string>>();
+        Environments = environments ?? new List<KeyValuePair<string, string>>();
         return this;
     }
 
-    public MasterContainerConfiguration SetContainerPortConfigurations()
+
+    public MasterContainerConfiguration SetContainerPortConfigurations(List<ContainerPortConfigurationDto>? containerPortConfigurations)
     {
         return this;
     }

@@ -106,7 +106,7 @@ public class DeploymentConfiguration : FullAggregateRoot
         Replicas = input.Replicas;
         MaxUnavailable = input.MaxUnavailable;
         ImagePullSecretId = input.ImagePullSecretId;
-        Name=input.Name;
+        Name = input.Name;
         return this;
     }
 
@@ -118,7 +118,7 @@ public class DeploymentConfiguration : FullAggregateRoot
     /// <returns></returns>
     public DeploymentConfiguration SetInitContainers(List<string>? initContainers)
     {
-        if(initContainers is null)
+        if (initContainers is null)
         {
             return this;
         }
@@ -157,28 +157,15 @@ public class DeploymentConfiguration : FullAggregateRoot
         }
 
         var applicationContainer = new MasterContainerConfiguration(input.ContainerName,
-            input.RestartPolicy, input.ImagePullPolicy, input.IsInitContainer, input.Image??"");
-        if (input.Limits is not null)
-        {
-            applicationContainer.SetLimits(input.Limits);
-        }
+            input.RestartPolicy, input.ImagePullPolicy, input.IsInitContainer, input.Image ?? "");
 
-        if (input.Requests is not null)
-        {
-            applicationContainer.SetRequests(input.Requests);
-        }
+        applicationContainer
+            .SetLimits(input.Limits)
+            .SetRequests(input.Requests)
+            .SetLiveNessProbe(input.LiveNessProbe)
+            .SetReadinessProbe(input.ReadinessProbe)
+            .SetEnvironments(input.Environments);
 
-        if (input.LiveNessProbe is not null)
-        {
-            applicationContainer.SetLiveNessProbe(input.LiveNessProbe);
-        }
-
-        if (input.ReadinessProbe is not null)
-        {
-            applicationContainer.SetReadinessProbe(input.ReadinessProbe);
-        }
-        
-        applicationContainer.SetEnvironments(input.Environments ?? new List<KeyValuePair<string, string>>());
         MasterContainers.Add(applicationContainer);
 
         return this;
@@ -220,7 +207,13 @@ public class DeploymentConfiguration : FullAggregateRoot
             throw new BusinessException($"【{input.ContainerName}】已存在");
         }
 
-        applicationContainer.Update(input);
+        applicationContainer
+            .Update(input)
+            .SetLimits(input.Limits)
+            .SetRequests(input.Requests)
+            .SetLiveNessProbe(input.LiveNessProbe)
+            .SetReadinessProbe(input.ReadinessProbe)
+            .SetEnvironments(input.Environments);
         return this;
     }
 }
