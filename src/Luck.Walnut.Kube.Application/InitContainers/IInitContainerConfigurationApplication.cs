@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Luck.Walnut.Kube.Dto.InitContainerConfigurations;
+﻿using Luck.Walnut.Kube.Dto.InitContainerConfigurations;
 
 namespace Luck.Walnut.Kube.Application.InitContainers
 {
-    public interface IInitContainerConfigurationApplication
+    public interface IInitContainerConfigurationApplication:IScopedDependency
     {
         /// <summary>
         /// 创建默认容器 

@@ -25,6 +25,12 @@ namespace Luck.Walnut.Kube.Application.InitContainers
             }
 
             var initContainer = new InitContainerConfiguration(input.ContainerName, input.IsInitContainer, input.Image, input.RestartPolicy, input.ImagePullPolicy);
+            initContainer.SetEnvironments(input.Environments)
+                .SetReadinessProbe(input.ReadinessProbe)
+                .SetLiveNessProbe(input.LiveNessProbe)
+                .SetLimits(input.Limits)
+                .SetRequests(input.Requests)
+                .SetContainerPortConfigurations(input.ContainerPortConfigurations);
             _initContainerConfigurationRepository.Add(initContainer);
             await _unitOfWork.CommitAsync();
         }

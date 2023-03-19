@@ -1,5 +1,4 @@
 ﻿using Luck.Walnut.Kube.Dto.DeploymentConfigurations;
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +9,5 @@ namespace Luck.Walnut.Kube.Dto.InitContainerConfigurations
 {
     public class InitContainerConfigurationBaseDto : MasterContainerConfigurationBaseDto
     {
-        
     }
 }

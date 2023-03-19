@@ -1,6 +1,7 @@
 ﻿using Luck.Framework.Exceptions;
 using Luck.Walnut.Kube.Domain.AggregateRoots.InitContainerConfigurations;
 using Luck.Walnut.Kube.Domain.Repositories;
+using Luck.Walnut.Kube.Dto;
 using Luck.Walnut.Kube.Dto.ContainerDtoBases;
 using Luck.Walnut.Kube.Dto.InitContainerConfigurations;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,16 @@ namespace Luck.Walnut.Kube.Query.InitContainers
         {
             var initContainerList = await _initContainerConfigurationRepository.FindAll().ToListAsync();
             return initContainerList.Select(CreateInitContainerConfigurationOutputDto).ToList();
+        }
+
+        public async Task<PageBaseResult<InitContainerConfigurationOutputDto>> GetInitContainerConfigurationPageListAsync(InitContainerConfigurationQueryDto query)
+        {
+            var (data, totalCount) = await _initContainerConfigurationRepository.GetInitContainerConfigurationPageListAsync(query);
+
+            var initContainerConfigurationOutputDtoList = data.Select(CreateInitContainerConfigurationOutputDto).ToArray();
+
+
+            return new PageBaseResult<InitContainerConfigurationOutputDto>(totalCount, initContainerConfigurationOutputDtoList);
         }
 
         private InitContainerConfigurationOutputDto CreateInitContainerConfigurationOutputDto(InitContainerConfiguration initContainer)

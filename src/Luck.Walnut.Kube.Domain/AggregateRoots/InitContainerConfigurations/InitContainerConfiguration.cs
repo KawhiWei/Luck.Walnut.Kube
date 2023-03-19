@@ -1,11 +1,5 @@
 ﻿using Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Luck.Walnut.Kube.Dto.ContainerDtoBases;
-using Luck.Walnut.Kube.Dto.DeploymentConfigurations;
 using Luck.Walnut.Kube.Dto.InitContainerConfigurations;
 
 namespace Luck.Walnut.Kube.Domain.AggregateRoots.InitContainerConfigurations
@@ -39,7 +33,6 @@ namespace Luck.Walnut.Kube.Domain.AggregateRoots.InitContainerConfigurations
         /// 镜像名称
         /// </summary>
         public string? Image { get; private set; }
-
 
         /// <summary>
         /// 重启策略

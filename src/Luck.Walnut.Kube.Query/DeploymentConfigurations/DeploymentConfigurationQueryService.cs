@@ -1,10 +1,7 @@
-using IdentityModel.OidcClient;
-using Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
 using Luck.Walnut.Kube.Domain.Repositories;
 using Luck.Walnut.Kube.Dto;
 using Luck.Walnut.Kube.Dto.ContainerDtoBases;
 using Luck.Walnut.Kube.Dto.DeploymentConfigurations;
-using Microsoft.Extensions.Hosting;
 
 namespace Luck.Walnut.Kube.Query.DeploymentConfigurations;
 

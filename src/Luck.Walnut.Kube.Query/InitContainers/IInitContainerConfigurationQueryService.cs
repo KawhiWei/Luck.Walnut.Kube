@@ -1,8 +1,9 @@
-﻿using Luck.Walnut.Kube.Dto.InitContainerConfigurations;
+﻿using Luck.Walnut.Kube.Dto;
+using Luck.Walnut.Kube.Dto.InitContainerConfigurations;
 
 namespace Luck.Walnut.Kube.Query.InitContainers
 {
-    public interface IInitContainerConfigurationQueryService
+    public interface IInitContainerConfigurationQueryService:IScopedDependency
     {
         /// <summary>
         /// 根据Id获取一个容器配置 
@@ -15,5 +16,10 @@ namespace Luck.Walnut.Kube.Query.InitContainers
         /// 获取初始容器列表
         /// </summary>
         Task<List<InitContainerConfigurationOutputDto>> GetInitContainerConfigurationListAsync();
+        
+        /// <summary>
+        /// 获取初始容器列表
+        /// </summary>
+        Task<PageBaseResult<InitContainerConfigurationOutputDto>> GetInitContainerConfigurationPageListAsync(InitContainerConfigurationQueryDto query);
     }
 }
