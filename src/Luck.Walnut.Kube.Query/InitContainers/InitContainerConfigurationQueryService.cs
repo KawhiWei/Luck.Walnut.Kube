@@ -46,7 +46,6 @@ namespace Luck.Walnut.Kube.Query.InitContainers
                 Id = initContainer.Id,
                 ContainerName = initContainer.ContainerName,
                 RestartPolicy = initContainer.RestartPolicy,
-                IsInitContainer = initContainer.IsInitContainer,
                 ImagePullPolicy = initContainer.ImagePullPolicy,
                 Image = initContainer.Image,
             };

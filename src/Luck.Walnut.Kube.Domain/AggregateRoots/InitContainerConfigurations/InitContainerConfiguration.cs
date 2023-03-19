@@ -9,10 +9,9 @@ namespace Luck.Walnut.Kube.Domain.AggregateRoots.InitContainerConfigurations
     /// </summary>
     public class InitContainerConfiguration : FullAggregateRoot
     {
-        public InitContainerConfiguration(string containerName, bool isInitContainer, string? image, string restartPolicy, string imagePullPolicy)
+        public InitContainerConfiguration(string containerName, string? image, string restartPolicy, string imagePullPolicy)
         {
             ContainerName = containerName;
-            IsInitContainer = isInitContainer;
             Image = image;
             RestartPolicy = restartPolicy;
             ImagePullPolicy = imagePullPolicy;
@@ -23,11 +22,6 @@ namespace Luck.Walnut.Kube.Domain.AggregateRoots.InitContainerConfigurations
         /// 容器名称
         /// </summary>
         public string ContainerName { get; private set; }
-
-        /// <summary>
-        /// 是否初始容器
-        /// </summary>
-        public bool IsInitContainer { get; private set; }
 
         /// <summary>
         /// 镜像名称
@@ -43,7 +37,6 @@ namespace Luck.Walnut.Kube.Domain.AggregateRoots.InitContainerConfigurations
         /// <summary>
         /// 镜像拉取策略
         /// </summary>
-
         public string ImagePullPolicy { get; private set; }
 
         /// <summary>
@@ -81,7 +74,6 @@ namespace Luck.Walnut.Kube.Domain.AggregateRoots.InitContainerConfigurations
             ContainerName = input.ContainerName;
             RestartPolicy = input.RestartPolicy;
             ImagePullPolicy = input.ImagePullPolicy;
-            IsInitContainer = input.IsInitContainer;
             Image = input.Image;
             return this;
         }

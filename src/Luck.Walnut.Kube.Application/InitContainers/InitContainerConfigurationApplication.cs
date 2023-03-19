@@ -24,7 +24,7 @@ namespace Luck.Walnut.Kube.Application.InitContainers
                 throw new BusinessException($"[{input.ContainerName}]已存在,请刷新界面");
             }
 
-            var initContainer = new InitContainerConfiguration(input.ContainerName, input.IsInitContainer, input.Image, input.RestartPolicy, input.ImagePullPolicy);
+            var initContainer = new InitContainerConfiguration(input.ContainerName, input.Image, input.RestartPolicy, input.ImagePullPolicy);
             initContainer.SetEnvironments(input.Environments)
                 .SetReadinessProbe(input.ReadinessProbe)
                 .SetLiveNessProbe(input.LiveNessProbe)
