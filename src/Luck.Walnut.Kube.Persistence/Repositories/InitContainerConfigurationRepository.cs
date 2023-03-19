@@ -17,7 +17,15 @@ namespace Luck.Walnut.Kube.Persistence.Repositories
         {
         }
 
-        public Task<InitContainerConfiguration?> FindInitContainerConfigurationByNameAsunc(string name) => FindAll().FirstOrDefaultAsync(x => x.ContainerName == name);
+        public Task<InitContainerConfiguration?> FindInitContainerConfigurationByNameAsync(string name) => FindAll().FirstOrDefaultAsync(x => x.ContainerName == name);
+        
+        
+        /// <summary>
+        /// /
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Task<InitContainerConfiguration?> FindInitContainerConfigurationByIdAsync(string id) => FindAll().FirstOrDefaultAsync(x => x.Id == id);
         
     }
 }

@@ -1,4 +1,4 @@
-namespace Luck.Walnut.Kube.Dto.DeploymentConfigurations;
+namespace Luck.Walnut.Kube.Dto.ContainerDtoBases;
 
 public class ContainerSurviveConfigurationDto
 {

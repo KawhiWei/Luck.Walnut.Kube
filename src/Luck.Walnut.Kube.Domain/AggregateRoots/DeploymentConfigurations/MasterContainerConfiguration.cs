@@ -1,5 +1,5 @@
+using Luck.Walnut.Kube.Dto.ContainerDtoBases;
 using Luck.Walnut.Kube.Dto.DeploymentConfigurations;
-using MediatR;
 
 namespace Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
 
@@ -100,6 +100,7 @@ public class MasterContainerConfiguration : FullEntity
         {
             return this;
         }
+
         ReadinessProbe = new ContainerSurviveConfiguration(readinessProbe.Scheme, readinessProbe.Path, readinessProbe.Port, readinessProbe.InitialDelaySeconds, readinessProbe.PeriodSeconds);
 
         return this;
@@ -111,6 +112,7 @@ public class MasterContainerConfiguration : FullEntity
         {
             return this;
         }
+
         LiveNessProbe = new ContainerSurviveConfiguration(liveNessProbe.Scheme, liveNessProbe.Path, liveNessProbe.Port, liveNessProbe.InitialDelaySeconds, liveNessProbe.PeriodSeconds);
         return this;
     }
@@ -142,6 +144,7 @@ public class MasterContainerConfiguration : FullEntity
         {
             return this;
         }
+
         Requests = new ContainerResourceQuantity();
         if (requests.Cpu is not null)
         {

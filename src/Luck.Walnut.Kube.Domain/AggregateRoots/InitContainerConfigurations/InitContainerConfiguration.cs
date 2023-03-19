@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Luck.Walnut.Kube.Dto.ContainerDtoBases;
+using Luck.Walnut.Kube.Dto.DeploymentConfigurations;
+using Luck.Walnut.Kube.Dto.InitContainerConfigurations;
 
 namespace Luck.Walnut.Kube.Domain.AggregateRoots.InitContainerConfigurations
 {
@@ -80,5 +83,91 @@ namespace Luck.Walnut.Kube.Domain.AggregateRoots.InitContainerConfigurations
         /// </summary>
         public ICollection<ContainerPortConfiguration> ContainerPortConfigurations { get; private set; } = new HashSet<ContainerPortConfiguration>();
 
+        public InitContainerConfiguration Update(InitContainerConfigurationInputDto input)
+        {
+            ContainerName = input.ContainerName;
+            RestartPolicy = input.RestartPolicy;
+            ImagePullPolicy = input.ImagePullPolicy;
+            IsInitContainer = input.IsInitContainer;
+            Image = input.Image;
+            return this;
+        }
+
+        public InitContainerConfiguration SetReadinessProbe(ContainerSurviveConfigurationDto? readinessProbe)
+        {
+            if (readinessProbe is null)
+            {
+                return this;
+            }
+
+            ReadinessProbe = new ContainerSurviveConfiguration(readinessProbe.Scheme, readinessProbe.Path, readinessProbe.Port, readinessProbe.InitialDelaySeconds, readinessProbe.PeriodSeconds);
+
+            return this;
+        }
+
+        public InitContainerConfiguration SetLiveNessProbe(ContainerSurviveConfigurationDto? liveNessProbe)
+        {
+            if (liveNessProbe is null)
+            {
+                return this;
+            }
+
+            LiveNessProbe = new ContainerSurviveConfiguration(liveNessProbe.Scheme, liveNessProbe.Path, liveNessProbe.Port, liveNessProbe.InitialDelaySeconds, liveNessProbe.PeriodSeconds);
+            return this;
+        }
+
+        public InitContainerConfiguration SetLimits(ContainerResourceQuantityDto? limits)
+        {
+            if (limits is null)
+            {
+                return this;
+            }
+
+            Limits = new ContainerResourceQuantity();
+            if (limits.Cpu is not null)
+            {
+                Limits.SetCpu(limits.Cpu);
+            }
+
+            if (limits.Memory is not null)
+            {
+                Limits.SetMemory(limits.Memory);
+            }
+
+            return this;
+        }
+
+        public InitContainerConfiguration SetRequests(ContainerResourceQuantityDto? requests)
+        {
+            if (requests is null)
+            {
+                return this;
+            }
+
+            Requests = new ContainerResourceQuantity();
+            if (requests.Cpu is not null)
+            {
+                Requests.SetCpu(requests.Cpu);
+            }
+
+            if (requests.Memory is not null)
+            {
+                Requests.SetMemory(requests.Memory);
+            }
+
+            return this;
+        }
+
+        public InitContainerConfiguration SetEnvironments(List<KeyValuePair<string, string>>? environments)
+        {
+            Environments = environments ?? new List<KeyValuePair<string, string>>();
+            return this;
+        }
+
+
+        public InitContainerConfiguration SetContainerPortConfigurations(List<ContainerPortConfigurationDto>? containerPortConfigurations)
+        {
+            return this;
+        }
     }
 }

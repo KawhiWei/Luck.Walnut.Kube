@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Luck.Walnut.Kube.Dto.InitContainerConfiguration
+namespace Luck.Walnut.Kube.Dto.InitContainerConfigurations
 {
     public class InitContainerConfigurationBaseDto : MasterContainerConfigurationBaseDto
     {

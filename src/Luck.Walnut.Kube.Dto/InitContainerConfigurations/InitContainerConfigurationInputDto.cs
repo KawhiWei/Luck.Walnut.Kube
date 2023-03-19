@@ -1,4 +1,4 @@
-﻿namespace Luck.Walnut.Kube.Dto.InitContainerConfiguration
+﻿namespace Luck.Walnut.Kube.Dto.InitContainerConfigurations
 {
     public class InitContainerConfigurationInputDto : InitContainerConfigurationBaseDto
     {

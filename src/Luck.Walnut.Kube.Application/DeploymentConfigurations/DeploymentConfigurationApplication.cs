@@ -138,12 +138,7 @@ public class DeploymentConfigurationApplication : IDeploymentConfigurationApplic
     private async Task<bool> CheckIsExitDeploymentConfigurationAsync(string appId, string name)
     {
         var cluster = await _deploymentConfigurationRepository.FindDeploymentConfigurationByAppIdAndNameAsync(appId, name);
-        if (cluster is null)
-        {
-            return false;
-        }
-
-        return true;
+        return cluster is not null;
     }
 
     #endregion

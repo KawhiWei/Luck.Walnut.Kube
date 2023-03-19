@@ -1,3 +1,5 @@
+using Luck.Walnut.Kube.Dto.ContainerDtoBases;
+
 namespace Luck.Walnut.Kube.Dto.DeploymentConfigurations;
 
 public class MasterContainerConfigurationBaseDto
@@ -12,20 +14,22 @@ public class MasterContainerConfigurationBaseDto
     /// </summary>
 
     public string RestartPolicy { get; set; } = default!;
+
     /// <summary>
     /// 是否初始容器
     /// </summary>
-    public bool IsInitContainer { get;  set; }
+    public bool IsInitContainer { get; set; }
+
     /// <summary>
     /// 镜像拉取策略
     /// </summary>
 
     public string ImagePullPolicy { get; set; } = default!;
-    
+
     /// <summary>
     /// 镜像名称
     /// </summary>
-    public string? Image { get;  set; }
+    public string? Image { get; set; }
 
     /// <summary>
     /// 准备完成探针配置
@@ -50,11 +54,11 @@ public class MasterContainerConfigurationBaseDto
     /// <summary>
     /// 环境变量
     /// </summary>
-    public List<KeyValuePair<string,string>>? Environments { get; set; }
+    public List<KeyValuePair<string, string>>? Environments { get; set; }
 
 
     /// <summary>
     /// 容器端口配置
     /// </summary>
-    public List<ContainerPortConfigurationDto>? ContainerPortConfigurations { get; set; }
+    public List<ContainerPortConfigurationDto>? ContainerPortConfigurations { get; set; } = null;
 }
