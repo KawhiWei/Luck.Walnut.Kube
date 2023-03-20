@@ -88,7 +88,6 @@ public class DeploymentConfigurationQueryService : IDeploymentConfigurationQuery
             }
 
             deploymentContainerConfiguration.Environments = x.Environments;
-
             return deploymentContainerConfiguration;
         }).FirstOrDefault();
 
@@ -105,6 +104,7 @@ public class DeploymentConfigurationQueryService : IDeploymentConfigurationQuery
             Replicas = deploymentConfiguration.Replicas,
             MaxUnavailable = deploymentConfiguration.MaxUnavailable,
             ImagePullSecretId = deploymentConfiguration.ImagePullSecretId,
+            InitContainers = deploymentConfiguration.InitContainers.ToList()
         };
 
         return new DeploymentOutputDto()

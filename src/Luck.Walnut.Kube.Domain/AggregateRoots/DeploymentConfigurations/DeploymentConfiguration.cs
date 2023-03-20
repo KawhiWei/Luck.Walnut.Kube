@@ -107,6 +107,7 @@ public class DeploymentConfiguration : FullAggregateRoot
         MaxUnavailable = input.MaxUnavailable;
         ImagePullSecretId = input.ImagePullSecretId;
         Name = input.Name;
+        SetInitContainers(input.InitContainers);
         return this;
     }
 
@@ -114,7 +115,6 @@ public class DeploymentConfiguration : FullAggregateRoot
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="input"></param>
     /// <returns></returns>
     public DeploymentConfiguration SetInitContainers(List<string>? initContainers)
     {
