@@ -5,11 +5,12 @@ namespace Luck.Walnut.Kube.Domain.AggregateRoots.NameSpaces;
 /// </summary>
 public class NameSpace : FullAggregateRoot
 {
-    public NameSpace(string chineseName, string name, bool isPublish)
+    public NameSpace(string chineseName, string name, bool isPublish, string clusterId)
     {
         ChineseName = chineseName;
         Name = name;
         IsPublish = isPublish;
+        ClusterId = clusterId;
     }
 
     /// <summary>
@@ -21,6 +22,11 @@ public class NameSpace : FullAggregateRoot
     /// 明明空间名称
     /// </summary>
     public string Name { get; private set; }
+    
+    /// <summary>
+    /// 集群Id
+    /// </summary>
+    public string ClusterId{ get; private set; } 
 
     /// <summary>
     /// 是否发布

@@ -1,6 +1,7 @@
 using Luck.Framework.Exceptions;
 using Luck.Walnut.Kube.Domain.AggregateRoots.Clusters;
 using Luck.Walnut.Kube.Domain.Repositories;
+using Luck.Walnut.Kube.Dto;
 using Luck.Walnut.Kube.Dto.Clusteries;
 
 namespace Luck.Walnut.Kube.Query.Clusters;
@@ -30,6 +31,16 @@ public class ClusterQueryService : IClusterQueryService
         };
     }
 
+    public async Task<PageBaseResult<ClusterOutputDto>> GetClusterPageListAsync(ClusterQueryDto query)
+    {
+        var (data, totalCount) = await _clusterRepository.GetClusterPageListAsync(query);
+        var result = data.Select(x => new ClusterOutputDto
+        {
+            Name = x.Name,
+            Config = x.Config,
+        });
+        return new PageBaseResult<ClusterOutputDto>(totalCount, result.ToArray());
+    }
 
     private async Task<Cluster> CheckClusterIsExistAsync(string id)
     {

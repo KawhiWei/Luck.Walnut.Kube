@@ -1,4 +1,5 @@
 using Luck.Framework.Infrastructure.DependencyInjectionModule;
+using Luck.Walnut.Kube.Dto;
 using Luck.Walnut.Kube.Dto.Clusteries;
 
 namespace Luck.Walnut.Kube.Query.Clusters;
@@ -17,4 +18,11 @@ public interface IClusterQueryService : IScopedDependency
     /// <param name="id"></param>
     /// <returns></returns>
     Task<ClusterOutputDto> GetClusterFindByIdAsync(string id);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    Task<PageBaseResult<ClusterOutputDto>> GetClusterPageListAsync(ClusterQueryDto query);
 }

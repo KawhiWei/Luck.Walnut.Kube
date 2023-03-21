@@ -5,14 +5,20 @@ public class NameSpaceBaseDto
     /// <summary>
     /// 中文名称
     /// </summary>
-    public string ChineseName { get;  set; } = default!;
+    public string ChineseName { get; set; } = default!;
 
     /// <summary>
     /// 明明空间名称
     /// </summary>
-    public string Name { get;  set; } = default!;
-}
+    public string Name { get; set; } = default!;
 
-public class NameSpaceInputDto:NameSpaceBaseDto
-{
+    /// <summary>
+    /// 集群Id
+    /// </summary>
+    public string ClusterId { get; set; } = default!;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public bool IsPublish { get; set; } = default!;
 }

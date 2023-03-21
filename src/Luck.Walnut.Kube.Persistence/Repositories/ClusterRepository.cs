@@ -12,6 +12,15 @@ public class ClusterRepository : EfCoreAggregateRootRepository<Cluster, string>,
     }
 
 
+    public async Task<(Cluster[] Data, int TotalCount)> GetClusterPageListAsync(ClusterQueryDto query)
+    {
+        var queryable = FindAll();
+        var totalCount = await queryable.CountAsync();
+        var list = await queryable.ToPage(query.PageIndex, query.PageSize).ToArrayAsync();
+        return (list, totalCount);
+    }
+
+
     public async Task<List<ClusterOutputDto>> GetClusterOutputDtoListAsync()
     {
         return await FindAll().Select(x => new ClusterOutputDto()
@@ -26,9 +35,8 @@ public class ClusterRepository : EfCoreAggregateRootRepository<Cluster, string>,
         return await FindAll().FirstOrDefaultAsync(x => x.Id == id);
     }
 
-
-    public async Task<List<Cluster>> GetAllClusterListAsync()
+    public async Task<List<Cluster>> GetClusterFindByIdListAsync(List<string> idList)
     {
-        return await FindAll().ToListAsync();
+        return await FindAll(x => idList.Contains(x.Id)).ToListAsync();
     }
 }

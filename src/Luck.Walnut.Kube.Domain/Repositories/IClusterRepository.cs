@@ -14,9 +14,23 @@ public interface IClusterRepository : IAggregateRootRepository<Cluster, string>,
 
 
     /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    Task<(Cluster[] Data, int TotalCount)> GetClusterPageListAsync(ClusterQueryDto query);
+    
+    /// <summary>
     /// 查询一个集群信息
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
     Task<Cluster?> GetClusterFindByIdAsync(string id);
+
+    /// <summary>
+    /// 根据Id查询集群列表
+    /// </summary>
+    /// <param name="idList"></param>
+    /// <returns></returns>
+    Task<List<Cluster>> GetClusterFindByIdListAsync(List<string> idList);
 }

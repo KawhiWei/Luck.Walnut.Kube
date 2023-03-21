@@ -1,4 +1,5 @@
 using Luck.Walnut.Kube.Application.Clusters;
+using Luck.Walnut.Kube.Dto;
 using Luck.Walnut.Kube.Dto.Clusteries;
 using Luck.Walnut.Kube.Dto.Kubernetes;
 using Luck.Walnut.Kube.Query.Clusters;
@@ -32,7 +33,7 @@ public class ClusterController : BaseController
     /// <returns></returns>
     [HttpPut("{id}")]
     public Task UpdateCluster([FromServices] IClusterApplication clusterApplication, string id, [FromBody] ClusterInputDto input)
-        => clusterApplication.CreateClusterAsync(input);
+        => clusterApplication.UpdateClusterAsync(id, input);
 
 
     /// <summary>
@@ -53,6 +54,16 @@ public class ClusterController : BaseController
     [HttpGet("list")]
     public Task<List<ClusterOutputDto>> GetClusterList([FromServices] IClusterQueryService clusterQueryService)
         => clusterQueryService.GetClusterOutputDtoListAsync();
+
+    /// <summary>
+    /// 分页获取集群列表
+    /// </summary>
+    /// <param name="clusterQueryService"></param>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    [HttpGet("page/list")]
+    public Task<PageBaseResult<ClusterOutputDto>> GetClusterPageList([FromServices] IClusterQueryService clusterQueryService, [FromQuery] ClusterQueryDto query)
+        => clusterQueryService.GetClusterPageListAsync(query);
 
     /// <summary>
     /// 根据ID获取一个集群信息

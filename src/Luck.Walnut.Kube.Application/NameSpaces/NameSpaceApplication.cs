@@ -19,12 +19,12 @@ public class NameSpaceApplication : INameSpaceApplication
 
     public async Task CreateNameSpaceAsync(NameSpaceInputDto input)
     {
-        if (await CheckIsExitNameSpaceAsync(input.Name))
+        if (await CheckIsExitNameSpaceAsync(input.Name,input.ClusterId))
         {
             throw new BusinessException($"[{input.Name}]已存在，请刷新页面");
         }
 
-        var nameSpace = new NameSpace(input.ChineseName, input.Name, false);
+        var nameSpace = new NameSpace(input.ChineseName, input.Name, false,input.ClusterId);
         _nameSpaceRepository.Add(nameSpace);
         await _unitOfWork.CommitAsync();
     }
@@ -32,7 +32,8 @@ public class NameSpaceApplication : INameSpaceApplication
     public async Task UpdateNameSpaceAsync(string id, NameSpaceInputDto input)
     {
         var nameSpace = await GetAndCheckNameSpaceAsync(id);
-        nameSpace.Update(input.ChineseName, input.Name);
+        nameSpace.Update(input.ChineseName, input.Name)
+            .SetIsPublish(false);
         await _unitOfWork.CommitAsync();
     }
 
@@ -61,9 +62,15 @@ public class NameSpaceApplication : INameSpaceApplication
         return nameSpace;
     }
 
-    private async Task<bool> CheckIsExitNameSpaceAsync(string name)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="clusterId"></param>
+    /// <returns></returns>
+    private async Task<bool> CheckIsExitNameSpaceAsync(string name,string clusterId)
     {
-        var nameSpace = await _nameSpaceRepository.FindNameSpaceByNameAsync(name);
+        var nameSpace = await _nameSpaceRepository.FindNameSpaceByNameAndClusterIdAsync(name,clusterId);
         return nameSpace is not null;
     }
 }
