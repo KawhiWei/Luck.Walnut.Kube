@@ -35,6 +35,16 @@ public class ClusterController : BaseController
     public Task UpdateCluster([FromServices] IClusterApplication clusterApplication, string id, [FromBody] ClusterInputDto input)
         => clusterApplication.UpdateClusterAsync(id, input);
 
+    /// <summary>
+    /// 删除集群
+    /// </summary>
+    /// <param name="clusterApplication"></param>
+    /// <param name="id"></param>
+    /// <param name="input"></param>
+    /// <returns></returns>
+    [HttpDelete("{id}")]
+    public Task DeleteCluster([FromServices] IClusterApplication clusterApplication, string id)
+        => clusterApplication.DeleteClusterAsync(id);
 
     /// <summary>
     /// 获取集群资源仪表盘
@@ -54,6 +64,8 @@ public class ClusterController : BaseController
     [HttpGet("list")]
     public Task<List<ClusterOutputDto>> GetClusterList([FromServices] IClusterQueryService clusterQueryService)
         => clusterQueryService.GetClusterOutputDtoListAsync();
+
+
 
     /// <summary>
     /// 分页获取集群列表

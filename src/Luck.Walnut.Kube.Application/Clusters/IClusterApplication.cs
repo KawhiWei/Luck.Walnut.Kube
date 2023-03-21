@@ -8,7 +8,9 @@ public interface IClusterApplication : IScopedDependency
     Task CreateClusterAsync(ClusterInputDto input);
 
     Task UpdateClusterAsync(string id,ClusterInputDto input);
-    
+
+    Task DeleteClusterAsync(string id);
+
     /// <summary>
     /// 
     /// </summary>

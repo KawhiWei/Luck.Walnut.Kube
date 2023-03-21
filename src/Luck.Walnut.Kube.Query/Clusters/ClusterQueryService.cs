@@ -38,6 +38,7 @@ public class ClusterQueryService : IClusterQueryService
         {
             Name = x.Name,
             Config = x.Config,
+            Id=x.Id
         });
         return new PageBaseResult<ClusterOutputDto>(totalCount, result.ToArray());
     }
