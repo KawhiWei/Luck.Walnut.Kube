@@ -36,7 +36,7 @@ public class DeploymentConfigurationApplication : IDeploymentConfigurationApplic
 
         var applicationDeployment = new DeploymentConfiguration(deploymentConfiguration.EnvironmentName,
             deploymentConfiguration.ApplicationRuntimeType, deploymentConfiguration.DeploymentType, deploymentConfiguration.ChineseName, deploymentConfiguration.Name, deploymentConfiguration.AppId,
-            deploymentConfiguration.KubernetesNameSpaceId, deploymentConfiguration.Replicas, deploymentConfiguration.MaxUnavailable, deploymentConfiguration.ImagePullSecretId, false);
+            deploymentConfiguration.NameSpaceId, deploymentConfiguration.Replicas, deploymentConfiguration.MaxUnavailable, deploymentConfiguration.ImagePullSecretId,deploymentConfiguration.ClusterId);
 
         applicationDeployment.SetInitContainers(deploymentConfiguration.InitContainers);
         applicationDeployment.AddMasterContainerConfiguration(masterContainerConfiguration);
@@ -150,7 +150,7 @@ public class DeploymentConfigurationApplication : IDeploymentConfigurationApplic
 
         v1Deployment.Metadata.Name = applicationDeployment.Name;
         v1Deployment.Spec.Replicas = applicationDeployment.Replicas;
-        v1Deployment.Metadata.NamespaceProperty = applicationDeployment.KubernetesNameSpaceId;
+        v1Deployment.Metadata.NamespaceProperty = applicationDeployment.NameSpaceId;
 
         applicationDeployment
             .MasterContainers.Where(x => x.IsInitContainer).ForEach(a =>

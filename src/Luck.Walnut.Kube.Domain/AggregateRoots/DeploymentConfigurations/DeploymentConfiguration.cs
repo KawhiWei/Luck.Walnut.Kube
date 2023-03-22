@@ -10,7 +10,7 @@ namespace Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
 public class DeploymentConfiguration : FullAggregateRoot
 {
     public DeploymentConfiguration(string environmentName, ApplicationRuntimeTypeEnum applicationRuntimeType, DeploymentTypeEnum deploymentType, string chineseName, string name, string appId,
-        string kubernetesNameSpaceId, int replicas, int maxUnavailable, string? imagePullSecretId, bool isPublish)
+        string nameSpaceId, int replicas, int maxUnavailable, string? imagePullSecretId, string clusterId, bool isPublish = false)
     {
         EnvironmentName = environmentName;
         ApplicationRuntimeType = applicationRuntimeType;
@@ -18,10 +18,11 @@ public class DeploymentConfiguration : FullAggregateRoot
         ChineseName = chineseName;
         Name = name;
         AppId = appId;
-        KubernetesNameSpaceId = kubernetesNameSpaceId;
+        NameSpaceId = nameSpaceId;
         Replicas = replicas;
         MaxUnavailable = maxUnavailable;
         ImagePullSecretId = imagePullSecretId;
+        ClusterId = clusterId;
         IsPublish = isPublish;
     }
 
@@ -56,9 +57,14 @@ public class DeploymentConfiguration : FullAggregateRoot
     public string AppId { get; private set; }
 
     /// <summary>
+    /// 应用Id
+    /// </summary>
+    public string ClusterId { get; private set; }
+    
+    /// <summary>
     /// 命名空间Id
     /// </summary>
-    public string KubernetesNameSpaceId { get; private set; }
+    public string NameSpaceId { get; private set; }
 
     /// <summary>
     /// 部署副本数量
@@ -102,11 +108,13 @@ public class DeploymentConfiguration : FullAggregateRoot
         DeploymentType = input.DeploymentType;
         ChineseName = input.ChineseName;
         AppId = input.AppId;
-        KubernetesNameSpaceId = input.KubernetesNameSpaceId;
+        NameSpaceId = input.NameSpaceId;
         Replicas = input.Replicas;
         MaxUnavailable = input.MaxUnavailable;
         ImagePullSecretId = input.ImagePullSecretId;
         Name = input.Name;
+        ClusterId = input.ClusterId;
+        NameSpaceId = input.NameSpaceId;
         SetInitContainers(input.InitContainers);
         return this;
     }

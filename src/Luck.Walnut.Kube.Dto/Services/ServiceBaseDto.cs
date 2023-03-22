@@ -10,7 +10,7 @@ public class ServiceBaseDto
     /// <summary>
     /// 部署配置Id
     /// </summary>
-    public string ApplicationDeploymentId { get;  set; }= default!;
+    public string DeploymentId { get;  set; }= default!;
     
     /// <summary>
     /// 命名空间Id
@@ -18,7 +18,11 @@ public class ServiceBaseDto
     public string NameSpaceId { get;  set; }= default!;
     
     /// <summary>
+    /// 集群Id
+    /// </summary>
+    public string ClusterId { get;  set; }= default!;
+    /// <summary>
     /// 服务端口配置
     /// </summary>
-    public List<ServicePortInputDto>? ServicePorts { get; set; } = default!;
+    public List<ServicePortDto>? ServicePorts { get; set; } = default!;
 }

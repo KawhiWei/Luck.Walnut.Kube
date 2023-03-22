@@ -1,3 +1,4 @@
+using Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
 using Luck.Walnut.Kube.Domain.Repositories;
 using Luck.Walnut.Kube.Dto;
 using Luck.Walnut.Kube.Dto.ContainerDtoBases;
@@ -9,11 +10,15 @@ public class DeploymentConfigurationQueryService : IDeploymentConfigurationQuery
 {
     private readonly IDeploymentConfigurationRepository _deploymentConfigurationRepository;
     private readonly IMasterContainerConfigurationRepository _masterContainerConfigurationRepository;
+    private readonly INameSpaceRepository _nameSpaceRepository;
+    private readonly IClusterRepository _clusterRepository;
 
-    public DeploymentConfigurationQueryService(IDeploymentConfigurationRepository applicationDeploymentRepository, IMasterContainerConfigurationRepository masterContainerConfigurationRepository)
+    public DeploymentConfigurationQueryService(IDeploymentConfigurationRepository applicationDeploymentRepository, IMasterContainerConfigurationRepository masterContainerConfigurationRepository, INameSpaceRepository nameSpaceRepository, IClusterRepository clusterRepository)
     {
         _deploymentConfigurationRepository = applicationDeploymentRepository;
         _masterContainerConfigurationRepository = masterContainerConfigurationRepository;
+        _nameSpaceRepository = nameSpaceRepository;
+        _clusterRepository = clusterRepository;
     }
 
 
@@ -21,16 +26,34 @@ public class DeploymentConfigurationQueryService : IDeploymentConfigurationQuery
     {
         var (data, totalCount) = await _deploymentConfigurationRepository.GetDeploymentConfigurationPageListAsync(appId, query);
         var masterContainerList = await _masterContainerConfigurationRepository.GetListByDeploymentIdsAsync(data.Select(x => x.Id).ToList());
-        foreach (var item in data)
+        var nameSpaceList = await _nameSpaceRepository.GetNameSpaceByIdsListAsync(data.Select(x => x.NameSpaceId).ToList());
+        var clusterList = await _clusterRepository.GetClusterFindByIdListAsync(data.Select(x => x.ClusterId).ToList());
+
+        var result = data.Select(deploymentConfiguration =>
         {
-            var masterContainer = masterContainerList.FirstOrDefault(x => x.DeploymentId == item.Id);
+            var deploymentConfigurationOutputDto = CreateDeploymentConfigurationOutputDto(deploymentConfiguration);
+            var masterContainer = masterContainerList.FirstOrDefault(x => x.DeploymentId == deploymentConfigurationOutputDto.Id);
             if (masterContainer is not null)
             {
-                item.MasterContainerId = masterContainer.Id;
+                deploymentConfigurationOutputDto.MasterContainerId = masterContainer.Id;
             }
-        }
 
-        return new PageBaseResult<DeploymentConfigurationOutputDto>(totalCount, data);
+            var nameSpace = nameSpaceList.FirstOrDefault(x => x.Id == deploymentConfigurationOutputDto.NameSpaceId);
+            if (nameSpace is not null)
+            {
+                deploymentConfigurationOutputDto.NameSpaceName = nameSpace.Name;
+            }
+
+            var cluster = clusterList.FirstOrDefault(cluster => cluster.Id == deploymentConfigurationOutputDto.ClusterId);
+            if (cluster is not null)
+            {
+                deploymentConfigurationOutputDto.ClusterName = cluster.Name;
+            }
+
+            return deploymentConfigurationOutputDto;
+        }).ToArray();
+
+        return new PageBaseResult<DeploymentConfigurationOutputDto>(totalCount, result);
     }
 
     public async Task<DeploymentOutputDto?> GetDeploymentConfigurationDetailByIdAsync(string deploymentId, string masterContainerId)
@@ -42,7 +65,7 @@ public class DeploymentConfigurationQueryService : IDeploymentConfigurationQuery
             return null;
         }
 
-        var masterContainerConfigurations = deploymentConfiguration.MasterContainers.Where(x=>x.Id==masterContainerId).Select(x =>
+        var masterContainerConfigurations = deploymentConfiguration.MasterContainers.Where(x => x.Id == masterContainerId).Select(x =>
         {
             var deploymentContainerConfiguration = new MasterContainerConfigurationOutputDto { Id = x.Id, ContainerName = x.ContainerName, RestartPolicy = x.RestartPolicy, IsInitContainer = x.IsInitContainer, ImagePullPolicy = x.ImagePullPolicy, Image = x.Image, };
             if (x.ReadinessProbe is not null)
@@ -91,6 +114,17 @@ public class DeploymentConfigurationQueryService : IDeploymentConfigurationQuery
             return deploymentContainerConfiguration;
         }).FirstOrDefault();
 
+
+        return new DeploymentOutputDto()
+        {
+            DeploymentConfiguration = CreateDeploymentConfigurationOutputDto(deploymentConfiguration),
+            MasterContainerConfiguration = masterContainerConfigurations,
+        };
+    }
+
+
+    private DeploymentConfigurationOutputDto CreateDeploymentConfigurationOutputDto(DeploymentConfiguration deploymentConfiguration)
+    {
         var deploymentConfigurationOutputDto = new DeploymentConfigurationOutputDto
         {
             Id = deploymentConfiguration.Id,
@@ -100,17 +134,14 @@ public class DeploymentConfigurationQueryService : IDeploymentConfigurationQuery
             ChineseName = deploymentConfiguration.ChineseName,
             Name = deploymentConfiguration.Name,
             AppId = deploymentConfiguration.AppId,
-            KubernetesNameSpaceId = deploymentConfiguration.KubernetesNameSpaceId,
+            NameSpaceId = deploymentConfiguration.NameSpaceId,
             Replicas = deploymentConfiguration.Replicas,
             MaxUnavailable = deploymentConfiguration.MaxUnavailable,
             ImagePullSecretId = deploymentConfiguration.ImagePullSecretId,
+            ClusterId = deploymentConfiguration.ClusterId,
             InitContainers = deploymentConfiguration.InitContainers.ToList()
         };
 
-        return new DeploymentOutputDto()
-        {
-            DeploymentConfiguration = deploymentConfigurationOutputDto,
-            MasterContainerConfiguration = masterContainerConfigurations,
-        };
+        return deploymentConfigurationOutputDto;
     }
 }

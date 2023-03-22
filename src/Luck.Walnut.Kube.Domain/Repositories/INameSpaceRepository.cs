@@ -13,6 +13,13 @@ public interface INameSpaceRepository: IAggregateRootRepository<NameSpace,string
     /// <param name="query"></param>
     /// <returns></returns>
     Task<(NameSpace[] Data, int TotalCount)> GetNameSpacePageListAsync(NameSpaceQueryDto query);
+
+    /// <summary>
+    /// 根据Id列表查询一组NameSpace
+    /// </summary>
+    /// <param name="ids"></param>
+    /// <returns></returns>
+    Task<List<NameSpace>> GetNameSpaceByIdsListAsync(List<string> ids);
     
     /// <summary>
     /// 根据名称和集群id查询是否存在命名空间
@@ -27,4 +34,12 @@ public interface INameSpaceRepository: IAggregateRootRepository<NameSpace,string
     /// <param name="id"></param>
     /// <returns></returns>
     Task<NameSpace?> FindNameSpaceByIdAsync(string id);
+    
+    
+    /// <summary>
+    /// 根据集群Id获取NameSpace列表
+    /// </summary>
+    /// <param name="clusterId"></param>
+    /// <returns></returns>
+    Task<List<NameSpace>> GetNameSpaceByClusterIdListAsync(string clusterId);
 }

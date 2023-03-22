@@ -1,3 +1,4 @@
+using Luck.Walnut.Kube.Domain.AggregateRoots.NameSpaces;
 using Luck.Walnut.Kube.Domain.Repositories;
 using Luck.Walnut.Kube.Dto;
 using Luck.Walnut.Kube.Dto.NameSpaces;
@@ -22,14 +23,7 @@ public class NameSpaceQueryService : INameSpaceQueryService
         var clusterList = await _clusterRepository.GetClusterFindByIdListAsync(data.Select(x => x.ClusterId).ToList());
         var result = data.Select(nameSpace =>
         {
-            var nameSpaceOutputDto = new NameSpaceOutputDto()
-            {
-                Id = nameSpace.Id,
-                Name = nameSpace.Name,
-                ChineseName = nameSpace.ChineseName,
-                ClusterId = nameSpace.ClusterId,
-                IsPublish = nameSpace.IsPublish,
-            };
+            var nameSpaceOutputDto = CreateNameSpaceOutputDto(nameSpace);
             var cluster = clusterList.FirstOrDefault(cluster => cluster.Id == nameSpace.ClusterId);
             if (cluster is not null)
             {
@@ -45,16 +39,25 @@ public class NameSpaceQueryService : INameSpaceQueryService
     {
         var nameSpace = await _nameSpaceRepository.FindNameSpaceByIdAsync(id);
 
-        if (nameSpace is null)
-        {
-            return null;
-        }
+        return nameSpace is null ? null : CreateNameSpaceOutputDto(nameSpace);
+    }
 
+    public async Task<List<NameSpaceOutputDto>> GetNameSpaceByClusterIdListAsync(string clusterId)
+    {
+        var nameSpaceList = await _nameSpaceRepository.GetNameSpaceByClusterIdListAsync(clusterId);
+
+        return nameSpaceList.Select(CreateNameSpaceOutputDto).ToList();
+    }
+
+
+    private NameSpaceOutputDto CreateNameSpaceOutputDto(NameSpace nameSpace)
+    {
         return new NameSpaceOutputDto()
         {
             Name = nameSpace.Name,
             ChineseName = nameSpace.ChineseName,
             ClusterId = nameSpace.ClusterId,
+            Id = nameSpace.Id,
         };
     }
 }

@@ -33,7 +33,7 @@ public class NameSpaceController : BaseController
     [HttpPut("{id}")]
     public Task UpdateNameSpace([FromServices] INameSpaceApplication nameSpaceApplication, string id, [FromBody] NameSpaceInputDto input)
         => nameSpaceApplication.UpdateNameSpaceAsync(id, input);
-    
+
     /// <summary>
     /// 发布集群到K8S
     /// </summary>
@@ -71,4 +71,15 @@ public class NameSpaceController : BaseController
     [HttpGet]
     public Task<PageBaseResult<NameSpaceOutputDto>> GetNameSpacePageList([FromServices] INameSpaceQueryService nameSpaceQueryService, [FromQuery] NameSpaceQueryDto query)
         => nameSpaceQueryService.GetNameSpacePageListAsync(query);
+
+
+    /// <summary>
+    /// 修改集群
+    /// </summary>
+    /// <param name="nameSpaceQueryService"></param>
+    /// <param name="clusterId"></param>
+    /// <returns></returns>
+    [HttpGet("{clusterId}/list")]
+    public Task<List<NameSpaceOutputDto>> GetNameSpaceByClusterIdList([FromServices] INameSpaceQueryService nameSpaceQueryService, string clusterId)
+        => nameSpaceQueryService.GetNameSpaceByClusterIdListAsync(clusterId);
 }

@@ -35,5 +35,5 @@ public enum DeploymentTypeEnum
     /// <summary>
     /// CronJob
     /// </summary>
-    CronJob = 5,
+    CronJob = 6,
 }

@@ -25,6 +25,11 @@ public class DeploymentConfigurationBaseDto
     public string ChineseName { get; set; } = default!;
 
     /// <summary>
+    /// 应用Id
+    /// </summary>
+    public string ClusterId { get; set; } = default!;
+    
+    /// <summary>
     /// 名称
     /// </summary>
     public string Name { get; set; } = default!;
@@ -37,7 +42,7 @@ public class DeploymentConfigurationBaseDto
     /// <summary>
     /// 命名空间Id
     /// </summary>
-    public string KubernetesNameSpaceId { get; set; } = default!;
+    public string NameSpaceId { get; set; } = default!;
 
     /// <summary>
     /// 部署副本数量
@@ -57,6 +62,5 @@ public class DeploymentConfigurationBaseDto
     /// <summary>
     /// 初始容器配置列表
     /// </summary>
-    public List<string>? InitContainers { get;  set; } = default!;
-
+    public List<string>? InitContainers { get; set; } = default!;
 }

@@ -32,7 +32,7 @@ public class NameSpaceApplication : INameSpaceApplication
     public async Task UpdateNameSpaceAsync(string id, NameSpaceInputDto input)
     {
         var nameSpace = await GetAndCheckNameSpaceAsync(id);
-        nameSpace.Update(input.ChineseName, input.Name)
+        nameSpace.Update(input)
             .SetIsPublish(false);
         await _unitOfWork.CommitAsync();
     }

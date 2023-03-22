@@ -31,8 +31,23 @@ public class NameSpaceRepository : EfCoreAggregateRootRepository<NameSpace, stri
         return await this.FindAll().FirstOrDefaultAsync(x => x.Name == name && x.ClusterId == clusterId);
     }
 
+    public async Task<List<NameSpace>> GetNameSpaceByIdsListAsync(List<string> ids)
+    {
+        return await this.FindAll(x => ids.Contains(x.Id)).ToListAsync();
+    }
+    
+    
     public async Task<NameSpace?> FindNameSpaceByIdAsync(string id)
     {
         return await this.FindAll().FirstOrDefaultAsync(x => x.Id == id);
     }
+
+
+    /// <summary>
+    /// 根据集群Id获取NameSpace列表
+    /// </summary>
+    /// <param name="clusterId"></param>
+    /// <returns></returns>
+    public Task<List<NameSpace>> GetNameSpaceByClusterIdListAsync(string clusterId) => FindAll(x => x.ClusterId == clusterId).ToListAsync();
+
 }

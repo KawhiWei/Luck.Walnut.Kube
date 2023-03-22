@@ -1,3 +1,5 @@
+using Luck.Walnut.Kube.Dto.NameSpaces;
+
 namespace Luck.Walnut.Kube.Domain.AggregateRoots.NameSpaces;
 
 /// <summary>
@@ -22,21 +24,22 @@ public class NameSpace : FullAggregateRoot
     /// 明明空间名称
     /// </summary>
     public string Name { get; private set; }
-    
+
     /// <summary>
     /// 集群Id
     /// </summary>
-    public string ClusterId{ get; private set; } 
+    public string ClusterId { get; private set; }
 
     /// <summary>
     /// 是否发布
     /// </summary>
     public bool IsPublish { get; private set; }
 
-    public NameSpace Update(string chineseName, string name)
+    public NameSpace Update(NameSpaceInputDto input)
     {
-        ChineseName = chineseName;
-        Name = name;
+        ChineseName = input.ChineseName;
+        Name = input.Name;
+        ClusterId = input.ClusterId;
         return this;
     }
 

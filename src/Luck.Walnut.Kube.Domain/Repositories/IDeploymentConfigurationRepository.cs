@@ -14,7 +14,7 @@ public interface IDeploymentConfigurationRepository : IAggregateRootRepository<D
     /// <param name="appId"></param>
     /// <param name="query"></param>
     /// <returns></returns>
-    Task<(DeploymentConfigurationOutputDto[] Data, int TotalCount)> GetDeploymentConfigurationPageListAsync(string appId, DeploymentConfigurationQueryDto query);
+    Task<(DeploymentConfiguration[] Data, int TotalCount)> GetDeploymentConfigurationPageListAsync(string appId, DeploymentConfigurationQueryDto query);
 
     /// <summary>
     /// 根据Id获取一个应用部署数据

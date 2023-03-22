@@ -11,21 +11,9 @@ public class DeploymentConfigurationRepository : EfCoreAggregateRootRepository<D
     {
     }
 
-    public async Task<(DeploymentConfigurationOutputDto[] Data, int TotalCount)> GetDeploymentConfigurationPageListAsync(string appId, DeploymentConfigurationQueryDto query)
+    public async Task<(DeploymentConfiguration[] Data, int TotalCount)> GetDeploymentConfigurationPageListAsync(string appId, DeploymentConfigurationQueryDto query)
     {
-        var queryable = FindAll(x => x.AppId == appId).Select(x => new DeploymentConfigurationOutputDto
-        {
-            Id= x.Id,
-            AppId = x.AppId,
-            ApplicationRuntimeType = x.ApplicationRuntimeType,
-            DeploymentType = x.DeploymentType,
-            ChineseName = x.ChineseName,
-            Name = x.Name,
-            KubernetesNameSpaceId = x.KubernetesNameSpaceId,
-            Replicas = x.Replicas,
-            MaxUnavailable = x.MaxUnavailable,
-            ImagePullSecretId = x.ImagePullSecretId,
-        });
+        var queryable = FindAll(x => x.AppId == appId);
         var totalCount = await queryable.CountAsync();
         var list = await queryable.ToPage(query.PageIndex, query.PageSize).ToArrayAsync();
 

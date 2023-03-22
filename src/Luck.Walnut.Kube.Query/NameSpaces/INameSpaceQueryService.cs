@@ -18,4 +18,12 @@ public interface INameSpaceQueryService:IScopedDependency
     /// <param name="id"></param>
     /// <returns></returns>
     Task<NameSpaceOutputDto?> GetNameSpaceDetailByIdAsync(string id);
+
+
+    /// <summary>
+    /// 根据集群Id获取NameSpace列表
+    /// </summary>
+    /// <param name="clusterId"></param>
+    /// <returns></returns>
+    Task<List<NameSpaceOutputDto>> GetNameSpaceByClusterIdListAsync(string clusterId);
 }

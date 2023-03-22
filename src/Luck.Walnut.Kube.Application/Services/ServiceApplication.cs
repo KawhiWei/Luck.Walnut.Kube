@@ -24,7 +24,7 @@ public class ServiceApplication : IServiceApplication
             throw new BusinessException($"[{input.Name}]已存在，请刷新页面");
         }
 
-        var service = new Service(input.Name, input.ApplicationDeploymentId, input.NameSpaceId, false);
+        var service = new Service(input.Name, input.DeploymentId, input.NameSpaceId, input.ClusterId);
         _serviceRepository.Add(service);
         await _unitOfWork.CommitAsync();
     }
@@ -33,6 +33,7 @@ public class ServiceApplication : IServiceApplication
     {
         var service = await GetAndCheckServiceAsync(id);
         service.SetIsPublish(false)
+            .Update(input)
             .SetServicePorts(input);
         await _unitOfWork.CommitAsync();
     }
