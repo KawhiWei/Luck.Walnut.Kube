@@ -24,7 +24,7 @@ public class ServiceApplication : IServiceApplication
             throw new BusinessException($"[{input.Name}]已存在，请刷新页面");
         }
 
-        var service = new Service(input.Name, input.DeploymentId, input.NameSpaceId, input.ClusterId);
+        var service = new Service(input.Name, input.DeploymentId, input.NameSpaceId, input.ClusterId, input.AppId);
         _serviceRepository.Add(service);
         await _unitOfWork.CommitAsync();
     }

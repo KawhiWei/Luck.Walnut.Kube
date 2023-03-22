@@ -21,6 +21,11 @@ public class ServiceBaseDto
     /// 集群Id
     /// </summary>
     public string ClusterId { get;  set; }= default!;
+
+    /// <summary>
+    /// 集群Id
+    /// </summary>
+    public string AppId { get; set; } = default!;
     /// <summary>
     /// 服务端口配置
     /// </summary>

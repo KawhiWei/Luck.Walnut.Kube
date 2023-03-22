@@ -9,12 +9,13 @@ namespace Luck.Walnut.Kube.Domain.AggregateRoots.Services;
 /// </summary>
 public class Service : FullAggregateRoot
 {
-    public Service(string name, string deploymentId, string nameSpaceId, string clusterId, bool isPublish=false)
+    public Service(string name, string deploymentId, string nameSpaceId, string clusterId, string appId, bool isPublish = false)
     {
         Name = name;
         DeploymentId = deploymentId;
         NameSpaceId = nameSpaceId;
         ClusterId = clusterId;
+        AppId = appId;
         IsPublish = isPublish;
     }
 
@@ -22,6 +23,11 @@ public class Service : FullAggregateRoot
     /// 服务名称
     /// </summary>
     public string Name { get; private set; }
+
+    /// <summary>
+    /// 应用Id
+    /// </summary>
+    public string AppId { get; private set; }
 
     /// <summary>
     /// 部署配置Id
@@ -63,6 +69,7 @@ public class Service : FullAggregateRoot
         DeploymentId = input.DeploymentId;
         NameSpaceId = input.NameSpaceId;
         ClusterId = input.ClusterId;
+        AppId = input.AppId;
         return this;
     }
     public Service SetIsPublish(bool isPublish)
