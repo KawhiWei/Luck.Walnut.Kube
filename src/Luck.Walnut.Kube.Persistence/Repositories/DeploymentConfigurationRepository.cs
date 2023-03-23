@@ -38,6 +38,6 @@ public class DeploymentConfigurationRepository : EfCoreAggregateRootRepository<D
 
     public Task<List<DeploymentConfiguration>> GetDeploymentConfigurationByAppIdListAsync(string appId)
     {
-        throw new NotImplementedException();
+        return FindAll(x => x.AppId == appId).ToListAsync();
     }
 }

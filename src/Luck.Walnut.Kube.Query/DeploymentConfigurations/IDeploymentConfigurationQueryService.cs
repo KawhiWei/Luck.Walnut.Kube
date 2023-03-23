@@ -18,4 +18,11 @@ public interface IDeploymentConfigurationQueryService:IScopedDependency
 
 
     Task<DeploymentOutputDto?> GetDeploymentConfigurationDetailByIdAsync(string deploymentId,string masterContainerId);
+
+    /// <summary>
+    /// 根据AppId查询部署列表
+    /// </summary>
+    /// <param name="appId"></param>
+    /// <returns></returns>
+    Task<List<DeploymentConfigurationOutputDto>> GetDeploymentConfigurationByAppIdListAsync(string appId);
 }

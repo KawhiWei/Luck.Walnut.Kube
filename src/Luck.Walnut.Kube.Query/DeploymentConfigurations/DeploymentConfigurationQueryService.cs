@@ -123,6 +123,13 @@ public class DeploymentConfigurationQueryService : IDeploymentConfigurationQuery
     }
 
 
+    public async Task<List<DeploymentConfigurationOutputDto>> GetDeploymentConfigurationByAppIdListAsync(string appId)
+    {
+        var deploymentConfigurationList = await _deploymentConfigurationRepository.GetDeploymentConfigurationByAppIdListAsync(appId);
+
+        return deploymentConfigurationList.Select(CreateDeploymentConfigurationOutputDto).ToList();
+    }
+
     private DeploymentConfigurationOutputDto CreateDeploymentConfigurationOutputDto(DeploymentConfiguration deploymentConfiguration)
     {
         var deploymentConfigurationOutputDto = new DeploymentConfigurationOutputDto

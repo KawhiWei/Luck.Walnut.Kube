@@ -8,9 +8,9 @@ public enum PortTypeEnum
     /// <summary>
     /// 
     /// </summary>
-    Tcp,
+    Tcp=0,
     /// <summary>
     /// 
     /// </summary>
-    Http,
+    Http=1,
 }
