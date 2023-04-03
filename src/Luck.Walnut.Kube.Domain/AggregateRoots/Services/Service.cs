@@ -63,13 +63,12 @@ public class Service : FullAggregateRoot
         }
     }
 
-    public Service Update(ServiceInputDto input)
+    public Service Update(string name, string deploymentId, string nameSpaceId, string clusterId)
     {
-        Name = input.Name;
-        DeploymentId = input.DeploymentId;
-        NameSpaceId = input.NameSpaceId;
-        ClusterId = input.ClusterId;
-        AppId = input.AppId;
+        Name = name;
+        DeploymentId = deploymentId;
+        NameSpaceId = nameSpaceId;
+        ClusterId = clusterId;
         return this;
     }
     public Service SetIsPublish(bool isPublish)

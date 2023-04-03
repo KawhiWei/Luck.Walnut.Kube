@@ -1,3 +1,4 @@
+using Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
 using Luck.Walnut.Kube.Dto.DeploymentConfigurations;
 
 namespace Luck.Walnut.Kube.Application.DeploymentConfigurations;
@@ -27,4 +28,6 @@ public interface IDeploymentConfigurationApplication : IScopedDependency
 
 
     Task DeleteDeploymentContainerConfigurationAsync(string deploymentConfigurationId, string deploymentContainerConfigurationId);
+
+    Task<DeploymentConfiguration> GetAndCheckDeploymentConfigurationAsync(string id);
 }

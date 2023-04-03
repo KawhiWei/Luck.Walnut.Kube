@@ -44,10 +44,9 @@ public class NameSpaceRepository : EfCoreAggregateRootRepository<NameSpace, stri
 
 
     /// <summary>
-    /// 根据集群Id获取NameSpace列表
+    /// 获取NameSpace列表
     /// </summary>
-    /// <param name="clusterId"></param>
     /// <returns></returns>
-    public Task<List<NameSpace>> GetNameSpaceByClusterIdListAsync(string clusterId) => FindAll(x => x.ClusterId == clusterId).ToListAsync();
+    public Task<List<NameSpace>> GetNameSpaceListAsync() => FindAll().ToListAsync();
 
 }

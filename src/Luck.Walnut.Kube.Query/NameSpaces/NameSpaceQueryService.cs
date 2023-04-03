@@ -42,9 +42,9 @@ public class NameSpaceQueryService : INameSpaceQueryService
         return nameSpace is null ? null : CreateNameSpaceOutputDto(nameSpace);
     }
 
-    public async Task<List<NameSpaceOutputDto>> GetNameSpaceByClusterIdListAsync(string clusterId)
+    public async Task<List<NameSpaceOutputDto>> GetNameSpaceListAsync()
     {
-        var nameSpaceList = await _nameSpaceRepository.GetNameSpaceByClusterIdListAsync(clusterId);
+        var nameSpaceList = await _nameSpaceRepository.GetNameSpaceListAsync();
 
         return nameSpaceList.Select(CreateNameSpaceOutputDto).ToList();
     }

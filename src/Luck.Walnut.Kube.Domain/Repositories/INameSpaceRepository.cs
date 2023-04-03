@@ -39,7 +39,6 @@ public interface INameSpaceRepository: IAggregateRootRepository<NameSpace,string
     /// <summary>
     /// 根据集群Id获取NameSpace列表
     /// </summary>
-    /// <param name="clusterId"></param>
     /// <returns></returns>
-    Task<List<NameSpace>> GetNameSpaceByClusterIdListAsync(string clusterId);
+    Task<List<NameSpace>> GetNameSpaceListAsync();
 }

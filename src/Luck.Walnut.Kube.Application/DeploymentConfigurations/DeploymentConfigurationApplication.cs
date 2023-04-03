@@ -79,6 +79,17 @@ public class DeploymentConfigurationApplication : IDeploymentConfigurationApplic
     }
 
 
+    public async Task<DeploymentConfiguration> GetAndCheckDeploymentConfigurationAsync(string id)
+    {
+        var cluster = await _deploymentConfigurationRepository.FindDeploymentConfigurationByIdAsync(id);
+        if (cluster is null)
+        {
+            throw new BusinessException("部署不存在，请刷新页面");
+        }
+
+        return cluster;
+    }
+    
     #region ApplicationContainer
 
     /// <summary>
@@ -124,16 +135,7 @@ public class DeploymentConfigurationApplication : IDeploymentConfigurationApplic
 
     #region 私有Check方法
 
-    private async Task<DeploymentConfiguration> GetAndCheckDeploymentConfigurationAsync(string id)
-    {
-        var cluster = await _deploymentConfigurationRepository.FindDeploymentConfigurationByIdAsync(id);
-        if (cluster is null)
-        {
-            throw new BusinessException("部署不存在，请刷新页面");
-        }
 
-        return cluster;
-    }
 
     private async Task<bool> CheckIsExitDeploymentConfigurationAsync(string appId, string name)
     {

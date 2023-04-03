@@ -1,5 +1,6 @@
 using Luck.Framework.Exceptions;
 using Luck.Framework.UnitOfWorks;
+using Luck.Walnut.Kube.Application.DeploymentConfigurations;
 using Luck.Walnut.Kube.Domain.AggregateRoots.Services;
 using Luck.Walnut.Kube.Domain.Repositories;
 using Luck.Walnut.Kube.Dto.Services;
@@ -10,30 +11,34 @@ public class ServiceApplication : IServiceApplication
 {
     private readonly IServiceRepository _serviceRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IDeploymentConfigurationApplication _deploymentConfigurationApplication;
 
-    public ServiceApplication(IServiceRepository serviceRepository, IUnitOfWork unitOfWork)
+    public ServiceApplication(IServiceRepository serviceRepository, IUnitOfWork unitOfWork, IDeploymentConfigurationApplication deploymentConfigurationApplication)
     {
         _serviceRepository = serviceRepository;
         _unitOfWork = unitOfWork;
+        _deploymentConfigurationApplication = deploymentConfigurationApplication;
     }
 
     public async Task CreateServiceAsync(ServiceInputDto input)
     {
-        if (await CheckIsExitNameSpaceAsync(input.Name, input.NameSpaceId))
+        var deployment = await _deploymentConfigurationApplication.GetAndCheckDeploymentConfigurationAsync(input.DeploymentId);
+        if (await CheckIsExitNameSpaceAsync(input.Name, deployment.NameSpaceId))
         {
             throw new BusinessException($"[{input.Name}]已存在，请刷新页面");
         }
 
-        var service = new Service(input.Name, input.DeploymentId, input.NameSpaceId, input.ClusterId, input.AppId);
+        var service = new Service(input.Name, input.DeploymentId, deployment.NameSpaceId, deployment.ClusterId, input.AppId);
         _serviceRepository.Add(service);
         await _unitOfWork.CommitAsync();
     }
 
     public async Task UpdateServiceAsync(string id, ServiceInputDto input)
     {
+        var deployment = await _deploymentConfigurationApplication.GetAndCheckDeploymentConfigurationAsync(input.DeploymentId);
         var service = await GetAndCheckServiceAsync(id);
         service.SetIsPublish(false)
-            .Update(input)
+            .Update(input.Name, input.DeploymentId, deployment.NameSpaceId, deployment.ClusterId)
             .SetServicePorts(input);
         await _unitOfWork.CommitAsync();
     }

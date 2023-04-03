@@ -74,12 +74,11 @@ public class NameSpaceController : BaseController
 
 
     /// <summary>
-    /// 修改集群
+    /// 获取集群列表
     /// </summary>
     /// <param name="nameSpaceQueryService"></param>
-    /// <param name="clusterId"></param>
     /// <returns></returns>
-    [HttpGet("{clusterId}/list")]
-    public Task<List<NameSpaceOutputDto>> GetNameSpaceByClusterIdList([FromServices] INameSpaceQueryService nameSpaceQueryService, string clusterId)
-        => nameSpaceQueryService.GetNameSpaceByClusterIdListAsync(clusterId);
+    [HttpGet("list")]
+    public Task<List<NameSpaceOutputDto>> GetNameSpaceByClusterIdList([FromServices] INameSpaceQueryService nameSpaceQueryService )
+        => nameSpaceQueryService.GetNameSpaceListAsync();
 }
