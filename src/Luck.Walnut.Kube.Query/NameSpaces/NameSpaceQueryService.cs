@@ -58,6 +58,7 @@ public class NameSpaceQueryService : INameSpaceQueryService
             ChineseName = nameSpace.ChineseName,
             ClusterId = nameSpace.ClusterId,
             Id = nameSpace.Id,
+            IsPublish=nameSpace.IsPublish,
         };
     }
 }
