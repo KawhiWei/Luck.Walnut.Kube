@@ -17,8 +17,16 @@ public interface IKubernetesResource:IScopedDependency
 
      Task<object> GetPodListAsync(string config);
      
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="config"></param>
+    /// <param name="nameSpace"></param>
+    /// <returns></returns>
      Task<object> GetPodListAsync(string config,string nameSpace);
 
      Task CreateDeploymentAsync(V1Deployment v1Deployment);
 
 }
+
+

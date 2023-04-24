@@ -1,3 +1,5 @@
+using k8s.Models;
+
 using Luck.Framework.Exceptions;
 using Luck.Framework.UnitOfWorks;
 using Luck.Walnut.Kube.Domain.AggregateRoots.NameSpaces;
@@ -40,6 +42,17 @@ public class NameSpaceApplication : INameSpaceApplication
     public async Task PublishNameSpaceAsync(string id)
     {
         var nameSpace = await GetAndCheckNameSpaceAsync(id);
+
+        var KubernetesNameSpace=new V1Namespace()
+        {
+            Metadata=new V1ObjectMeta()
+            {
+                Name=nameSpace.Name,
+            }
+        }
+
+
+
         nameSpace.SetIsPublish(true);
         await _unitOfWork.CommitAsync();
     }
