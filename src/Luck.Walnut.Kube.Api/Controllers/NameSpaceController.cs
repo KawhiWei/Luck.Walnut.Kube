@@ -79,6 +79,6 @@ public class NameSpaceController : BaseController
     /// <param name="nameSpaceQueryService"></param>
     /// <returns></returns>
     [HttpGet("list")]
-    public Task<List<NameSpaceOutputDto>> GetNameSpaceByClusterIdList([FromServices] INameSpaceQueryService nameSpaceQueryService )
+    public Task<List<NameSpaceOutputDto>> GetNameSpaceIdList([FromServices] INameSpaceQueryService nameSpaceQueryService )
         => nameSpaceQueryService.GetNameSpaceListAsync();
 }

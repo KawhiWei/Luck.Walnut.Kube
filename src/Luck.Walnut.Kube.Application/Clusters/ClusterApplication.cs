@@ -107,8 +107,7 @@ public class ClusterApplication : IClusterApplication
                 .ToList(),
         }).ToList();
     }
-
-
+    
     private async Task<Cluster> CheckAndGetClusterIsExistAsync(string id)
     {
         var cluster = await _clusterRepository.GetClusterFindByIdAsync(id);
