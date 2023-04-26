@@ -1,3 +1,5 @@
+using Luck.Framework.Exceptions;
+using Luck.Walnut.Kube.Domain.Shared.Enums;
 using Luck.Walnut.Kube.Dto.NameSpaces;
 
 namespace Luck.Walnut.Kube.Domain.AggregateRoots.NameSpaces;
@@ -7,11 +9,11 @@ namespace Luck.Walnut.Kube.Domain.AggregateRoots.NameSpaces;
 /// </summary>
 public class NameSpace : FullAggregateRoot
 {
-    public NameSpace(string chineseName, string name, bool isPublish, string clusterId)
+    public NameSpace(string chineseName, string name, string clusterId, OnlineStatusEnum onlineStatus= OnlineStatusEnum.Offline)
     {
         ChineseName = chineseName;
         Name = name;
-        IsPublish = isPublish;
+        OnlineStatus = onlineStatus;
         ClusterId = clusterId;
     }
 
@@ -33,7 +35,7 @@ public class NameSpace : FullAggregateRoot
     /// <summary>
     /// 是否发布
     /// </summary>
-    public bool IsPublish { get; private set; }
+    public OnlineStatusEnum OnlineStatus { get; private set; }
 
     public NameSpace Update(NameSpaceInputDto input)
     {
@@ -43,9 +45,17 @@ public class NameSpace : FullAggregateRoot
         return this;
     }
 
-    public NameSpace SetIsPublish(bool isPublish)
+    public NameSpace SetOnline(OnlineStatusEnum onlineStatus)
     {
-        IsPublish = isPublish;
+        OnlineStatus = onlineStatus;
         return this;
+    }
+
+    public void CheckOnlineStatusIsOnline()
+    {
+        if (OnlineStatus == OnlineStatusEnum.Online)
+        {
+            throw new BusinessException("已上线的NameSpace不允许修改！");
+        }
     }
 }

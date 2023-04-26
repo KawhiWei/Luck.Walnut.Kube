@@ -31,7 +31,7 @@ namespace Luck.Walnut.Kube.Adapter.KubernetesAdapter.Deployments
 
 
         /// <summary>
-        /// 获取所有明明空间下的Deployment
+        /// 获取Deployment
         /// </summary>
         /// <param name="kubernetes"></param>
         /// <param name="nameSpace"></param>

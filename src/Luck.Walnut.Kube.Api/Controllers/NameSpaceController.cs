@@ -35,14 +35,14 @@ public class NameSpaceController : BaseController
         => nameSpaceApplication.UpdateNameSpaceAsync(id, input);
 
     /// <summary>
-    /// 发布集群到K8S
+    /// 上线集群到K8s
     /// </summary>
     /// <param name="nameSpaceApplication"></param>
     /// <param name="id"></param>
     /// <returns></returns>
-    [HttpPut("{id}/publish")]
-    public Task PublishNameSpace([FromServices] INameSpaceApplication nameSpaceApplication, string id)
-        => nameSpaceApplication.PublishNameSpaceAsync(id);
+    [HttpPut("{id}/online")]
+    public Task OnlineNameSpace([FromServices] INameSpaceApplication nameSpaceApplication, string id)
+        => nameSpaceApplication.OnlineNameSpaceAsync(id);
 
     /// <summary>
     /// 根据Id获取NameSpace
@@ -53,6 +53,17 @@ public class NameSpaceController : BaseController
     [HttpGet("{id}")]
     public Task<NameSpaceOutputDto?> GetNameSpaceDetailById([FromServices] INameSpaceQueryService nameSpaceQueryService, string id)
         => nameSpaceQueryService.GetNameSpaceDetailByIdAsync(id);
+
+    /// <summary>
+    /// 从K8s集群下线
+    /// </summary>
+    /// <param name="nameSpaceApplication"></param>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpPut("{id}/offline")]
+    public Task OfflineNameSpace([FromServices] INameSpaceApplication nameSpaceApplication, string id)
+        => nameSpaceApplication.OnlineNameSpaceAsync(id);
+
 
     /// <summary>
     /// 删除命名空间

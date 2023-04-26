@@ -82,14 +82,9 @@ public class DeploymentConfigurationApplication : IDeploymentConfigurationApplic
     public async Task<DeploymentConfiguration> GetAndCheckDeploymentConfigurationAsync(string id)
     {
         var cluster = await _deploymentConfigurationRepository.FindDeploymentConfigurationByIdAsync(id);
-        if (cluster is null)
-        {
-            throw new BusinessException("部署不存在，请刷新页面");
-        }
-
-        return cluster;
+        return cluster is null ? throw new BusinessException("部署不存在，请刷新页面") : cluster;
     }
-    
+
     #region ApplicationContainer
 
     /// <summary>

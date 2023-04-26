@@ -24,7 +24,7 @@ public interface INameSpaceApplication : IScopedDependency
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    Task PublishNameSpaceAsync(string id);
+    Task OnlineNameSpaceAsync(string id);
 
     /// <summary>
     /// 删除名称空间

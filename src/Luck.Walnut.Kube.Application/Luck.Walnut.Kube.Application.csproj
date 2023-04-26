@@ -7,10 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="DeploymentConfigurations\ij03szlu.vfc~" />
+    <None Remove="NameSpaces\NameSpaceApplication.cs~RF12b9db8.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Luck.Walnut.Kube.Persistence\Luck.Walnut.Kube.Persistence.csproj" />
     <ProjectReference Include="..\Luck.Walnut.Kube.Adapter\Luck.Walnut.Kube.Adapter.csproj" />
     <ProjectReference Include="..\Luck.Walnut.Kube.Domain\Luck.Walnut.Kube.Domain.csproj" />
     <ProjectReference Include="..\Luck.Walnut.Kube.Dto\Luck.Walnut.Kube.Dto.csproj" />
+    <ProjectReference Include="..\Luck.Walnut.Kube.Query\Luck.Walnut.Kube.Query.csproj" />
   </ItemGroup>
 
 </Project>

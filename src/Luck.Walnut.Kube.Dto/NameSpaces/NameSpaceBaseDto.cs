@@ -1,3 +1,5 @@
+using Luck.Walnut.Kube.Domain.Shared.Enums;
+
 namespace Luck.Walnut.Kube.Dto.NameSpaces;
 
 public class NameSpaceBaseDto
@@ -20,5 +22,5 @@ public class NameSpaceBaseDto
     /// <summary>
     /// 
     /// </summary>
-    public bool IsPublish { get; set; } = default!;
+    public OnlineStatusEnum OnlineStatus { get;  set; }
 }

@@ -33,19 +33,17 @@ public class DeploymentResource : IDeploymentResource
         throw new NotImplementedException();
     }
 
-    public async Task<List<KubernetesDeployment>> GetAllNamespacesDeploymentListAsync(IKubernetes kubernetes,
+
+    public async Task<List<KubernetesDeployment>> GetDeploymentListAsync(IKubernetes kubernetes,
         string nameSpace = "")
     {
         V1DeploymentList v1DeploymentList;
-        
         if (nameSpace.IsNotNull())
         {
-            v1DeploymentList = await kubernetes.AppsV1.ListNamespacedDeploymentWithHttpMessagesAsync(nameSpace);
+            v1DeploymentList = await kubernetes.AppsV1.ListNamespacedDeploymentAsync(nameSpace);
             return GetKubernetesDeploymentListList(v1DeploymentList.Items).ToList();    
         }
-        
         v1DeploymentList = await kubernetes.AppsV1.ListDeploymentForAllNamespacesAsync();
-        
         return GetKubernetesDeploymentListList(v1DeploymentList.Items).ToList();
     }
 
@@ -60,4 +58,5 @@ public class DeploymentResource : IDeploymentResource
             return kubernetesDaemonSet;
         }).ToList();
     }
+
 }

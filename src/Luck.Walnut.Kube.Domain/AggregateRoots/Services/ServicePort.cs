@@ -5,10 +5,7 @@ namespace Luck.Walnut.Kube.Domain.AggregateRoots.Services;
 
 public class ServicePort
 {
-    public ServicePort()
-    {
-    }
-    
+     
     /// <summary>
     /// 
     /// </summary>

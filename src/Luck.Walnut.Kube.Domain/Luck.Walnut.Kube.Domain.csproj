@@ -6,10 +6,11 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Luck.DDD.Domain" Version="1.0.5" />
+		<PackageReference Include="Luck.DDD.Domain" Version="1.0.7" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\Luck.Walnut.Kube.Domain.Shared\Luck.Walnut.Kube.Domain.Shared.csproj" />
 	  <ProjectReference Include="..\Luck.Walnut.Kube.Dto\Luck.Walnut.Kube.Dto.csproj" />
+	  <ProjectReference Include="..\Luck.Walnut.Kube.Infrastructure\Luck.Walnut.Kube.Infrastructure.csproj" />
 	</ItemGroup>
 </Project>
