@@ -1,5 +1,4 @@
 using k8s.Models;
-
 using Luck.Framework.Exceptions;
 using Luck.Framework.UnitOfWorks;
 using Luck.Walnut.Kube.Domain.AggregateRoots.NameSpaces;
@@ -21,12 +20,12 @@ public class NameSpaceApplication : INameSpaceApplication
 
     public async Task CreateNameSpaceAsync(NameSpaceInputDto input)
     {
-        if (await CheckIsExitNameSpaceAsync(input.Name,input.ClusterId))
+        if (await CheckIsExitNameSpaceAsync(input.Name, input.ClusterId))
         {
             throw new BusinessException($"[{input.Name}]已存在，请刷新页面");
         }
 
-        var nameSpace = new NameSpace(input.ChineseName, input.Name, false,input.ClusterId);
+        var nameSpace = new NameSpace(input.ChineseName, input.Name, false, input.ClusterId);
         _nameSpaceRepository.Add(nameSpace);
         await _unitOfWork.CommitAsync();
     }
@@ -43,14 +42,13 @@ public class NameSpaceApplication : INameSpaceApplication
     {
         var nameSpace = await GetAndCheckNameSpaceAsync(id);
 
-        var KubernetesNameSpace=new V1Namespace()
+        var KubernetesNameSpace = new V1Namespace()
         {
-            Metadata=new V1ObjectMeta()
+            Metadata = new V1ObjectMeta()
             {
-                Name=nameSpace.Name,
+                Name = nameSpace.Name,
             }
-        }
-
+        };
 
 
         nameSpace.SetIsPublish(true);
@@ -81,9 +79,9 @@ public class NameSpaceApplication : INameSpaceApplication
     /// <param name="name"></param>
     /// <param name="clusterId"></param>
     /// <returns></returns>
-    private async Task<bool> CheckIsExitNameSpaceAsync(string name,string clusterId)
+    private async Task<bool> CheckIsExitNameSpaceAsync(string name, string clusterId)
     {
-        var nameSpace = await _nameSpaceRepository.FindNameSpaceByNameAndClusterIdAsync(name,clusterId);
+        var nameSpace = await _nameSpaceRepository.FindNameSpaceByNameAndClusterIdAsync(name, clusterId);
         return nameSpace is not null;
     }
 }

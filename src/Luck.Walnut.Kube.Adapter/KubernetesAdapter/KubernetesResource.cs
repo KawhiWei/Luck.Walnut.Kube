@@ -185,8 +185,6 @@ public class KubernetesResource : IKubernetesResource
     {
         return v1Deployments.Select(v1Deployment =>
         {
-            // v1Deployment.Spec.Template.Spec.Containers.ForEach(a=>a.Resources.Limits)
-
             var kubernetesDaemonSet =
                 new KubernetesDeployment(v1Deployment.Metadata.Name, v1Deployment.Status.Replicas, v1Deployment.Status.ReadyReplicas, v1Deployment.Status.AvailableReplicas);
             return kubernetesDaemonSet;
@@ -200,12 +198,7 @@ public class KubernetesResource : IKubernetesResource
 
     private ResourceQuantity? GetResourceQuantity(string key, IDictionary<string, ResourceQuantity> allocatable)
     {
-        if (allocatable.TryGetValue(key, out var resourceQuantity))
-        {
-            return resourceQuantity;
-        }
-
-        return null;
+        return allocatable.TryGetValue(key, out var resourceQuantity) ? resourceQuantity : null;
     }
 
 

@@ -1,14 +1,7 @@
-﻿using k8s;
-using k8s.Models;
-
+﻿using k8s.Models;
 using Luck.Framework.Infrastructure.DependencyInjectionModule;
-using Luck.Walnut.Kube.Adapter.Factories;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using k8s;
+using Luck.Walnut.Kube.Domain.AggregateRoots.Kubernetes;
 
 namespace Luck.Walnut.Kube.Adapter.KubernetesAdapter.Deployments
 {
@@ -35,38 +28,14 @@ namespace Luck.Walnut.Kube.Adapter.KubernetesAdapter.Deployments
         /// <param name="v1Deployment"></param>
         /// <returns></returns>
         Task DeleteDeploymentAsync(V1Deployment v1Deployment);
+
+
+        /// <summary>
+        /// 获取所有明明空间下的Deployment
+        /// </summary>
+        /// <param name="kubernetes"></param>
+        /// <param name="nameSpace"></param>
+        /// <returns></returns>
+        Task<List<KubernetesDeployment>> GetDeploymentListAsync(IKubernetes kubernetes, string nameSpace = "");
     }
-
-    public class DeploymentResource : IDeploymentResource
-    {
-        private readonly IKubernetesClientFactory _kubernetesClientFactory;
-
-        public DeploymentResource(IKubernetesClientFactory kubernetesClientFactory)
-        {
-            _kubernetesClientFactory = kubernetesClientFactory;
-        }
-
-        public Task CreateDeploymentAsync(V1Deployment v1Deployment)
-        {
-
-
-            var client= _kubernetesClientFactory.GetKubernetesClient("");
-
-            client.AppsV1.CreateNamespacedDeployment(v1Deployment, "");
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteDeploymentAsync(V1Deployment v1Deployment)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateDeploymentAsync(V1Deployment v1Deployment)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-
-
 }
