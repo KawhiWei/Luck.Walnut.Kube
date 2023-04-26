@@ -18,9 +18,9 @@ namespace Luck.Walnut.Kube.Adapter.KubernetesAdapter.NameSpaces
             await kubernetes.CoreV1.CreateNamespaceAsync(GeV1Namespace(nameSpace));
         }
 
-        public async Task UpdateNameSpaceAsync(IKubernetes kubernetes, V1Namespace v1Namespace)
+        public async Task UpdateNameSpaceAsync(IKubernetes kubernetes, V1Namespace v1NameSpace)
         {
-            await kubernetes.CoreV1.CreateNamespaceAsync(v1Namespace);
+            await kubernetes.CoreV1.CreateNamespaceAsync(v1NameSpace);
         }
 
 
@@ -32,8 +32,8 @@ namespace Luck.Walnut.Kube.Adapter.KubernetesAdapter.NameSpaces
         /// <returns></returns>
         public async Task UpdateNameSpaceAsync(IKubernetes kubernetes, NameSpace nameSpace)
         {
-            var v1Namespace = await kubernetes.CoreV1.ReadNamespaceAsync(nameSpace.Name);
-            await kubernetes.CoreV1.PatchNamespaceAsync(GetPatchNameSpaceV1Namespace(nameSpace, v1Namespace), nameSpace.Name);
+            var v1NameSpace = await kubernetes.CoreV1.ReadNamespaceAsync(nameSpace.Name);
+            await kubernetes.CoreV1.PatchNamespaceAsync(GetPatchNameSpaceV1Namespace(nameSpace, v1NameSpace), nameSpace.Name);
         }
 
 
@@ -75,9 +75,9 @@ namespace Luck.Walnut.Kube.Adapter.KubernetesAdapter.NameSpaces
             
             var old = JsonSerializer.SerializeToDocument(oldV1Namespace, options);
             var expected = JsonSerializer.SerializeToDocument(oldV1Namespace);
-            //var patch = old.CreatePatch(expected);
+            var patch = old.CreatePatch(expected);
 
-            return new V1Patch(expected, V1Patch.PatchType.JsonPatch);
+            return new V1Patch(patch, V1Patch.PatchType.JsonPatch);
             //var daemonSet = await client.AppsV1.ReadNamespacedDaemonSetAsync(name, @namespace);
             //var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, WriteIndented = true };
             //var old = JsonSerializer.SerializeToDocument(daemonSet, options);
