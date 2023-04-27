@@ -8,7 +8,7 @@ namespace Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
 public class ContainerSurviveConfiguration
 {
     [JsonConstructor]//这个特性 可以写私有，标识你要用哪个构造函数
-    public ContainerSurviveConfiguration(string? scheme, string? path, uint? port, uint? initialDelaySeconds, uint? periodSeconds)
+    public ContainerSurviveConfiguration(string? scheme, string? path, int? port, int? initialDelaySeconds, int? periodSeconds)
     {
         Scheme = scheme;
         Path = path;
@@ -30,15 +30,15 @@ public class ContainerSurviveConfiguration
     /// <summary>
     /// 端口
     /// </summary>
-    public uint? Port { get; private set; }
+    public int? Port { get; private set; }
 
     /// <summary>
     /// 端口
     /// </summary>
-    public uint? InitialDelaySeconds { get; private set; }
+    public int? InitialDelaySeconds { get; private set; }
 
     /// <summary>
     /// 端口
     /// </summary>
-    public uint? PeriodSeconds { get; private set; }
+    public int? PeriodSeconds { get; private set; }
 }

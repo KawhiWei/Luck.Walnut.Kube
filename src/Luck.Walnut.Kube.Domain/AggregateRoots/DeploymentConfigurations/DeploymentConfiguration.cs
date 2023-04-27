@@ -74,7 +74,7 @@ public class DeploymentConfiguration : FullAggregateRoot
     /// <summary>
     /// 最大不可用
     /// </summary>
-    public int MaxUnavailable { get; private set; }
+    public string MaxUnavailable { get; private set; }
 
     /// <summary>
     /// 镜像拉取证书

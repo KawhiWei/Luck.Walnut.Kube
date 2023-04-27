@@ -15,15 +15,15 @@ public class ContainerSurviveConfigurationDto
     /// <summary>
     /// 端口
     /// </summary>
-    public uint? Port { get; set; } 
+    public int? Port { get; set; } 
 
     /// <summary>
     /// 端口
     /// </summary>
-    public uint? InitialDelaySeconds { get; set; } 
+    public int? InitialDelaySeconds { get; set; } 
 
     /// <summary>
     /// 端口
     /// </summary>
-    public uint? PeriodSeconds { get; set; }
+    public int? PeriodSeconds { get; set; }
 }

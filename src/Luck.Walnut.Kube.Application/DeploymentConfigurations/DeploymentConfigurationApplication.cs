@@ -181,7 +181,7 @@ public class DeploymentConfigurationApplication : IDeploymentConfigurationApplic
 
                 v1Container.Resources = new V1ResourceRequirements();
 
-                // if (a.Limits is not null)
+                if (a.Limits is not null)
                 // {
                 //     limits.Add(a.Limits.Name, new ResourceQuantity(a.Limits.Cpu));
                 //     limits.Add(a.Limits.Memory, new ResourceQuantity(a.Limits.Memory));

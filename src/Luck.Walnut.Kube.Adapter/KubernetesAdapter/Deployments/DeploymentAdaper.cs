@@ -6,30 +6,28 @@ using Luck.Walnut.Kube.Adapter.Factories;
 using Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
 using Luck.Walnut.Kube.Domain.AggregateRoots.InitContainerConfigurations;
 using Luck.Walnut.Kube.Domain.AggregateRoots.Kubernetes;
+using Luck.Walnut.Kube.Domain.AggregateRoots.NameSpaces;
 using Luck.Walnut.Kube.Infrastructure;
 
 using RazorEngine.Templating;
+using System.Reflection.Emit;
+using System.Xml.Linq;
 
 namespace Luck.Walnut.Kube.Adapter.KubernetesAdapter.Deployments;
 
 public class DeploymentAdaper : IDeploymentAdaper
 {
-    private readonly IKubernetesClientFactory _kubernetesClientFactory;
+    private readonly IKubernetesCommonParamsBuild _kubernetesCommonParamsBuild;
 
-    public DeploymentAdaper(IKubernetesClientFactory kubernetesClientFactory)
+    public DeploymentAdaper(IKubernetesCommonParamsBuild kubernetesCommonParamsBuild)
     {
-        _kubernetesClientFactory = kubernetesClientFactory;
+        _kubernetesCommonParamsBuild = kubernetesCommonParamsBuild;
     }
 
-    public Task CreateDeploymentAsync(IKubernetes kubernetes, DeploymentConfiguration deployment, List<InitContainerConfiguration> initContainerConfigurations)
+    public async Task CreateDeploymentAsync(IKubernetes kubernetes, DeploymentConfiguration deployment, List<InitContainerConfiguration> initContainerConfigurations)
     {
-        //var client = _kubernetesClientFactory.GetKubernetesClient("");
-
-        //client.AppsV1.CreateNamespacedDeployment(v1Deployment, "");
-
-        //kubernetes.AppsV1.createdep
-
-        throw new NotImplementedException();
+        var v1Deployment= GetV1Deployment(deployment, initContainerConfigurations);
+        await kubernetes.AppsV1.CreateNamespacedDeploymentAsync(v1Deployment,"");
     }
 
     public Task DeleteDeploymentAsync(V1Deployment v1Deployment)
@@ -39,6 +37,10 @@ public class DeploymentAdaper : IDeploymentAdaper
 
     public Task UpdateDeploymentAsync(V1Deployment v1Deployment)
     {
+
+
+
+
         throw new NotImplementedException();
     }
 
@@ -68,55 +70,61 @@ public class DeploymentAdaper : IDeploymentAdaper
         }).ToList();
     }
 
+    #region 创建V1Deployment
+
+    /// <summary>
+    /// 创建V1Deployment对象
+    /// </summary>
+    /// <param name="deployment"></param>
+    /// <param name="initContainerConfigurations"></param>
+    /// <returns></returns>
     private V1Deployment GetV1Deployment(DeploymentConfiguration deployment, List<InitContainerConfiguration> initContainerConfigurations)
     {
-        var labels = Constants.GetKubeDefalutLabels();
-        return new V1Deployment()
+
+        var masterContainers = deployment.MasterContainers.Select(masterContainer => _kubernetesCommonParamsBuild.CreateV1ContainerForMasterContainerConfiguration(masterContainer)).ToList();
+
+        var v1PodSpec = _kubernetesCommonParamsBuild.CreateV1PodSpec(containers: masterContainers);
+
+        var deploymentV1ObjectMeta = _kubernetesCommonParamsBuild.CreateV1ObjectMeta();
+
+        var podTemplateV1ObjectMeta = _kubernetesCommonParamsBuild.CreateV1ObjectMeta();
+
+        var v1PodTemplateSpec= _kubernetesCommonParamsBuild.CreateV1PodTemplateSpec(podTemplateV1ObjectMeta, v1PodSpec);
+
+        var v1DeploymentSpec = CreateV1DeploymentSpec(deployment.Replicas, v1PodTemplateSpec);
+
+        var v1Deployment = new V1Deployment()
         {
 
-            Metadata = GetV1ObjectMeta(deployment.Name, labels),
-            Spec = new V1DeploymentSpec()
+            Metadata = deploymentV1ObjectMeta,
+            Spec = v1DeploymentSpec,
         };
+        return v1Deployment;
     }
 
-    private V1ObjectMeta GetV1ObjectMeta(string name, IDictionary<string, string> keyValuePairs)
-    {
-        return new V1ObjectMeta() { Labels = keyValuePairs, Name = name };
-    }
-
-    private V1DeploymentSpec GetV1DeploymentSpec(string name, int replicas, int revisionHistoryLimit, V1PodTemplateSpec v1PodTemplateSpec)
+    /// <summary>
+    /// 创建V1DeploymentSpec
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="replicas"></param>
+    /// <param name="revisionHistoryLimit"></param>
+    /// <param name="v1PodTemplateSpec"></param>
+    /// <returns></returns>
+    private V1DeploymentSpec CreateV1DeploymentSpec(int replicas, V1PodTemplateSpec v1PodTemplateSpec, V1DeploymentStrategy? v1DeploymentStrategy=null, V1LabelSelector? v1LabelSelector=null)
     {
         return new V1DeploymentSpec()
         {
             Replicas = replicas,
-            RevisionHistoryLimit = revisionHistoryLimit,
-            Selector = new V1LabelSelector() { MatchLabels = Constants.GetKubeDefalutLabels() },
+            Strategy= v1DeploymentStrategy,
+            Selector = v1LabelSelector,
             Template = v1PodTemplateSpec
         };
     }
+    #endregion
 
-    private V1PodTemplateSpec GetV1PodTemplateSpec(string name, IDictionary<string, string> keyValuePairs, IList<V1Container> containers, IList<V1Container> initContainers)
-    {
-        return new()
-        {
-            Metadata = GetV1ObjectMeta("", keyValuePairs),
-            
-            Spec = new V1PodSpec()
-            {
-                Containers = containers,
-                InitContainers = initContainers,
-                //ImagePullSecrets = 
-            }
-        };
-    }
 
-    private V1Container GetV1Container()
-    {
-        return new V1Container()
-        {
-            //Name = 
-        };
-    }
+
+
 
 
 

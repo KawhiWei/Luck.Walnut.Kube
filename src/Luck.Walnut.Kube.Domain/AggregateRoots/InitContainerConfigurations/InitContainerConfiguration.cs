@@ -6,6 +6,7 @@ namespace Luck.Walnut.Kube.Domain.AggregateRoots.InitContainerConfigurations
 {
     /// <summary>
     /// 初始容器配置
+    /// 五一更名为    SideCarPlugin
     /// </summary>
     public class InitContainerConfiguration : FullAggregateRoot
     {
