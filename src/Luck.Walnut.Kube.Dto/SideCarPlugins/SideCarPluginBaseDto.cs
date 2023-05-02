@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Luck.Walnut.Kube.Dto.InitContainerConfigurations
+namespace Luck.Walnut.Kube.Dto.SideCarPlugins
 {
-    public class InitContainerConfigurationBaseDto : MasterContainerConfigurationBaseDto
+    public class SideCarPluginBaseDto : MasterContainerConfigurationBaseDto
     {
     }
 }

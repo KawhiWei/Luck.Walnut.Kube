@@ -8,7 +8,7 @@ public class EntityFrameworkCoreModule: EntityFrameworkCoreBaseModule
 {
     protected override void AddDbContextWithUnitOfWork(IServiceCollection services)
     {
-        services.AddLuckDbContext<KubeWalnutDbContext>(x =>
+        services.AddLuckDbContext<WalnutKubeDbContext>(x =>
         {
             x.ConnectionString = "User ID=postgres;Password=wzw0126..;Host=39.101.165.187;Port=8832;Database=luck.walnut.kube";
             x.Type = DataBaseType.PostgreSQL;

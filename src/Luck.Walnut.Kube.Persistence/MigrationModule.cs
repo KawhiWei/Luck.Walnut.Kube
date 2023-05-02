@@ -10,7 +10,7 @@ public class MigrationModule: AppModule
     {
 
         //drop schema "luck.walnut.kube" cascade;
-        var moduleDbContext = context.ServiceProvider.GetService<KubeWalnutDbContext>();
+        var moduleDbContext = context.ServiceProvider.GetService<WalnutKubeDbContext>();
         moduleDbContext?.Database.EnsureCreated();
     }
 

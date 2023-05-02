@@ -3,7 +3,7 @@ using Luck.Framework.Infrastructure.DependencyInjectionModule;
 using k8s;
 using Luck.Walnut.Kube.Domain.AggregateRoots.Kubernetes;
 using Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
-using Luck.Walnut.Kube.Domain.AggregateRoots.InitContainerConfigurations;
+using Luck.Walnut.Kube.Domain.AggregateRoots.SideCarPlugins;
 
 namespace Luck.Walnut.Kube.Adapter.KubernetesAdapter.Deployments
 {
@@ -14,7 +14,7 @@ namespace Luck.Walnut.Kube.Adapter.KubernetesAdapter.Deployments
         /// </summary>
         /// <param name="v1Deployment"></param>
         /// <returns></returns>
-        Task CreateDeploymentAsync(IKubernetes kubernetes, DeploymentConfiguration deployment, List<InitContainerConfiguration> initContainerConfigurations);
+        Task CreateDeploymentAsync(IKubernetes kubernetes, DeploymentConfiguration deployment, List<SideCarPlugin> sideCarPlugins);
 
         /// <summary>
         /// 

@@ -36,9 +36,10 @@ public class DeploymentConfigurationApplication : IDeploymentConfigurationApplic
 
         var applicationDeployment = new DeploymentConfiguration(deploymentConfiguration.EnvironmentName,
             deploymentConfiguration.ApplicationRuntimeType, deploymentConfiguration.DeploymentType, deploymentConfiguration.ChineseName, deploymentConfiguration.Name, deploymentConfiguration.AppId,
-            deploymentConfiguration.NameSpaceId, deploymentConfiguration.Replicas, deploymentConfiguration.MaxUnavailable, deploymentConfiguration.ImagePullSecretId,deploymentConfiguration.ClusterId);
+            deploymentConfiguration.NameSpaceId, deploymentConfiguration.Replicas, deploymentConfiguration.ImagePullSecretId,deploymentConfiguration.ClusterId);
 
         applicationDeployment.SetInitContainers(deploymentConfiguration.InitContainers);
+        applicationDeployment.SetStrategy(deploymentConfiguration.Strategy);
         applicationDeployment.AddMasterContainerConfiguration(masterContainerConfiguration);
         _deploymentConfigurationRepository.Add(applicationDeployment);
         await _unitOfWork.CommitAsync();
@@ -53,6 +54,7 @@ public class DeploymentConfigurationApplication : IDeploymentConfigurationApplic
     {
         var applicationDeployment = await GetAndCheckDeploymentConfigurationAsync(id);
         applicationDeployment.SetDeploymentInfo(input);
+        applicationDeployment.SetStrategy(input.Strategy);
         await _unitOfWork.CommitAsync();
     }
 
@@ -60,10 +62,10 @@ public class DeploymentConfigurationApplication : IDeploymentConfigurationApplic
     {
         var deploymentConfiguration = input.DeploymentConfiguration;
         var masterContainerConfiguration = input.MasterContainerConfiguration;
-
         var applicationDeployment = await GetAndCheckDeploymentConfigurationAsync(id);
         applicationDeployment.UpdateMasterContainerConfiguration(masterContainerId, masterContainerConfiguration);
         applicationDeployment.SetDeploymentInfo(deploymentConfiguration);
+        applicationDeployment.SetStrategy(deploymentConfiguration.Strategy);
         await _unitOfWork.CommitAsync();
     }
 

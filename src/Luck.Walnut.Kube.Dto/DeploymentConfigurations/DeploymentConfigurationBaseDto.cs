@@ -50,9 +50,9 @@ public class DeploymentConfigurationBaseDto
     public int Replicas { get; set; }
 
     /// <summary>
-    /// 最大不可用
+    /// 部署更新策略
     /// </summary>
-    public int MaxUnavailable { get; set; }
+    public  StrategyInputDto? Strategy { get; set; } 
 
     /// <summary>
     /// 镜像拉取证书

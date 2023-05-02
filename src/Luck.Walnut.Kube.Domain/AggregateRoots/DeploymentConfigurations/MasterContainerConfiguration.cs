@@ -1,3 +1,4 @@
+using Luck.Walnut.Kube.Domain.AggregateRoots.ValueObject;
 using Luck.Walnut.Kube.Dto.ContainerDtoBases;
 using Luck.Walnut.Kube.Dto.DeploymentConfigurations;
 

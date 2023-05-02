@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using Luck.Walnut.Kube.Dto.DeploymentConfigurations;
 
-namespace Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
+namespace Luck.Walnut.Kube.Domain.AggregateRoots.ValueObject;
 
 /// <summary>
 /// 资源配置

@@ -143,7 +143,6 @@ public class DeploymentConfigurationQueryService : IDeploymentConfigurationQuery
             AppId = deploymentConfiguration.AppId,
             NameSpaceId = deploymentConfiguration.NameSpaceId,
             Replicas = deploymentConfiguration.Replicas,
-            MaxUnavailable = deploymentConfiguration.MaxUnavailable,
             ImagePullSecretId = deploymentConfiguration.ImagePullSecretId,
             ClusterId = deploymentConfiguration.ClusterId,
             InitContainers = deploymentConfiguration.InitContainers.ToList()

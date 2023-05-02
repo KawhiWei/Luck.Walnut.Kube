@@ -4,14 +4,14 @@ using Luck.EntityFrameworkCore.DbContexts;
 using Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
 using Luck.Walnut.Kube.Domain.AggregateRoots.Clusters;
 using Luck.Walnut.Kube.Domain.AggregateRoots.NameSpaces;
-using Luck.Walnut.Kube.Domain.AggregateRoots.InitContainerConfigurations;
 using Luck.Walnut.Kube.Domain.AggregateRoots.Services;
+using Luck.Walnut.Kube.Domain.AggregateRoots.SideCarPlugins;
 
 namespace Luck.Walnut.Kube.Persistence;
 
-public class KubeWalnutDbContext: LuckDbContextBase
+public class WalnutKubeDbContext: LuckDbContextBase
 {
-    public KubeWalnutDbContext(DbContextOptions options, IServiceProvider serviceProvider) : base(options, serviceProvider)
+    public WalnutKubeDbContext(DbContextOptions options, IServiceProvider serviceProvider) : base(options, serviceProvider)
     {
     }
     
@@ -21,7 +21,7 @@ public class KubeWalnutDbContext: LuckDbContextBase
 
     public DbSet<DeploymentConfiguration> ApplicationDeployments => Set<DeploymentConfiguration>();
 
-    public DbSet<InitContainerConfiguration> InitContainerConfigurations => Set<InitContainerConfiguration>();
+    public DbSet<SideCarPlugin> SideCarPlugins => Set<SideCarPlugin>();
 
     public DbSet<NameSpace> NameSpaces => Set<NameSpace>();
     

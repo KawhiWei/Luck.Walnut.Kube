@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Configurations\DeploymentConfigurationMapConfiguration.cs~RF85e398b.TMP" />
+    <None Remove="Repositories\InitContainerConfigurationRepository.cs~RF8e3f10d.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\src\Luck.Walnut.Kube.Domain\Luck.Walnut.Kube.Domain.csproj" />
   </ItemGroup>
 	<ItemGroup>

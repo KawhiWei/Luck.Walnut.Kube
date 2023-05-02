@@ -1,16 +1,16 @@
-﻿using Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
+﻿using Luck.Walnut.Kube.Domain.AggregateRoots.ValueObject;
 using Luck.Walnut.Kube.Dto.ContainerDtoBases;
-using Luck.Walnut.Kube.Dto.InitContainerConfigurations;
+using Luck.Walnut.Kube.Dto.SideCarPlugins;
 
-namespace Luck.Walnut.Kube.Domain.AggregateRoots.InitContainerConfigurations
+namespace Luck.Walnut.Kube.Domain.AggregateRoots.SideCarPlugins
 {
     /// <summary>
     /// 初始容器配置
     /// 五一更名为    SideCarPlugin
     /// </summary>
-    public class InitContainerConfiguration : FullAggregateRoot
+    public class SideCarPlugin : FullAggregateRoot
     {
-        public InitContainerConfiguration(string containerName, string? image, string restartPolicy, string imagePullPolicy)
+        public SideCarPlugin(string containerName, string? image, string restartPolicy, string imagePullPolicy)
         {
             ContainerName = containerName;
             Image = image;
@@ -70,7 +70,7 @@ namespace Luck.Walnut.Kube.Domain.AggregateRoots.InitContainerConfigurations
         /// </summary>
         public ICollection<ContainerPortConfiguration> ContainerPortConfigurations { get; private set; } = new HashSet<ContainerPortConfiguration>();
 
-        public InitContainerConfiguration Update(InitContainerConfigurationInputDto input)
+        public SideCarPlugin Update(SideCarPluginInputDto input)
         {
             ContainerName = input.ContainerName;
             RestartPolicy = input.RestartPolicy;
@@ -79,7 +79,7 @@ namespace Luck.Walnut.Kube.Domain.AggregateRoots.InitContainerConfigurations
             return this;
         }
 
-        public InitContainerConfiguration SetReadinessProbe(ContainerSurviveConfigurationDto? readinessProbe)
+        public SideCarPlugin SetReadinessProbe(ContainerSurviveConfigurationDto? readinessProbe)
         {
             if (readinessProbe is null)
             {
@@ -91,7 +91,7 @@ namespace Luck.Walnut.Kube.Domain.AggregateRoots.InitContainerConfigurations
             return this;
         }
 
-        public InitContainerConfiguration SetLiveNessProbe(ContainerSurviveConfigurationDto? liveNessProbe)
+        public SideCarPlugin SetLiveNessProbe(ContainerSurviveConfigurationDto? liveNessProbe)
         {
             if (liveNessProbe is null)
             {
@@ -102,7 +102,7 @@ namespace Luck.Walnut.Kube.Domain.AggregateRoots.InitContainerConfigurations
             return this;
         }
 
-        public InitContainerConfiguration SetLimits(ContainerResourceQuantityDto? limits)
+        public SideCarPlugin SetLimits(ContainerResourceQuantityDto? limits)
         {
             if (limits is null)
             {
@@ -123,7 +123,7 @@ namespace Luck.Walnut.Kube.Domain.AggregateRoots.InitContainerConfigurations
             return this;
         }
 
-        public InitContainerConfiguration SetRequests(ContainerResourceQuantityDto? requests)
+        public SideCarPlugin SetRequests(ContainerResourceQuantityDto? requests)
         {
             if (requests is null)
             {
@@ -144,14 +144,14 @@ namespace Luck.Walnut.Kube.Domain.AggregateRoots.InitContainerConfigurations
             return this;
         }
 
-        public InitContainerConfiguration SetEnvironments(List<KeyValuePair<string, string>>? environments)
+        public SideCarPlugin SetEnvironments(List<KeyValuePair<string, string>>? environments)
         {
             Environments = environments ?? new List<KeyValuePair<string, string>>();
             return this;
         }
 
 
-        public InitContainerConfiguration SetContainerPortConfigurations(List<ContainerPortConfigurationDto>? containerPortConfigurations)
+        public SideCarPlugin SetContainerPortConfigurations(List<ContainerPortConfigurationDto>? containerPortConfigurations)
         {
             return this;
         }

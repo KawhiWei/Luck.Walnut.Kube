@@ -1,17 +1,9 @@
 using k8s;
 using k8s.Models;
-
 using Luck.Framework.Extensions;
-using Luck.Walnut.Kube.Adapter.Factories;
 using Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
-using Luck.Walnut.Kube.Domain.AggregateRoots.InitContainerConfigurations;
 using Luck.Walnut.Kube.Domain.AggregateRoots.Kubernetes;
-using Luck.Walnut.Kube.Domain.AggregateRoots.NameSpaces;
-using Luck.Walnut.Kube.Infrastructure;
-
-using RazorEngine.Templating;
-using System.Reflection.Emit;
-using System.Xml.Linq;
+using Luck.Walnut.Kube.Domain.AggregateRoots.SideCarPlugins;
 
 namespace Luck.Walnut.Kube.Adapter.KubernetesAdapter.Deployments;
 
@@ -24,7 +16,7 @@ public class DeploymentAdaper : IDeploymentAdaper
         _kubernetesCommonParamsBuild = kubernetesCommonParamsBuild;
     }
 
-    public async Task CreateDeploymentAsync(IKubernetes kubernetes, DeploymentConfiguration deployment, List<InitContainerConfiguration> initContainerConfigurations)
+    public async Task CreateDeploymentAsync(IKubernetes kubernetes, DeploymentConfiguration deployment, List<SideCarPlugin> initContainerConfigurations)
     {
         var v1Deployment= GetV1Deployment(deployment, initContainerConfigurations);
         await kubernetes.AppsV1.CreateNamespacedDeploymentAsync(v1Deployment,"");
@@ -78,7 +70,7 @@ public class DeploymentAdaper : IDeploymentAdaper
     /// <param name="deployment"></param>
     /// <param name="initContainerConfigurations"></param>
     /// <returns></returns>
-    private V1Deployment GetV1Deployment(DeploymentConfiguration deployment, List<InitContainerConfiguration> initContainerConfigurations)
+    private V1Deployment GetV1Deployment(DeploymentConfiguration deployment, List<SideCarPlugin> initContainerConfigurations)
     {
 
         var masterContainers = deployment.MasterContainers.Select(masterContainer => _kubernetesCommonParamsBuild.CreateV1ContainerForMasterContainerConfiguration(masterContainer)).ToList();

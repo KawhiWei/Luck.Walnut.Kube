@@ -1,4 +1,5 @@
 using Luck.Framework.Exceptions;
+using Luck.Walnut.Kube.Domain.AggregateRoots.ValueObject;
 using Luck.Walnut.Kube.Domain.Shared.Enums;
 using Luck.Walnut.Kube.Dto.DeploymentConfigurations;
 
@@ -10,7 +11,7 @@ namespace Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
 public class DeploymentConfiguration : FullAggregateRoot
 {
     public DeploymentConfiguration(string environmentName, ApplicationRuntimeTypeEnum applicationRuntimeType, DeploymentTypeEnum deploymentType, string chineseName, string name, string appId,
-        string nameSpaceId, int replicas, int maxUnavailable, string? imagePullSecretId, string clusterId, bool isPublish = false)
+        string nameSpaceId, int replicas, string? imagePullSecretId, string clusterId, bool isPublish = false)
     {
         EnvironmentName = environmentName;
         ApplicationRuntimeType = applicationRuntimeType;
@@ -20,7 +21,6 @@ public class DeploymentConfiguration : FullAggregateRoot
         AppId = appId;
         NameSpaceId = nameSpaceId;
         Replicas = replicas;
-        MaxUnavailable = maxUnavailable;
         ImagePullSecretId = imagePullSecretId;
         ClusterId = clusterId;
         IsPublish = isPublish;
@@ -60,7 +60,7 @@ public class DeploymentConfiguration : FullAggregateRoot
     /// 应用Id
     /// </summary>
     public string ClusterId { get; private set; }
-    
+
     /// <summary>
     /// 命名空间Id
     /// </summary>
@@ -72,11 +72,6 @@ public class DeploymentConfiguration : FullAggregateRoot
     public int Replicas { get; private set; }
 
     /// <summary>
-    /// 最大不可用
-    /// </summary>
-    public string MaxUnavailable { get; private set; }
-
-    /// <summary>
     /// 镜像拉取证书
     /// </summary>
     public string? ImagePullSecretId { get; private set; }
@@ -85,6 +80,11 @@ public class DeploymentConfiguration : FullAggregateRoot
     /// 是否发布
     /// </summary>
     public bool IsPublish { get; private set; }
+
+    /// <summary>
+    /// 更新策略
+    /// </summary>
+    public Strategy? Strategy { get; private set; } = null;
 
     /// <summary>
     /// 主应用容器配置
@@ -110,13 +110,23 @@ public class DeploymentConfiguration : FullAggregateRoot
         AppId = input.AppId;
         NameSpaceId = input.NameSpaceId;
         Replicas = input.Replicas;
-        MaxUnavailable = input.MaxUnavailable;
         ImagePullSecretId = input.ImagePullSecretId;
         Name = input.Name;
         ClusterId = input.ClusterId;
         NameSpaceId = input.NameSpaceId;
         SetInitContainers(input.InitContainers);
         return this;
+    }
+
+
+    public DeploymentConfiguration SetStrategy(StrategyInputDto? input) 
+    {
+        if(input is not null)
+        {
+            Strategy = new Strategy(input.Type, input.MaxSurge, input.MaxUnavailable);
+        }
+        return this;
+    
     }
 
 
@@ -224,4 +234,7 @@ public class DeploymentConfiguration : FullAggregateRoot
             .SetEnvironments(input.Environments);
         return this;
     }
+
+
+
 }

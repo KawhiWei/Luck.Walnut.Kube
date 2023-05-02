@@ -1,8 +1,9 @@
 ﻿using k8s.Models;
+using k8s;
 using Luck.Framework.Extensions;
 using Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
-using Luck.Walnut.Kube.Domain.AggregateRoots.InitContainerConfigurations;
-using System.Xml.Linq;
+using Luck.Walnut.Kube.Domain.AggregateRoots.SideCarPlugins;
+using Luck.Walnut.Kube.Domain.AggregateRoots.ValueObject;
 
 namespace Luck.Walnut.Kube.Adapter.KubernetesAdapter
 {
@@ -25,7 +26,7 @@ namespace Luck.Walnut.Kube.Adapter.KubernetesAdapter
         /// <param name="initContainerConfiguration"></param>
         /// <returns></returns>
 
-        public List<V1Container> CreateV1ContainerForInitContainerConfiguration(List<InitContainerConfiguration> initContainerConfiguration)
+        public List<V1Container> CreateV1ContainerForInitContainerConfiguration(List<SideCarPlugin> initContainerConfiguration)
         {
             var v1Container = new List<V1Container>();
             return v1Container;
@@ -53,7 +54,7 @@ namespace Luck.Walnut.Kube.Adapter.KubernetesAdapter
 
         }
 
-
+        
         public V1PodTemplateSpec CreateV1PodTemplateSpec(V1ObjectMeta? metadata=null, V1PodSpec? spec=null)
         {
             return new V1PodTemplateSpec(metadata,spec);
@@ -118,6 +119,12 @@ namespace Luck.Walnut.Kube.Adapter.KubernetesAdapter
             return new V1RollingUpdateDeployment(maxSurge, maxUnavailable);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="MatchExpressions"></param>
+        /// <param name="matchLabels"></param>
+        /// <returns></returns>
 
         public V1LabelSelector CreateV1LabelSelector(IList<V1LabelSelectorRequirement> MatchExpressions,IDictionary<string, string>? matchLabels = null)
         {

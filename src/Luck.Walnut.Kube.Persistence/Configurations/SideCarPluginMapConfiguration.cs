@@ -1,10 +1,10 @@
-﻿using Luck.Walnut.Kube.Domain.AggregateRoots.InitContainerConfigurations;
+﻿using Luck.Walnut.Kube.Domain.AggregateRoots.SideCarPlugins;
 
 namespace Luck.Walnut.Kube.Persistence.Configurations;
 
-public class InitContainerConfigurationMapConfiguration : IEntityTypeConfiguration<InitContainerConfiguration>
+public class SideCarPluginMapConfiguration : IEntityTypeConfiguration<SideCarPlugin>
 {
-    public void Configure(EntityTypeBuilder<InitContainerConfiguration> builder)
+    public void Configure(EntityTypeBuilder<SideCarPlugin> builder)
     {
         builder.HasKey(x => x.Id);
         builder.Property(e => e.ReadinessProbe).HasJsonConversion();
@@ -13,6 +13,6 @@ public class InitContainerConfigurationMapConfiguration : IEntityTypeConfigurati
         builder.Property(e => e.Requests).HasJsonConversion();
         builder.Property(e => e.Environments).HasJsonConversion();
         builder.Property(e => e.ContainerPortConfigurations).HasJsonConversion();
-        builder.ToTable("init_containers");
+        builder.ToTable("sidecar_plugins");
     }
 }

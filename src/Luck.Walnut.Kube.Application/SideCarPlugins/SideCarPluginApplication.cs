@@ -1,30 +1,30 @@
 ﻿using Luck.Framework.Exceptions;
-using Luck.Walnut.Kube.Domain.AggregateRoots.InitContainerConfigurations;
 using Luck.Walnut.Kube.Domain.Repositories;
-using Luck.Walnut.Kube.Dto.InitContainerConfigurations;
+using Luck.Walnut.Kube.Dto.SideCarPlugins;
 using Luck.Framework.UnitOfWorks;
+using Luck.Walnut.Kube.Domain.AggregateRoots.SideCarPlugins;
 
-namespace Luck.Walnut.Kube.Application.InitContainers
+namespace Luck.Walnut.Kube.Application.SideCarPlugins
 {
-    public class InitContainerConfigurationApplication : IInitContainerConfigurationApplication
+    public class SideCarPluginApplication : ISideCarPluginApplication
     {
-        private readonly IInitContainerConfigurationRepository _initContainerConfigurationRepository;
+        private readonly ISideCarPluginRepository _initContainerConfigurationRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public InitContainerConfigurationApplication(IInitContainerConfigurationRepository initContainerConfigurationRepository, IUnitOfWork unitOfWork)
+        public SideCarPluginApplication(ISideCarPluginRepository initContainerConfigurationRepository, IUnitOfWork unitOfWork)
         {
             _initContainerConfigurationRepository = initContainerConfigurationRepository;
             _unitOfWork = unitOfWork;
         }
 
-        public async Task CreateInitContainerConfigurationAsync(InitContainerConfigurationInputDto input)
+        public async Task CreateSideCarPluginAsync(SideCarPluginInputDto input)
         {
             if (await CheckIsExitInitContainerConfigurationAsync(input.ContainerName))
             {
                 throw new BusinessException($"[{input.ContainerName}]已存在,请刷新界面");
             }
 
-            var initContainer = new InitContainerConfiguration(input.ContainerName, input.Image, input.RestartPolicy, input.ImagePullPolicy);
+            var initContainer = new SideCarPlugin(input.ContainerName, input.Image, input.RestartPolicy, input.ImagePullPolicy);
             initContainer.SetEnvironments(input.Environments)
                 .SetReadinessProbe(input.ReadinessProbe)
                 .SetLiveNessProbe(input.LiveNessProbe)
@@ -41,7 +41,7 @@ namespace Luck.Walnut.Kube.Application.InitContainers
         /// <param name="id"></param>
         /// <param name="input"></param>
         /// <exception cref="BusinessException"></exception>
-        public async Task UpdateInitContainerConfigurationAsync(string id, InitContainerConfigurationInputDto input)
+        public async Task UpdateSideCarPluginAsync(string id, SideCarPluginInputDto input)
         {
             var initContainer = await CheckAndGetInitContainerConfigurationAsync(id);
             initContainer.Update(input)
@@ -58,7 +58,7 @@ namespace Luck.Walnut.Kube.Application.InitContainers
         /// 删除容器
         /// </summary>
         /// <param name="id"></param>
-        public async Task DeleteInitContainerConfigurationAsync(string id)
+        public async Task DeleteSideCarPluginAsync(string id)
         {
             var initContainer = await CheckAndGetInitContainerConfigurationAsync(id);
             _initContainerConfigurationRepository.Remove(initContainer);
@@ -68,13 +68,13 @@ namespace Luck.Walnut.Kube.Application.InitContainers
 
         private async Task<bool> CheckIsExitInitContainerConfigurationAsync(string name)
         {
-            var container = await _initContainerConfigurationRepository.FindInitContainerConfigurationByNameAsync(name);
+            var container = await _initContainerConfigurationRepository.FindSideCarPluginByNameAsync(name);
             return container is not null;
         }
 
-        private async Task<InitContainerConfiguration> CheckAndGetInitContainerConfigurationAsync(string id)
+        private async Task<SideCarPlugin> CheckAndGetInitContainerConfigurationAsync(string id)
         {
-            var initContainer = await _initContainerConfigurationRepository.FindInitContainerConfigurationByIdAsync(id);
+            var initContainer = await _initContainerConfigurationRepository.FindSideCarPluginByIdAsync(id);
 
             if (initContainer is null)
             {

@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
+namespace Luck.Walnut.Kube.Domain.AggregateRoots.ValueObject;
 
 /// <summary>
 /// 容器端口配置
