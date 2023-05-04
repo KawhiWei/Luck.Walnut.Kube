@@ -81,9 +81,13 @@ public class DeploymentAdaper : IDeploymentAdaper
 
         var podTemplateV1ObjectMeta = _kubernetesCommonParamsBuild.CreateV1ObjectMeta();
 
+
+        var v1DeploymentStrategy = CreateV1DeploymentStrategy(deployment);
+
         var v1PodTemplateSpec= _kubernetesCommonParamsBuild.CreateV1PodTemplateSpec(podTemplateV1ObjectMeta, v1PodSpec);
 
-        var v1DeploymentSpec = CreateV1DeploymentSpec(deployment.Replicas, v1PodTemplateSpec);
+        var v1DeploymentSpec = CreateV1DeploymentSpec(deployment.Replicas, v1PodTemplateSpec, v1DeploymentStrategy);
+
 
         var v1Deployment = new V1Deployment()
         {
@@ -111,6 +115,17 @@ public class DeploymentAdaper : IDeploymentAdaper
             Selector = v1LabelSelector,
             Template = v1PodTemplateSpec
         };
+    }
+
+    /// <summary>
+    /// 创建更新策略
+    /// </summary>
+    /// <param name="deployment"></param>
+    /// <returns></returns>
+    private V1DeploymentStrategy? CreateV1DeploymentStrategy(DeploymentConfiguration deployment)
+    {
+        return deployment.Strategy is null ? null :
+         new V1DeploymentStrategy(new V1RollingUpdateDeployment(deployment.Strategy.MaxSurge, deployment.Strategy.MaxUnavailable), deployment.Strategy.Type);
     }
     #endregion
 

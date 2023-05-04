@@ -83,7 +83,7 @@ public class NameSpaceApplication : INameSpaceApplication
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public async Task OffLineNameSpaceAsync(string id)
+    public async Task OfflineNameSpaceAsync(string id)
     {
         var nameSpace = await GetAndCheckNameSpaceAsync(id);
         var cluster = await _clusterQueryService.GetClusterFindByIdAsync(nameSpace.ClusterId);
