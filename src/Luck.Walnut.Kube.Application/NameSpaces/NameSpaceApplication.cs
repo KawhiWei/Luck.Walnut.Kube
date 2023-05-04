@@ -133,6 +133,12 @@ public class NameSpaceApplication : INameSpaceApplication
         return nameSpace is not null;
     }
 
+    /// <summary>
+    /// 创建
+    /// </summary>
+    /// <param name="nameSpace"></param>
+    /// <param name="cluster"></param>
+    /// <returns></returns>
     private KubernetesNameSpacePublishContext CreateKubernetesNameSpacePublishContext(NameSpace nameSpace, ClusterOutputDto cluster)
     {
         return new KubernetesNameSpacePublishContext(cluster.Config, nameSpace);
