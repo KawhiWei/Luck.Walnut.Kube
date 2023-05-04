@@ -145,7 +145,7 @@ public class DeploymentConfigurationQueryService : IDeploymentConfigurationQuery
             Replicas = deploymentConfiguration.Replicas,
             ImagePullSecretId = deploymentConfiguration.ImagePullSecretId,
             ClusterId = deploymentConfiguration.ClusterId,
-            InitContainers = deploymentConfiguration.InitContainers.ToList()
+            SideCarPlugins = deploymentConfiguration.SideCarPlugins.ToList()
         };
 
         return deploymentConfigurationOutputDto;

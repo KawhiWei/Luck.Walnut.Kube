@@ -94,7 +94,7 @@ public class DeploymentConfiguration : FullAggregateRoot
     /// <summary>
     /// 初始容器配置列表
     /// </summary>
-    public ICollection<string> InitContainers { get; private set; } = new HashSet<string>();
+    public ICollection<string> SideCarPlugins { get; private set; } = new HashSet<string>();
 
     /// <summary>
     /// 
@@ -114,7 +114,7 @@ public class DeploymentConfiguration : FullAggregateRoot
         Name = input.Name;
         ClusterId = input.ClusterId;
         NameSpaceId = input.NameSpaceId;
-        SetInitContainers(input.InitContainers);
+        SetInitContainers(input.SideCarPlugins);
         return this;
     }
 
@@ -134,14 +134,14 @@ public class DeploymentConfiguration : FullAggregateRoot
     /// 
     /// </summary>
     /// <returns></returns>
-    public DeploymentConfiguration SetInitContainers(List<string>? initContainers)
+    public DeploymentConfiguration SetInitContainers(List<string>? sideCarPlugins)
     {
-        if (initContainers is null)
+        if (sideCarPlugins is null)
         {
             return this;
         }
 
-        InitContainers = initContainers;
+        SideCarPlugins = sideCarPlugins;
         return this;
     }
 

@@ -38,7 +38,7 @@ public class DeploymentConfigurationApplication : IDeploymentConfigurationApplic
             deploymentConfiguration.ApplicationRuntimeType, deploymentConfiguration.DeploymentType, deploymentConfiguration.ChineseName, deploymentConfiguration.Name, deploymentConfiguration.AppId,
             deploymentConfiguration.NameSpaceId, deploymentConfiguration.Replicas, deploymentConfiguration.ImagePullSecretId,deploymentConfiguration.ClusterId);
 
-        applicationDeployment.SetInitContainers(deploymentConfiguration.InitContainers);
+        applicationDeployment.SetInitContainers(deploymentConfiguration.SideCarPlugins);
         applicationDeployment.SetStrategy(deploymentConfiguration.Strategy);
         applicationDeployment.AddMasterContainerConfiguration(masterContainerConfiguration);
         _deploymentConfigurationRepository.Add(applicationDeployment);

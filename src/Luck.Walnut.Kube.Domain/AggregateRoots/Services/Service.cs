@@ -1,4 +1,5 @@
 using Luck.Framework.Exceptions;
+using Luck.Walnut.Kube.Domain.AggregateRoots.DeploymentConfigurations;
 using Luck.Walnut.Kube.Dto.Services;
 using MediatR;
 
@@ -7,7 +8,7 @@ namespace Luck.Walnut.Kube.Domain.AggregateRoots.Services;
 /// <summary>
 /// 服务配置
 /// </summary>
-public class Service : FullAggregateRoot
+public partial class Service : FullAggregateRoot
 {
     public Service(string name, string deploymentId, string nameSpaceId, string clusterId, string appId, bool isPublish = false)
     {
@@ -91,4 +92,5 @@ public class Service : FullAggregateRoot
 
         return this;
     }
+
 }

@@ -14,7 +14,7 @@ namespace Luck.Walnut.Kube.Adapter.KubernetesAdapter.NameSpaces
         /// <param name="kubernetes"></param>
         /// <param name="nameSpace"></param>
         /// <returns></returns>
-        Task CreateNameSpaceAsync(IKubernetes kubernetes, NameSpace nameSpace);
+        Task CreateNameSpaceAsync(KubernetesNameSpacePublishContext kubernetesNameSpacePublishContext);
 
 
         /// <summary>
@@ -23,7 +23,7 @@ namespace Luck.Walnut.Kube.Adapter.KubernetesAdapter.NameSpaces
         /// <param name="kubernetes"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        Task DeleteNameSpaceAsync(IKubernetes kubernetes, string name);
+        Task DeleteNameSpaceAsync(KubernetesNameSpacePublishContext kubernetesNameSpacePublishContext);
 
         /// <summary>
         /// 修改NameSpace
@@ -31,7 +31,7 @@ namespace Luck.Walnut.Kube.Adapter.KubernetesAdapter.NameSpaces
         /// <param name="kubernetes"></param>
         /// <param name="nameSpace"></param>
         /// <returns></returns>
-        Task UpdateNameSpaceAsync(IKubernetes kubernetes, NameSpace nameSpace);
+        Task UpdateNameSpaceAsync(KubernetesNameSpacePublishContext kubernetesNameSpacePublishContext);
 
     }
 }

@@ -1,6 +1,9 @@
 ﻿using k8s;
 using k8s.Models;
+using Luck.Framework.UnitOfWorks;
+using Luck.Walnut.Kube.Adapter.Factories;
 using Luck.Walnut.Kube.Domain.AggregateRoots.NameSpaces;
+using Luck.Walnut.Kube.Domain.Repositories;
 using Luck.Walnut.Kube.Infrastructure;
 using System.Text.Json;
 using System.Xml.Linq;
@@ -11,18 +14,21 @@ namespace Luck.Walnut.Kube.Adapter.KubernetesAdapter.NameSpaces
     public class NameSpaceAdaper : INameSpaceAdaper
     {
 
-        public async Task CreateNameSpaceAsync(IKubernetes kubernetes, NameSpace nameSpace)
+        private readonly IKubernetesClientFactory _kubernetesClientFactory;
+
+        public NameSpaceAdaper(IKubernetesClientFactory kubernetesClientFactory)
         {
 
-
-            await kubernetes.CoreV1.CreateNamespaceAsync(GetV1Namespace(nameSpace));
+            _kubernetesClientFactory = kubernetesClientFactory;
         }
 
-        public async Task UpdateNameSpaceAsync(IKubernetes kubernetes, V1Namespace v1NameSpace)
+
+        public async Task CreateNameSpaceAsync(KubernetesNameSpacePublishContext kubernetesNameSpacePublishContext)
         {
-            await kubernetes.CoreV1.CreateNamespaceAsync(v1NameSpace);
-        }
 
+            var kubernetesClient = _kubernetesClientFactory.GetKubernetesClient(kubernetesNameSpacePublishContext.ConfigString);
+            await kubernetesClient.CoreV1.CreateNamespaceAsync(GetV1Namespace(kubernetesNameSpacePublishContext.NameSpace));
+        }
 
         /// <summary>
         /// 
@@ -30,17 +36,21 @@ namespace Luck.Walnut.Kube.Adapter.KubernetesAdapter.NameSpaces
         /// <param name="kubernetes"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public async Task UpdateNameSpaceAsync(IKubernetes kubernetes, NameSpace nameSpace)
+        public async Task UpdateNameSpaceAsync(KubernetesNameSpacePublishContext kubernetesNameSpacePublishContext)
         {
-            var v1NameSpace = await kubernetes.CoreV1.ReadNamespaceAsync(nameSpace.Name);
-            await kubernetes.CoreV1.PatchNamespaceAsync(GetPatchNameSpaceV1NameSpace(nameSpace, v1NameSpace), nameSpace.Name);
+
+
+            var kubernetesClient = _kubernetesClientFactory.GetKubernetesClient(kubernetesNameSpacePublishContext.ConfigString);
+            var v1NameSpace = await kubernetesClient.CoreV1.ReadNamespaceAsync(kubernetesNameSpacePublishContext.NameSpace.Name);
+            await kubernetesClient.CoreV1.PatchNamespaceAsync(GetPatchNameSpaceV1NameSpace(kubernetesNameSpacePublishContext.NameSpace, v1NameSpace), kubernetesNameSpacePublishContext.NameSpace.Name);
         }
 
 
 
-        public async Task DeleteNameSpaceAsync(IKubernetes kubernetes, string name)
+        public async Task DeleteNameSpaceAsync(KubernetesNameSpacePublishContext kubernetesNameSpacePublishContext)
         {
-            await kubernetes.CoreV1.DeleteNamespaceAsync(name);
+            var kubernetesClient = _kubernetesClientFactory.GetKubernetesClient(kubernetesNameSpacePublishContext.ConfigString);
+            await kubernetesClient.CoreV1.DeleteNamespaceAsync(kubernetesNameSpacePublishContext.NameSpace.Name);
         }
 
         /// <summary>
@@ -69,14 +79,13 @@ namespace Luck.Walnut.Kube.Adapter.KubernetesAdapter.NameSpaces
         /// </summary>
         /// <param name="nameSpace"></param>
         /// <returns></returns>
-        private V1Patch GetPatchNameSpaceV1NameSpace(NameSpace nameSpace,V1Namespace oldV1Namespace)
+        private V1Patch GetPatchNameSpaceV1NameSpace(NameSpace nameSpace, V1Namespace oldV1Namespace)
         {
             var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, WriteIndented = true };
-            
+
             var old = JsonSerializer.SerializeToDocument(oldV1Namespace, options);
             var expected = JsonSerializer.SerializeToDocument(oldV1Namespace);
             var patch = old.CreatePatch(expected);
-
             return new V1Patch(patch, V1Patch.PatchType.JsonPatch);
             //var daemonSet = await client.AppsV1.ReadNamespacedDaemonSetAsync(name, @namespace);
             //var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, WriteIndented = true };

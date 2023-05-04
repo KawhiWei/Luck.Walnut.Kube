@@ -62,5 +62,5 @@ public class DeploymentConfigurationBaseDto
     /// <summary>
     /// 初始容器配置列表
     /// </summary>
-    public List<string>? InitContainers { get; set; } = default!;
+    public List<string>? SideCarPlugins { get; set; } = default!;
 }
