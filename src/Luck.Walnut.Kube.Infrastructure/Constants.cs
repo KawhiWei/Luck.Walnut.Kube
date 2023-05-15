@@ -6,7 +6,8 @@
         {
             var dic = new Dictionary<string, string>
             {
-                { "luck-walnu-kube", "true" }
+                //{ "toyar-paas", "true" },
+                { "app.kubernetes.io/created-by", "toyar-paas" },
             };
             return dic;
         }
